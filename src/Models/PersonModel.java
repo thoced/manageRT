@@ -5,18 +5,23 @@
  */
 package Models;
 
+import java.io.InputStream;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -30,7 +35,8 @@ public class PersonModel extends Model implements ISQL
 
     private final StringProperty nom = new SimpleStringProperty();
     private final StringProperty prenom = new SimpleStringProperty();
-    private Date dateNaissance;
+    //private LocalDate dateNaissance;
+   
     private final StringProperty numNational = new SimpleStringProperty();
     private final StringProperty adresse = new SimpleStringProperty();
     private final StringProperty numero = new SimpleStringProperty();
@@ -38,17 +44,42 @@ public class PersonModel extends Model implements ISQL
     private final StringProperty ville = new SimpleStringProperty();
     private final StringProperty codePostal = new SimpleStringProperty();
     private final StringProperty categorie = new SimpleStringProperty();
-    private final IntegerProperty priorite = new SimpleIntegerProperty();
+    private final StringProperty priorite = new SimpleStringProperty();
+    private final ObjectProperty<LocalDate> dateNaissance = new SimpleObjectProperty<>();
+    private InputStream photo;
 
-    public int getPriorite() {
+    public InputStream getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(InputStream photo) {
+        this.photo = photo;
+    }
+    
+
+    public LocalDate getDateNaissance() {
+        return dateNaissance.get();
+    }
+
+    public void setDateNaissance(LocalDate value) {
+        dateNaissance.set(value);
+    }
+
+    public ObjectProperty dateNaissanceProperty() {
+        return dateNaissance;
+    }
+
+    
+    
+    public String getPriorite() {
         return priorite.get();
     }
 
-    public void setPriorite(int value) {
+    public void setPriorite(String value) {
         priorite.set(value);
     }
 
-    public IntegerProperty prioriteProperty() {
+    public StringProperty prioriteProperty() {
         return priorite;
     }
     
@@ -175,15 +206,26 @@ public class PersonModel extends Model implements ISQL
         return prenom;
     }
 
-    public void setDate(Date d)
-    {
-        this.dateNaissance = d;
-    }
+   
   
    public PersonModel()
    {
-       dateNaissance = new Date();
+      
    }
+
+   
+    
+
+    @Override
+    public PersonModel clone() throws CloneNotSupportedException 
+    {
+        PersonModel m = new PersonModel();
+        m.setNom(this.getNom());
+        m.setPrenom(this.getPrenom());
+        return m;
+    }
+   
+   
 
     @Override
     public void init() 
@@ -205,7 +247,7 @@ public class PersonModel extends Model implements ISQL
                   + "priorite) values (?,?,?,?,?,?,?,?,?,?,?)";*/
     
     @Override
-    public void select(int id) 
+    public void select(long id) 
     {
         String sql = "select * from t_identity where id = ?";
         
@@ -214,7 +256,7 @@ public class PersonModel extends Model implements ISQL
         {
             st = ConnectionSQL.getCon().prepareStatement(sql);
             
-            st.setInt(1, id);
+            st.setLong(1, id);
             
             ResultSet result = st.executeQuery();
             result.first();
@@ -222,14 +264,17 @@ public class PersonModel extends Model implements ISQL
             {
                 this.setNom(result.getString("nom"));
                 this.setPrenom(result.getString("prenom"));
-                this.setDate(result.getDate("date_naissance"));
+                this.setNumNational(result.getString("num_national"));
+                java.sql.Date d = result.getDate("date_naissance");
+                this.setDateNaissance(d.toLocalDate());
                 this.setAdresse(result.getString("adresse"));
                 this.setNumero(result.getString("numero"));
                 this.setBoite(result.getString("boite"));
                 this.setVille(result.getString("ville"));
                 this.setCodePostal(result.getString("code_postal"));
                 this.setCategorie(result.getString("categorie"));
-                this.setPriorite(result.getInt("priorite"));
+                this.setPriorite(result.getString("priorite"));
+                this.setPhoto(result.getBinaryStream("photo"));
             }
         }
         catch(SQLException ex) 
@@ -271,7 +316,7 @@ public class PersonModel extends Model implements ISQL
             st.setString(8, ""); // ville
             st.setString(9, ""); // code_postal
             st.setString(10, ""); // categorie
-            st.setInt(11, 0); // priorite
+            st.setString(11, ""); // priorite
             st.executeUpdate();
             ResultSet result = st.getGeneratedKeys();
             if(result != null && result.first())
@@ -299,12 +344,27 @@ public class PersonModel extends Model implements ISQL
                + "ville = ?,"
                + "code_postal = ?,"
                + "categorie = ?,"
-               + "priorite = ?"
+               + "priorite = ?,"
+               + "photo = ?"
                + " where id = ?";
        
         try 
         {
             PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
+            st.setString(1, this.getNom()); // nom
+            st.setString(2, this.getPrenom()); // prenom
+            st.setDate(3, java.sql.Date.valueOf(this.getDateNaissance())); // date_naissance
+            st.setString(4, this.getNumNational()); // num_national
+            st.setString(5, this.getAdresse()); // adresse
+            st.setString(6, this.getNumero()); // numero
+            st.setString(7, this.getBoite()); // boite
+            st.setString(8, this.getVille()); // ville
+            st.setString(9, this.getCodePostal()); // code_postal
+            st.setString(10, this.getCategorie()); // categorie
+            st.setString(11, this.getPriorite()); // priorite
+            st.setBinaryStream(12, this.getPhoto());
+            st.setLong(13, this.getId());
+            
             // update
             st.execute();
         } catch (SQLException ex) {
@@ -333,6 +393,8 @@ public class PersonModel extends Model implements ISQL
         }
      
     }
+
+ 
    
     
 }

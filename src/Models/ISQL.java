@@ -17,7 +17,7 @@ public interface ISQL
 {
       
     public  void init();
-    public  void select(int id);
+    public  void select(long id);
     public  void insert();
     public  void update();
     public  void delete();

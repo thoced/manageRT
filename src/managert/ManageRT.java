@@ -38,18 +38,19 @@ import javafx.stage.Stage;
  *
  * @author Thonon
  */
-public class ManageRT extends Application implements EventHandler
+public class ManageRT extends Application 
 {
     private BorderPane rootPane;
     
-    private ObservableList<PersonModel> listPerson;
+   private TablePersonController tpc;
+  
     
     // class static de connection
     public static ConnectionSQL connectionSQL;
     
     public ManageRT()
     {
-        listPerson = FXCollections.observableArrayList();
+       
         try 
         {
             // connection à la base de donnée
@@ -69,7 +70,6 @@ public class ManageRT extends Application implements EventHandler
         Scene scene = new Scene(rootPane);
         stage.setScene(scene);
         stage.show();
-        
         // showtablepersonview
         this.ShowTablePersonView();
     }
@@ -81,22 +81,10 @@ public class ManageRT extends Application implements EventHandler
         BorderPane borderPane = loader.load();
         // récupération du controller
         TablePersonController tpc = loader.getController();
-        tpc.getTable().setItems(listPerson);
 
         // set du borderPane dans le rootPane
         rootPane.setCenter(borderPane);
-        
-        // ajout de l'handler sur le tableperson
-        tpc.getTable().addEventHandler(MouseEvent.MOUSE_CLICKED, this);
-        
-        // test
-        PersonModel p = new PersonModel();
-        p.setNom("Thonon");
-        p.setPrenom("Cedric");
-        
-    
-        listPerson.add(p);
-      
+       
         
     }
     
@@ -108,40 +96,5 @@ public class ManageRT extends Application implements EventHandler
         launch(args);
     }
 
-    @Override
-    public void handle(Event event)
-    {
-        // handler du clic sur le tableview
-        if(event.getSource().getClass() == TableView.class)
-        {
-  
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/PersonViewPackage/PersonView.fxml"));
-            try 
-            {
-                AnchorPane ap = loader.load();
-                // recuperation du controller
-                PersonController pc = loader.getController();
-                // récupération du model
-                PersonModel model = (PersonModel)((TableView)event.getSource()).getSelectionModel().getSelectedItem();
-                if(model != null)
-                    model.select(4);
-                // set du model
-                pc.setModel(model);
-                // création de la scene
-                Scene scene = new Scene(ap);
-                // creatin du stage
-                Stage stage = new Stage();
-                // ajout de la scene au stage
-                stage.setScene(scene);
-                // affichage de la vue
-                stage.showAndWait();
-                
-            } catch (IOException ex) {
-                Logger.getLogger(ManageRT.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(ManageRT.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
     
 }

@@ -6,19 +6,39 @@
 package PersonViewPackage;
 
 import Models.PersonModel;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.sql.Blob;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelFormat;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javax.imageio.ImageIO;
+import javax.swing.undo.UndoManager;
 
 
 
@@ -27,8 +47,10 @@ import javafx.scene.control.SingleSelectionModel;
  *
  * @author Thonon
  */
-public class PersonController implements Initializable,InvalidationListener {
+public class PersonController implements Initializable {
 
+    @FXML
+    private AnchorPane anchor;
     @FXML
     private ComboBox comboPriorite;
     @FXML
@@ -38,7 +60,7 @@ public class PersonController implements Initializable,InvalidationListener {
     @FXML
     private TextField numeroNational;
     @FXML
-    private TextField dateNaissance;
+    private DatePicker dateNaissance;
     @FXML
     private TextField adresse;
     @FXML
@@ -53,13 +75,14 @@ public class PersonController implements Initializable,InvalidationListener {
     private TextField prenom;
     @FXML
     private Button bCancel;
-    
+    @FXML
+    private ImageView photo;
     
     private ObservableList<String> oListPriorite;
     private ObservableList<String> oListCategorie;
     
     private PersonModel model;
-    private PersonModel backupModel;
+    
     /**
      * Initializes the controller class.
      */
@@ -92,30 +115,69 @@ public class PersonController implements Initializable,InvalidationListener {
     {
         if(model != null)
         {
-          comboPriorite.valueProperty().bindBidirectional(model.prioriteProperty());
-          comboCategorie.valueProperty().bindBidirectional(model.categorieProperty());
-          nom.textProperty().bindBidirectional(model.nomProperty());
-          prenom.textProperty().bindBidirectional(model.prenomProperty());
-          nom.textProperty().addListener(this);
-        
-        
-        }
-    }
-    
-    @FXML
-    public void cancel(ActionEvent event)
-    {
-        if(backupModel != null)
-        {
-            this.model.setNom(backupModel.getNom());
-            this.model.setPrenom(backupModel.getPrenom());
+         this.model = model;
+         nom.textProperty().bindBidirectional(model.nomProperty());
+         prenom.textProperty().bindBidirectional(model.prenomProperty());
+         numeroNational.textProperty().bindBidirectional(model.numNationalProperty());
+         dateNaissance.valueProperty().bindBidirectional(model.dateNaissanceProperty());
+         adresse.textProperty().bindBidirectional(model.adresseProperty());
+         numero.textProperty().bindBidirectional(model.numeroProperty());
+         boite.textProperty().bindBidirectional(model.boiteProperty());
+         ville.textProperty().bindBidirectional(model.villeProperty());
+         codePostal.textProperty().bindBidirectional(model.codePostalProperty());
+         comboPriorite.valueProperty().bindBidirectional(model.prioriteProperty());
+         
+         // chargement de la photo
+         if(model.getPhoto() != null)
+         {
+             Image ima = new Image(model.getPhoto());
+             photo.setImage(ima);
+         }
+         
+     
+            
         }
     }
 
-    @Override
-    public void invalidated(Observable observable) 
+    @FXML
+    public void cancel(ActionEvent event)
     {
-       System.out.println("invalidation: " + observable);
+
+       if(anchor != null)
+         anchor.getScene().getWindow().hide();
+        
+    }
+    
+     @FXML
+    public void ok(ActionEvent event)
+    {
+        // enregistrement
+        model.update();
+      
+       if(anchor != null)
+           anchor.getScene().getWindow().hide();
+    }
+
+    @FXML
+    public void clicPhoto() throws UnsupportedEncodingException, MalformedURLException, FileNotFoundException
+    {
+        // clic sur la photo
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Fichier bmp (Bitmap)", "*.bmp"),
+                new FileChooser.ExtensionFilter("Fichier jpg (Jpeg)", "*.jpg"),
+                new FileChooser.ExtensionFilter("Fichier png (Portable Network Graphics)","*.png"));
+        fc.setTitle("Choisissez la photo");
+        File file = fc.showOpenDialog(anchor.getScene().getWindow());
+        if(file != null)
+        {
+          Image ima = new Image(file.toURL().toString());
+          photo.setImage(ima);
+          InputStream stream = new FileInputStream(file.getAbsolutePath());
+          model.setPhoto(stream);
+         
+          
+        }
+        
     }
     
 }
