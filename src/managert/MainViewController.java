@@ -9,6 +9,7 @@ import Models.PersonModel;
 import PersonViewPackage.PersonController;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +32,7 @@ public class MainViewController implements Initializable {
    
     
     @FXML
-    private void onNewIdentity(ActionEvent event)
+    private void onNewIdentity(ActionEvent event) throws SQLException
     {
       // creation d'une nouvelle identité
        PersonModel model = new PersonModel();

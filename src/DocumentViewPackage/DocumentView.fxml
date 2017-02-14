@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="DocumentViewPackage.DocumentController">
+   <children>
+      <ListView fx:id="listDocuments" layoutX="14.0" layoutY="14.0" onMousePressed="#handleClic" prefHeight="327.0" prefWidth="768.0" />
+      <Button fx:id="bConfirm" defaultButton="true" layoutX="733.0" layoutY="561.0" mnemonicParsing="false" onAction="#handleUndo" text="Valider" />
+      <TextArea fx:id="commentaire" layoutX="16.0" layoutY="354.0" prefHeight="200.0" prefWidth="768.0" />
+      <Button fx:id="bVoirFichier" layoutX="14.0" layoutY="561.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Voir le fichier" />
+   </children>
+</AnchorPane>

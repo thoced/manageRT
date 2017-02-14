@@ -19,8 +19,8 @@ public class ConnectionSQL
     private static Connection con;
     
     private String url = "jdbc:mysql://localhost:3306/db_rad";
-    private String user = "root";
-    private String password = "";
+    private String user = "paquot";
+    private String password = "paquotolivier";
     
     public ConnectionSQL() throws SQLException, ClassNotFoundException
     {

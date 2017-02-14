@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public interface ISQL 
 {
       
-    public  void init();
+   
     public  void select(long id);
     public  void insert();
     public  void update();

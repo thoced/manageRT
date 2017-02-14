@@ -46,17 +46,18 @@ public class PersonModel extends Model implements ISQL
     private final StringProperty categorie = new SimpleStringProperty();
     private final StringProperty priorite = new SimpleStringProperty();
     private final ObjectProperty<LocalDate> dateNaissance = new SimpleObjectProperty<>();
-    private InputStream photo;
+    private Blob photo;
 
-    public InputStream getPhoto() {
+    public Blob getPhoto() {
         return photo;
     }
 
-    public void setPhoto(InputStream photo) {
+    public void setPhoto(Blob photo) {
         this.photo = photo;
     }
     
-
+    
+    
     public LocalDate getDateNaissance() {
         return dateNaissance.get();
     }
@@ -212,40 +213,7 @@ public class PersonModel extends Model implements ISQL
    {
       
    }
-
-   
-    
-
-    @Override
-    public PersonModel clone() throws CloneNotSupportedException 
-    {
-        PersonModel m = new PersonModel();
-        m.setNom(this.getNom());
-        m.setPrenom(this.getPrenom());
-        return m;
-    }
-   
-   
-
-    @Override
-    public void init() 
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-      /*
-    "insert into t_identity (nom,"
-                  + "prenom,"
-                  + "date_naissance,"
-                  + "num_national,"
-                  + "adresse,"
-                  + "numero,"
-                  + "boite,"
-                  + "ville,"
-                  + "code_postal,"
-                  + "categorie,"
-                  + "priorite) values (?,?,?,?,?,?,?,?,?,?,?)";*/
-    
+     
     @Override
     public void select(long id) 
     {
@@ -274,7 +242,7 @@ public class PersonModel extends Model implements ISQL
                 this.setCodePostal(result.getString("code_postal"));
                 this.setCategorie(result.getString("categorie"));
                 this.setPriorite(result.getString("priorite"));
-                this.setPhoto(result.getBinaryStream("photo"));
+                this.setPhoto(result.getBlob("photo"));
             }
         }
         catch(SQLException ex) 
@@ -362,7 +330,8 @@ public class PersonModel extends Model implements ISQL
             st.setString(9, this.getCodePostal()); // code_postal
             st.setString(10, this.getCategorie()); // categorie
             st.setString(11, this.getPriorite()); // priorite
-            st.setBinaryStream(12, this.getPhoto());
+            if(this.getPhoto() != null)
+                st.setBlob(12, this.getPhoto());
             st.setLong(13, this.getId());
             
             // update

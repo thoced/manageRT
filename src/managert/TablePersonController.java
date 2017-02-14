@@ -31,6 +31,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentEvent.EventType;
@@ -57,12 +58,11 @@ public class TablePersonController implements Initializable, EventListener {
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-
         // instance de listPerson
         listPerson = FXCollections.observableArrayList();
         // bind de listPerson avec la tableview
         table.setItems(listPerson);
-        
+      
        // bind des colonne
         nomColumn.setCellValueFactory(cellData->cellData.getValue().nomProperty());
         prenomColumn.setCellValueFactory(cellData->cellData.getValue().prenomProperty());
@@ -104,7 +104,7 @@ public class TablePersonController implements Initializable, EventListener {
     }
     
     @FXML
-    public void handleClic(Event event)
+    public void handleClic(Event event) throws SQLException
     {
         if(event.getSource() == table)
         {
@@ -124,6 +124,7 @@ public class TablePersonController implements Initializable, EventListener {
                 Scene scene = new Scene(ap);
                 // creatin du stage
                 Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
                 // ajout de la scene au stage
                 stage.setScene(scene);
                 // affichage de la vue
@@ -137,6 +138,9 @@ public class TablePersonController implements Initializable, EventListener {
                 Logger.getLogger(ManageRT.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        
+        
     }
 
    

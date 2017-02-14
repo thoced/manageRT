@@ -5,18 +5,21 @@
  */
 package PersonViewPackage;
 
+import DocumentViewPackage.DocumentController;
 import Models.PersonModel;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -25,7 +28,9 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
@@ -37,8 +42,12 @@ import javafx.scene.image.PixelFormat;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import javax.sql.rowset.serial.SerialBlob;
 import javax.swing.undo.UndoManager;
+
 
 
 
@@ -76,6 +85,10 @@ public class PersonController implements Initializable {
     @FXML
     private Button bCancel;
     @FXML
+    private Button bDocuments;
+    @FXML
+    private Button bLiens;
+    @FXML
     private ImageView photo;
     
     private ObservableList<String> oListPriorite;
@@ -89,6 +102,8 @@ public class PersonController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        // modification de la couleur de fond du imageview
+      
         
        if(comboPriorite != null)
        {
@@ -111,7 +126,7 @@ public class PersonController implements Initializable {
     
     }    
     
-    public void setModel(PersonModel model) throws CloneNotSupportedException
+    public void setModel(PersonModel model) throws CloneNotSupportedException, SQLException
     {
         if(model != null)
         {
@@ -126,16 +141,15 @@ public class PersonController implements Initializable {
          ville.textProperty().bindBidirectional(model.villeProperty());
          codePostal.textProperty().bindBidirectional(model.codePostalProperty());
          comboPriorite.valueProperty().bindBidirectional(model.prioriteProperty());
+         comboCategorie.valueProperty().bindBidirectional(model.categorieProperty()); 
          
          // chargement de la photo
          if(model.getPhoto() != null)
          {
-             Image ima = new Image(model.getPhoto());
+             Image ima = new Image(model.getPhoto().getBinaryStream());
              photo.setImage(ima);
          }
-         
-     
-            
+           
         }
     }
 
@@ -158,8 +172,22 @@ public class PersonController implements Initializable {
            anchor.getScene().getWindow().hide();
     }
 
+     @FXML
+    public void handleDocuments(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/DocumentViewPackage/DocumentView.fxml"));
+        AnchorPane pane = loader.load();
+        DocumentController controller = (DocumentController)loader.getController();
+        controller.setPersonId(model.getId());
+        Scene scene = new Scene(pane);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+    
     @FXML
-    public void clicPhoto() throws UnsupportedEncodingException, MalformedURLException, FileNotFoundException
+    public void clicPhoto() throws MalformedURLException, FileNotFoundException, IOException, SQLException  
     {
         // clic sur la photo
         FileChooser fc = new FileChooser();
@@ -173,7 +201,11 @@ public class PersonController implements Initializable {
           Image ima = new Image(file.toURL().toString());
           photo.setImage(ima);
           InputStream stream = new FileInputStream(file.getAbsolutePath());
-          model.setPhoto(stream);
+         
+          byte[] b = new byte[stream.available()];
+          stream.read(b);
+          Blob blob = new SerialBlob(b);
+          model.setPhoto(blob);
          
           
         }
