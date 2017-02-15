@@ -5,6 +5,7 @@
  */
 package managert;
 
+import LoginPackage.LoginController;
 import Models.ConnectionSQL;
 import Models.PersonModel;
 import PersonViewPackage.PersonController;
@@ -33,6 +34,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -53,8 +55,9 @@ public class ManageRT extends Application
        
         try 
         {
-            // connection à la base de donnée
+            // creation de l'objet static
             connectionSQL = new ConnectionSQL();
+           
          
             
         } catch (SQLException ex) {
@@ -65,13 +68,29 @@ public class ManageRT extends Application
     }
     
     @Override
-    public void start(Stage stage) throws Exception {
-        rootPane = FXMLLoader.load(getClass().getResource("MainView.fxml"));
-        Scene scene = new Scene(rootPane);
-        stage.setScene(scene);
-        stage.show();
-        // showtablepersonview
-        this.ShowTablePersonView();
+    public void start(Stage stage) throws Exception 
+    {
+        // ouverture de la vue de login
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/LoginPackage/LoginView.fxml"));
+        AnchorPane pane = loader.load();
+        LoginController controller = loader.getController();
+        Scene s = new Scene(pane);
+        Stage st = new Stage();
+        st.setScene(s);
+        st.setResizable(false);
+        st.setMaximized(false);
+        st.initStyle(StageStyle.UNDECORATED);
+        st.showAndWait();
+        
+        if(controller.isIsLogin()) // si la connexion est établie et acceptée
+        {
+            rootPane = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+            Scene scene = new Scene(rootPane);
+            stage.setScene(scene);
+            stage.show();
+            // showtablepersonview
+            this.ShowTablePersonView();
+        }
     }
     
     public void ShowTablePersonView() throws IOException
