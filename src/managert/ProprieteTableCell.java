@@ -19,11 +19,8 @@ public class ProprieteTableCell extends TableCell<PersonModel,String>
     @Override
     protected void updateItem(String item, boolean empty)
     {
-        
         super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
-        
-      
-        
+
         if(item != null)
         {
             String style;
@@ -44,9 +41,7 @@ public class ProprieteTableCell extends TableCell<PersonModel,String>
             this.setText(item);
             this.setStyle(style);
         }
-        
-        System.out.println(item);
-        
+
     }
 
    
