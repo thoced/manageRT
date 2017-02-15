@@ -24,6 +24,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -31,8 +33,8 @@ import javafx.beans.property.StringProperty;
  */
 public class PersonModel extends Model implements ISQL
 {
+    public static  ObservableList<PersonModel> listPerson = FXCollections.observableArrayList();;
     
-
     private final StringProperty nom = new SimpleStringProperty();
     private final StringProperty prenom = new SimpleStringProperty();
     //private LocalDate dateNaissance;

@@ -54,7 +54,7 @@ public class TablePersonController implements Initializable, EventListener {
     @FXML
     private TableColumn<PersonModel,String> categorieColumn;
      
-    private ObservableList<PersonModel> listPerson;
+    //private ObservableList<PersonModel> listPerson;
     
     /**
      * Initializes the controller class.
@@ -63,9 +63,9 @@ public class TablePersonController implements Initializable, EventListener {
     public void initialize(URL url, ResourceBundle rb) 
     {
         // instance de listPerson
-        listPerson = FXCollections.observableArrayList();
+        //listPerson = FXCollections.observableArrayList();
         // bind de listPerson avec la tableview
-        table.setItems(listPerson);
+        table.setItems(PersonModel.listPerson);
       
        // bind des colonnes
         nomColumn.setCellValueFactory(cellData->cellData.getValue().nomProperty());
@@ -89,7 +89,7 @@ public class TablePersonController implements Initializable, EventListener {
     public void refreshView()
     {
         // clear du list person
-        listPerson.clear();
+        PersonModel.listPerson.clear();
         // requete sql de chargement de l'ensemble des personnes
         String sql = "select * from t_identity";
         try 
@@ -107,7 +107,7 @@ public class TablePersonController implements Initializable, EventListener {
                 model.setPriorite(result.getString("priorite"));
                 model.setCategorie(result.getString("categorie"));
                 // ajout dans le tableview
-                listPerson.add(model);
+                PersonModel.listPerson.add(model);
             }
             
         } catch (SQLException ex) {

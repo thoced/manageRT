@@ -166,7 +166,9 @@ public class PersonController implements Initializable {
     public void ok(ActionEvent event)
     {
         // enregistrement
-        model.update();
+       model.update();
+       // ajout dans la liste
+       PersonModel.listPerson.add(model);
       
        if(anchor != null)
            anchor.getScene().getWindow().hide();
