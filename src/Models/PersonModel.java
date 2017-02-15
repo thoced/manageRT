@@ -330,8 +330,7 @@ public class PersonModel extends Model implements ISQL
             st.setString(9, this.getCodePostal()); // code_postal
             st.setString(10, this.getCategorie()); // categorie
             st.setString(11, this.getPriorite()); // priorite
-            if(this.getPhoto() != null)
-                st.setBlob(12, this.getPhoto());
+            st.setBlob(12, this.getPhoto());
             st.setLong(13, this.getId());
             
             // update

@@ -86,6 +86,11 @@ public class LoginController implements Initializable {
         {
             login.getScene().getWindow().hide();
         }
+        else
+        {
+            login.setText("");
+            password.setText("");
+        }
         
     }
 
