@@ -6,12 +6,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="DocumentViewPackage.DocumentController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DocumentViewPackage.DocumentController">
    <children>
-      <ListView fx:id="listDocuments" layoutX="14.0" layoutY="14.0" onMousePressed="#handleClic" prefHeight="327.0" prefWidth="768.0" />
+      <ListView fx:id="listDocuments" layoutX="14.0" layoutY="48.0" onMousePressed="#handleClic" prefHeight="293.0" prefWidth="768.0" />
       <Button fx:id="bConfirm" defaultButton="true" layoutX="733.0" layoutY="561.0" mnemonicParsing="false" onAction="#handleUndo" text="Valider" />
       <TextArea fx:id="commentaire" layoutX="16.0" layoutY="354.0" prefHeight="200.0" prefWidth="768.0" />
-      <Button fx:id="bVoirFichier" layoutX="14.0" layoutY="561.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Voir le fichier" />
+      <Button fx:id="bVoirFichier" layoutX="548.0" layoutY="561.0" mnemonicParsing="false" onAction="#handleVoirFichier" prefHeight="25.0" prefWidth="156.0" text="Voir le fichier" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleNewDocument" style="-fx-background-color: lightgreen;" text="Ajouter un document" />
+      <Button layoutX="330.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: orange;" text="Supprimer le document" />
+      <Button layoutX="160.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: lightblue;" text="Enregistrer les modifications" />
    </children>
 </AnchorPane>

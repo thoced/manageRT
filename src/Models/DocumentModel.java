@@ -8,6 +8,8 @@ package Models;
 import java.sql.Blob;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -15,10 +17,12 @@ import javafx.beans.property.StringProperty;
  */
 public class DocumentModel extends Model
 {
+    public static ObservableList<DocumentModel> oDocuments = FXCollections.observableArrayList();
 
     private final StringProperty nom = new SimpleStringProperty();
     private final StringProperty commentaire = new SimpleStringProperty();
     private Blob fichier;
+    private String suffix;
 
     
     public Blob getFichier() {
@@ -27,9 +31,8 @@ public class DocumentModel extends Model
 
     public void setFichier(Blob fichier) {
         this.fichier = fichier;
+        
     }
-
-    
     
     public String getCommentaire() {
         return commentaire.get();
