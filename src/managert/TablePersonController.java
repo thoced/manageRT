@@ -49,6 +49,10 @@ public class TablePersonController implements Initializable, EventListener {
     private TableColumn<PersonModel,String> nomColumn;
     @FXML
     private TableColumn<PersonModel,String> prenomColumn;
+    @FXML
+    private TableColumn<PersonModel,String> prioriteColumn;
+    @FXML
+    private TableColumn<PersonModel,String> categorieColumn;
      
     private ObservableList<PersonModel> listPerson;
     
@@ -63,9 +67,15 @@ public class TablePersonController implements Initializable, EventListener {
         // bind de listPerson avec la tableview
         table.setItems(listPerson);
       
-       // bind des colonne
+       // bind des colonnes
         nomColumn.setCellValueFactory(cellData->cellData.getValue().nomProperty());
         prenomColumn.setCellValueFactory(cellData->cellData.getValue().prenomProperty());
+        prioriteColumn.setCellValueFactory(cellData->cellData.getValue().prioriteProperty());
+        categorieColumn.setCellValueFactory(cellData->cellData.getValue().categorieProperty());
+       
+        // tablecell 
+       prioriteColumn.setCellFactory(tableCell->new ProprieteTableCell());
+       categorieColumn.setCellFactory(tableCell->new ProprieteTableCell());
       // refresh view
       this.refreshView();
     }  
@@ -94,6 +104,8 @@ public class TablePersonController implements Initializable, EventListener {
                 model.setId(result.getInt("id"));
                 model.setNom(result.getString("nom"));
                 model.setPrenom(result.getString("prenom"));
+                model.setPriorite(result.getString("priorite"));
+                model.setCategorie(result.getString("categorie"));
                 // ajout dans le tableview
                 listPerson.add(model);
             }

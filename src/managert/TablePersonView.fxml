@@ -6,12 +6,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="managert.TablePersonController">
+<BorderPane prefHeight="200.0" prefWidth="494.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="managert.TablePersonController">
    <center>
-      <TableView fx:id="table" onMouseClicked="#handleClic" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="table" onMouseClicked="#handleClic" prefHeight="200.0" prefWidth="477.0" style="-fx-background-color: lightblue;" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="nomColumn" prefWidth="75.0" text="Nom" />
           <TableColumn fx:id="prenomColumn" prefWidth="75.0" text="Prenom" />
+            <TableColumn fx:id="prioriteColumn" prefWidth="125.0" text="Priorite" />
+            <TableColumn fx:id="categorieColumn" prefWidth="122.0" text="Categorie" />
         </columns>
       </TableView>
    </center>
