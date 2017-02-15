@@ -74,8 +74,8 @@ public class TablePersonController implements Initializable, EventListener {
         categorieColumn.setCellValueFactory(cellData->cellData.getValue().categorieProperty());
        
         // tablecell 
-       prioriteColumn.setCellFactory(tableCell->new ProprieteTableCell());
-       categorieColumn.setCellFactory(tableCell->new ProprieteTableCell());
+        prioriteColumn.setCellFactory(tableCell->new ProprieteTableCell());
+      // categorieColumn.setCellFactory(tableCell->new ProprieteTableCell());
       // refresh view
       this.refreshView();
     }  
