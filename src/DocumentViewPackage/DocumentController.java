@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +30,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -100,6 +104,32 @@ public class DocumentController implements Initializable
              Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
          }
        
+    }
+    
+     @FXML
+    public void handleDeleteDocument() throws SQLException
+    {
+        // suppresion d'un document
+        DocumentModel model = (DocumentModel) listDocuments.getSelectionModel().getSelectedItem();
+        if(model != null)
+        {
+            // view de confirmation
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Suppression d'un document");
+            alert.setContentText("Etes-vous sûr de supprimer le document '" + model.getNom() + "' ?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.get() == ButtonType.CANCEL)
+                return;
+
+            // suppression dans la base
+            String sql = "delete from t_documents where id = ?";
+            PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
+            st.setLong(1, model.getId());
+            st.execute();
+            //
+            DocumentModel.oDocuments.remove(model);
+            commentaire.setText("");
+        }
     }
     
     @FXML
