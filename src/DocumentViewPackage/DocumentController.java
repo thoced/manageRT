@@ -117,8 +117,11 @@ public class DocumentController implements Initializable
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Suppression d'un document");
             alert.setContentText("Etes-vous sûr de supprimer le document '" + model.getNom() + "' ?");
+            ButtonType buttonOui = new ButtonType("Oui");
+            ButtonType buttonNon = new ButtonType("Non");
+            alert.getButtonTypes().setAll(buttonNon,buttonOui);
             Optional<ButtonType> result = alert.showAndWait();
-            if(result.get() == ButtonType.CANCEL)
+            if(result.get() == buttonNon)
                 return;
 
             // suppression dans la base
@@ -136,7 +139,6 @@ public class DocumentController implements Initializable
     public void handleClic()
     {
         // clic sur un élément
-       
         DocumentModel model = (DocumentModel) listDocuments.getSelectionModel().getSelectedItem();
         if(model != null)
         {
