@@ -6,6 +6,7 @@
 package PersonViewPackage;
 
 import DocumentViewPackage.DocumentController;
+import GestionPackage.GestionController;
 import Models.PersonModel;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -174,6 +175,20 @@ public class PersonController implements Initializable {
            anchor.getScene().getWindow().hide();
     }
 
+     @FXML
+    public void handleGestion(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GestionPackage/GestionView.fxml"));
+        AnchorPane pane = loader.load();
+        GestionController controller = (GestionController)loader.getController();
+        controller.setIdPerson(model.getId());
+        Scene scene = new Scene(pane);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+    
      @FXML
     public void handleDocuments(ActionEvent event) throws IOException
     {

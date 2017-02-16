@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GestionPackage.AjoutTodoController">
+   <children>
+      <Label layoutX="65.0" layoutY="64.0" text="Titre Todo" />
+      <TextField fx:id="titre" layoutX="184.0" layoutY="60.0" prefHeight="25.0" prefWidth="511.0" />
+      <TextArea fx:id="commentaire" layoutX="185.0" layoutY="119.0" prefHeight="200.0" prefWidth="518.0" />
+      <Label layoutX="65.0" layoutY="102.0" text="Commentaire" />
+      <Button defaultButton="true" layoutX="733.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleValider" text="Valider" />
+      <Button cancelButton="true" layoutX="660.0" layoutY="558.0" mnemonicParsing="false" text="Annuler" />
+      <DatePicker fx:id="datePicker" layoutX="185.0" layoutY="362.0" />
+      <Label layoutX="65.0" layoutY="366.0" text="Date de rappel:" />
+   </children>
+</AnchorPane>
