@@ -30,18 +30,13 @@ public class RappelTableCell extends TableCell<TodoModel,Boolean> implements Cha
     {
         super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
         
-        if(item != null)
+        if(!empty)
         {
-           
-                CheckBox box = new CheckBox("");
-                box.setSelected(empty);
-                this.setGraphic(box);
-                model = (TodoModel) this.getTableRow().getItem();
-                box.selectedProperty().bindBidirectional(model.rappelProperty());
-                box.selectedProperty().addListener(this);
-               
-           
+            this.setText("");
+            CheckBox box = new CheckBox("");
+            this.setGraphic(box);
         }
+       
     }
 
     @Override
@@ -50,6 +45,8 @@ public class RappelTableCell extends TableCell<TodoModel,Boolean> implements Cha
        // enregistrement
         if(model != null)
         {
+            model.setRappel((Boolean)observable.getValue());
+            
             try {
                 String sql = "update t_todo set rappel = ? where id = ?";
                 PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);

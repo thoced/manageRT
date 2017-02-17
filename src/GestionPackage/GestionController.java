@@ -85,6 +85,7 @@ public class GestionController implements  Initializable {
             columnRappel.setCellValueFactory(cellData->cellData.getValue().rappelProperty());
             // cellfactory
             columnRappel.setCellFactory(a->new RappelTableCell());
+            columnDateRappel.setCellFactory(a->new DateRappelTableCell());
             
             
             // listener d'enregistrement automatique sur la perte du focus

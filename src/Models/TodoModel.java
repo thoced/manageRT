@@ -54,7 +54,8 @@ public class TodoModel extends Model
     }
     
 
-    public LocalDate getDateRappel() {
+    public LocalDate getDateRappel()
+    {
         return dateRappel.get();
     }
 

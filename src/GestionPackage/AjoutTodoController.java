@@ -41,8 +41,10 @@ public class AjoutTodoController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        // initialisation de la date de rappel à la date d'aujourd'hui
+       datePicker.valueProperty().set(LocalDate.now());
     }   
      @FXML
     public void handleUndo(ActionEvent event) throws IOException, SQLException
