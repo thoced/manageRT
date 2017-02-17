@@ -22,42 +22,50 @@ import javafx.scene.control.TableCell;
  * @author Thonon
  */
 public class RappelTableCell extends TableCell<TodoModel,Boolean> implements ChangeListener
-{
-    private TodoModel model;
+{ 
+   // private CheckBox box = new CheckBox("");
     
     @Override
     protected void updateItem(Boolean item, boolean empty) 
     {
         super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
-        
-        if(!empty)
+               
+        if(item != null && !empty)
         {
             this.setText("");
-            CheckBox box = new CheckBox("");
+            CheckBox box = new CheckBox();
+            box.setSelected(item);
+            box.selectedProperty().addListener(this);
             this.setGraphic(box);
         }
+        else
+        {
+            this.setGraphic(null);
+        }
+           
        
     }
+    
+    
 
     @Override
     public void changed(ObservableValue observable, Object oldValue, Object newValue) 
     {
-       // enregistrement
-        if(model != null)
-        {
-            model.setRappel((Boolean)observable.getValue());
-            
-            try {
-                String sql = "update t_todo set rappel = ? where id = ?";
-                PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
-                st.setBoolean(1, model.isRappel());
-                st.setLong(2, model.getId());
-                st.execute();
-            } catch (SQLException ex) {
-                Logger.getLogger(RappelTableCell.class.getName()).log(Level.SEVERE, null, ex);
-            }
-          
-        }
+         TodoModel model = (TodoModel) this.getTableRow().getItem();
+         if(model != null)
+         {
+             try {
+                 model.setRappel((boolean)newValue);
+                 String sql = "update t_todo set rappel = ? where id = ?";
+                 PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
+                 st.setBoolean(1, model.isRappel());
+                 st.setLong(2, model.getId());
+                 st.execute();
+             } catch (SQLException ex) {
+                 Logger.getLogger(RappelTableCell.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         }
+    
     }
     
     
