@@ -38,6 +38,7 @@ import javafx.stage.Stage;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+
 /**
  * FXML Controller class
  *
@@ -54,6 +55,8 @@ public class GestionController implements  Initializable {
     private TableColumn<TodoModel,LocalDate> columnDateCreation;
     @FXML
     private TableColumn<TodoModel,LocalDate> columnDateRappel;
+    @FXML
+    private TableColumn<TodoModel,Boolean> columnRappel;
     @FXML
     private TextArea commentaire;
     @FXML
@@ -79,9 +82,16 @@ public class GestionController implements  Initializable {
             columnTodo.setCellValueFactory(cellData->cellData.getValue().titreProperty());
             columnDateCreation.setCellValueFactory(cellData->cellData.getValue().dateCreationProperty());
             columnDateRappel.setCellValueFactory(cellData->cellData.getValue().dateRappelProperty());
+            columnRappel.setCellValueFactory(cellData->cellData.getValue().rappelProperty());
+            // cellfactory
+            columnRappel.setCellFactory(a->new RappelTableCell());
             
+            
+            // listener d'enregistrement automatique sur la perte du focus
             listener = new CommentaireChangeListener();
             commentaire.focusedProperty().addListener(listener);
+            // listener sur le changement de l'état checkbox 
+            
 
     }
      
@@ -103,6 +113,7 @@ public class GestionController implements  Initializable {
                 model.setText(result.getString("text"));
                 model.setDateCreation(result.getDate("date_creation").toLocalDate());
                 model.setDateRappel(result.getDate("date_rappel").toLocalDate());
+                model.setRappel(result.getBoolean("rappel"));
                 TodoModel.oTodo.add(model);
             }
             
@@ -111,11 +122,7 @@ public class GestionController implements  Initializable {
         }
     }
     
-     @FXML
-    public void handleCommentUpdate(ActionEvent event) 
-    {
-        System.out.println("changed");
-    }
+    
     public void handleSupprimer(ActionEvent event) throws IOException, SQLException
     {
         TodoModel model = (TodoModel) tabTodo.getSelectionModel().getSelectedItem();
@@ -180,6 +187,7 @@ public class GestionController implements  Initializable {
     @FXML
     public void handleValider()
     {
+        
         
         commentaire.getScene().getWindow().hide();
     }

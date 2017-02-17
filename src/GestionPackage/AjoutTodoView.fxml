@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -8,13 +9,23 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GestionPackage.AjoutTodoController">
    <children>
-      <Label layoutX="65.0" layoutY="64.0" text="Titre Todo" />
-      <TextField fx:id="titre" layoutX="184.0" layoutY="60.0" prefHeight="25.0" prefWidth="511.0" />
-      <TextArea fx:id="commentaire" layoutX="185.0" layoutY="119.0" prefHeight="200.0" prefWidth="518.0" />
-      <Label layoutX="65.0" layoutY="102.0" text="Commentaire" />
       <Button defaultButton="true" layoutX="733.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleValider" text="Valider" />
-      <Button cancelButton="true" layoutX="660.0" layoutY="558.0" mnemonicParsing="false" text="Annuler" />
-      <DatePicker fx:id="datePicker" layoutX="185.0" layoutY="362.0" />
-      <Label layoutX="65.0" layoutY="366.0" text="Date de rappel:" />
+      <Button cancelButton="true" layoutX="660.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleUndo" text="Annuler" />
+      <Pane layoutX="54.0" layoutY="434.0" prefHeight="93.0" prefWidth="535.0" style="-fx-border-radius: 12; -fx-border-color: orange; -fx-border-width: 8;">
+         <children>
+            <Label layoutX="36.0" layoutY="30.0" text="Voulez-vous être rappelé automatiquement lors du dépassement de la date de rappel ?" />
+            <CheckBox fx:id="rappel" layoutX="36.0" layoutY="55.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Etre rappelé" />
+         </children>
+      </Pane>
+      <Pane layoutX="54.0" layoutY="35.0" prefHeight="376.0" prefWidth="695.0" style="-fx-border-color: lightblue; -fx-border-radius: 8; -fx-border-width: 8;">
+         <children>
+            <Label layoutX="35.0" layoutY="27.0" text="Titre Todo" />
+            <TextField fx:id="titre" layoutX="154.0" layoutY="23.0" prefHeight="25.0" prefWidth="511.0" />
+            <TextArea fx:id="commentaire" layoutX="155.0" layoutY="82.0" prefHeight="200.0" prefWidth="518.0" />
+            <Label layoutX="35.0" layoutY="65.0" text="Commentaire" />
+            <DatePicker fx:id="datePicker" layoutX="155.0" layoutY="325.0" />
+            <Label layoutX="35.0" layoutY="329.0" text="Date de rappel:" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

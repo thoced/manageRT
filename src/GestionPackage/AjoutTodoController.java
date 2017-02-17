@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -34,6 +35,8 @@ public class AjoutTodoController implements Initializable {
     private TextArea commentaire;
     @FXML
     private DatePicker datePicker;
+    @FXML
+    private CheckBox rappel;
     /**
      * Initializes the controller class.
      */
@@ -41,7 +44,11 @@ public class AjoutTodoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }   
-    
+     @FXML
+    public void handleUndo(ActionEvent event) throws IOException, SQLException
+    {
+         titre.getScene().getWindow().hide();
+    }
       
     @FXML
     public void handleValider(ActionEvent event) throws IOException, SQLException
@@ -52,16 +59,18 @@ public class AjoutTodoController implements Initializable {
         model.setText(commentaire.getText());
         model.dateRappelProperty().bindBidirectional(datePicker.valueProperty());
         model.setDateCreation(LocalDate.now());
+        model.rappelProperty().bind(rappel.selectedProperty());
        
         
         // enregistrement sql
-        String sql = "insert into t_todo (ref_id_identity,titre,text,date_creation,date_rappel) values (?,?,?,?,?)";
+        String sql = "insert into t_todo (ref_id_identity,titre,text,date_creation,date_rappel,rappel) values (?,?,?,?,?,?)";
         PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
         st.setLong(1, this.getIdPerson());
         st.setString(2, model.getTitre());
         st.setString(3, model.getText());
         st.setDate(4, java.sql.Date.valueOf(model.getDateCreation()));
         st.setDate(5,java.sql.Date.valueOf(model.getDateRappel()));
+        st.setBoolean(6, model.isRappel());
         st.execute();
         // ajotu du model dans la liste
         TodoModel.oTodo.add(model);

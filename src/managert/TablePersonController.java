@@ -33,6 +33,7 @@ import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentEvent.EventType;
 
@@ -74,7 +75,7 @@ public class TablePersonController implements Initializable, EventListener {
         categorieColumn.setCellValueFactory(cellData->cellData.getValue().categorieProperty());
        
         // tablecell 
-        prioriteColumn.setCellFactory(tableCell->new ProprieteTableCell());
+        prioriteColumn.setCellFactory(a->new ProprieteTableCell());
       // categorieColumn.setCellFactory(tableCell->new ProprieteTableCell());
       // refresh view
       this.refreshView();
@@ -137,6 +138,9 @@ public class TablePersonController implements Initializable, EventListener {
                 // creatin du stage
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setMaximized(false);
+                stage.setFullScreen(false);
+                stage.initStyle(StageStyle.UNIFIED);
                 // ajout de la scene au stage
                 stage.setScene(scene);
                 // affichage de la vue

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.paint.*?>
@@ -14,7 +15,7 @@
 
 <AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PersonViewPackage.PersonController">
    <children>
-      <GridPane layoutX="10.0" layoutY="10.0" prefHeight="285.0" prefWidth="384.0" style="-fx-border-color: gray; -fx-border-radius: 6;">
+      <GridPane layoutX="10.0" layoutY="10.0" prefHeight="285.0" prefWidth="768.0" style="-fx-border-color: lightblue; -fx-border-radius: 8; -fx-border-width: 8;">
          <children>
             <Label text="Nom:" />
             <Label text="Prenom:" GridPane.rowIndex="1" />
@@ -34,14 +35,20 @@
             <TextField fx:id="codePostal" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <TextField fx:id="numeroNational" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <DatePicker fx:id="dateNaissance" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Priorité:" textAlignment="CENTER" GridPane.columnIndex="2" />
+            <Label text="Catégorie:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ComboBox fx:id="comboPriorite" GridPane.columnIndex="3" />
+            <ComboBox fx:id="comboCategorie" GridPane.columnIndex="3" GridPane.rowIndex="1" />
          </children>
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="128.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="128.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="310.0" minWidth="10.0" prefWidth="296.0" />
+            <ColumnConstraints halignment="CENTER" maxWidth="214.0" minWidth="10.0" prefWidth="144.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="256.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="5.0" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="19.0" vgrow="ALWAYS" />
             <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
             <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -54,27 +61,33 @@
       <Button defaultButton="true" layoutX="734.0" layoutY="561.0" mnemonicParsing="false" onAction="#ok" text="Valider" />
       <Button fx:id="bCancel" cancelButton="true" layoutX="665.0" layoutY="561.0" mnemonicParsing="false" onAction="#cancel" text="Annuler" />
       <ImageView fitHeight="256.0" fitWidth="256.0" layoutX="14.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true" />
-      <GridPane layoutX="400.0" layoutY="10.0" prefHeight="285.0" prefWidth="384.0" style="-fx-border-color: gray; -fx-border-radius: 6;">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <Pane layoutX="10.0" layoutY="318.0" prefHeight="272.0" prefWidth="272.0" style="-fx-border-radius: 8; -fx-border-color: orange; -fx-border-width: 8;">
          <children>
-            <Label text="Priorité:" />
-            <Label text="Catégorie:" GridPane.rowIndex="1" />
-            <ComboBox fx:id="comboPriorite" GridPane.columnIndex="1" />
-            <ComboBox fx:id="comboCategorie" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label layoutX="34.0" layoutY="124.0" prefHeight="25.0" prefWidth="204.0" text="Cliquer ici pour ajouter une image" textFill="LIGHTBLUE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="photo" fitHeight="256.0" fitWidth="256.0" layoutX="8.0" layoutY="9.0" onMouseClicked="#clicPhoto" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 5; -fx-background-color: blue;" />
          </children>
-      </GridPane>
-      <ImageView fx:id="photo" fitHeight="256.0" fitWidth="256.0" layoutX="74.0" layoutY="305.0" onMouseClicked="#clicPhoto" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 5; -fx-background-color: blue;" />
-      <Button fx:id="bDocuments" layoutX="400.0" layoutY="318.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleDocuments" prefWidth="80.0" style="-fx-background-color: lightblue;" text="Documents" />
-      <Button fx:id="bLiens" layoutX="501.0" layoutY="318.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: orange;" text="Liens" />
-      <Button layoutX="614.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleGestion" prefHeight="25.0" prefWidth="80.0" text="Gestion" />
+      </Pane>
+      <Button fx:id="bDocuments" layoutX="400.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleDocuments" text="Documents" />
+      <Button fx:id="bLiens" layoutX="400.0" layoutY="358.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Liens" />
+      <Button layoutX="400.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleGestion" prefHeight="25.0" prefWidth="77.0" text="Gestion" />
+      <Label layoutX="484.0" layoutY="322.0" text="gestion des documents">
+         <font>
+            <Font name="Corbel Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="484.0" layoutY="362.0" text="liens entre les différentes entitées">
+         <font>
+            <Font name="Corbel Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="484.0" layoutY="404.0" text="gestion des tâches">
+         <font>
+            <Font name="Corbel Italic" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
