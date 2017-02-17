@@ -55,7 +55,6 @@ public class DocumentController implements Initializable
      @FXML
      private TextArea commentaire;
      
-     
      @FXML
      private Button bVoirFichier;
      @FXML
@@ -63,7 +62,7 @@ public class DocumentController implements Initializable
      @FXML
      private Button bConfirm;
      
-    // private ObservableList<DocumentModel> oDocuments;
+    private ObservableList<DocumentModel> oDocuments;
      
      private long personId = -1;
 
@@ -79,7 +78,7 @@ public class DocumentController implements Initializable
          if(personId < 0)
            return;
         // clear de la liste des documents
-        DocumentModel.oDocuments.clear();
+        oDocuments.clear();
          
            // chargement de la liste des documents attachés à la personne
        String sql = "select * from t_documents where ref_id_identity = ?";
@@ -97,13 +96,17 @@ public class DocumentController implements Initializable
                  model.setCommentaire(result.getString("commentaire"));
                  model.setFichier(result.getBlob("fichier"));
                  //oDocuments.add(model);
-                 DocumentModel.oDocuments.add(model);
+                 oDocuments.add(model);
              }
              
          } catch (SQLException ex) {
              Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
          }
        
+         // listener
+         ODocumentsChangeListener listener = new ODocumentsChangeListener(this.personId);
+         oDocuments.addListener(listener);
+         
     }
     
      @FXML
@@ -124,13 +127,8 @@ public class DocumentController implements Initializable
             if(result.get() == buttonNon)
                 return;
 
-            // suppression dans la base
-            String sql = "delete from t_documents where id = ?";
-            PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
-            st.setLong(1, model.getId());
-            st.execute();
             //
-            DocumentModel.oDocuments.remove(model);
+            oDocuments.remove(model);
             commentaire.setText("");
         }
     }
@@ -157,6 +155,7 @@ public class DocumentController implements Initializable
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/DocumentViewPackage/NewDocumentView.fxml"));
         AnchorPane pane = loader.load();  
         NewDocumentController controller = loader.getController();
+        controller.setoDocuments(oDocuments);
         controller.setId(personId);
         Scene scene = new Scene(pane);
         Stage stage = new Stage();
@@ -203,9 +202,9 @@ public class DocumentController implements Initializable
     public void initialize(URL url, ResourceBundle rb) 
     {
             // instance de oDocuments
-            //oDocuments = FXCollections.observableArrayList();
+            oDocuments = FXCollections.observableArrayList();
             // bind
-            listDocuments.setItems(DocumentModel.oDocuments);
+            listDocuments.setItems(oDocuments);
        
     }    
     

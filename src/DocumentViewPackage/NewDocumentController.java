@@ -15,6 +15,7 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
@@ -38,7 +39,7 @@ public class NewDocumentController implements Initializable
      
      private long id = -1;
      
-     
+      private ObservableList<DocumentModel> oDocuments;
      
     @Override
     public void initialize(URL location, ResourceBundle resources) 
@@ -73,21 +74,12 @@ public class NewDocumentController implements Initializable
     {
         if(id < 0)
             return;
-        
         DocumentModel model = new DocumentModel();
         model.setNom(titre.getText());
         model.setCommentaire(commentaire.getText());
         model.setFichier(documentBlob);
-        DocumentModel.oDocuments.add(model);
-        
-        // creation de la requete sql d'ajout
-        String sql = "insert into t_documents (nom,commentaire,fichier,ref_id_identity) values (?,?,?,?)";
-        PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
-        st.setString(1, titre.getText());
-        st.setString(2, commentaire.getText());
-        st.setBlob(3, documentBlob);
-        st.setLong(4, this.getId());
-        st.execute();
+        oDocuments.add(model);
+
         // hide de la vue
         titre.getScene().getWindow().hide();
     }
@@ -104,6 +96,14 @@ public class NewDocumentController implements Initializable
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public ObservableList<DocumentModel> getoDocuments() {
+        return oDocuments;
+    }
+
+    public void setoDocuments(ObservableList<DocumentModel> oDocuments) {
+        this.oDocuments = oDocuments;
     }
     
     

@@ -17,7 +17,7 @@ import javafx.collections.ObservableList;
  */
 public class DocumentModel extends Model
 {
-    public static ObservableList<DocumentModel> oDocuments = FXCollections.observableArrayList();
+  
 
     private final StringProperty nom = new SimpleStringProperty();
     private final StringProperty commentaire = new SimpleStringProperty();
