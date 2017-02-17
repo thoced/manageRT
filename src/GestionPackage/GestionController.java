@@ -20,6 +20,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,6 +68,8 @@ public class GestionController implements  Initializable {
     
     private TodoModel modelCurrent;
     
+    private ObservableList<TodoModel> oTodo;
+    
     private CommentaireChangeListener listener;
     /**
      * Initializes the controller class.
@@ -75,9 +79,9 @@ public class GestionController implements  Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-       
+            oTodo = FXCollections.observableArrayList();
             // bind de la l iste
-            tabTodo.setItems(TodoModel.oTodo);
+            tabTodo.setItems(oTodo);
             // bind des colonnes
             columnTodo.setCellValueFactory(cellData->cellData.getValue().titreProperty());
             columnDateCreation.setCellValueFactory(cellData->cellData.getValue().dateCreationProperty());
@@ -100,7 +104,7 @@ public class GestionController implements  Initializable {
     {
          // clear de la liste
         try{
-            TodoModel.oTodo.clear();
+            oTodo.clear();
             // chargement des valeurs depuis le model db
             String sql = "select * from t_todo where ref_id_identity = ?";
             PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
@@ -115,12 +119,17 @@ public class GestionController implements  Initializable {
                 model.setDateCreation(result.getDate("date_creation").toLocalDate());
                 model.setDateRappel(result.getDate("date_rappel").toLocalDate());
                 model.setRappel(result.getBoolean("rappel"));
-                TodoModel.oTodo.add(model);
+                oTodo.add(model);
             }
             
         } catch (SQLException ex) {
             Logger.getLogger(GestionController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        // listener
+        OTodoChangeListener listener = new OTodoChangeListener(this.getIdPerson());
+        oTodo.addListener(listener);
+        
     }
     
     
@@ -138,12 +147,15 @@ public class GestionController implements  Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 if(result.get() == bNon)
                     return;
-                String sql = "delete from t_todo where id = ?";
+               /* String sql = "delete from t_todo where id = ?";
                 PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
                 st.setLong(1, modelCurrent.getId());
-                st.execute();
+                st.execute();*/
+               
+                oTodo.remove(model);
+               
                 // rechargement des données
-                this.refreshData();
+                //this.refreshData();
 
         }
     }
@@ -156,6 +168,7 @@ public class GestionController implements  Initializable {
         AnchorPane anchor = loader.load();
         AjoutTodoController controller = loader.getController();
         controller.setIdPerson(idPerson);
+        controller.setoTodo(oTodo);
         Scene scene = new Scene(anchor);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);

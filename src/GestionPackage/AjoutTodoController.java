@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,6 +41,8 @@ public class AjoutTodoController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    private ObservableList<TodoModel> oTodo;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -62,20 +65,9 @@ public class AjoutTodoController implements Initializable {
         model.dateRappelProperty().bindBidirectional(datePicker.valueProperty());
         model.setDateCreation(LocalDate.now());
         model.rappelProperty().bind(rappel.selectedProperty());
-       
-        
-        // enregistrement sql
-        String sql = "insert into t_todo (ref_id_identity,titre,text,date_creation,date_rappel,rappel) values (?,?,?,?,?,?)";
-        PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
-        st.setLong(1, this.getIdPerson());
-        st.setString(2, model.getTitre());
-        st.setString(3, model.getText());
-        st.setDate(4, java.sql.Date.valueOf(model.getDateCreation()));
-        st.setDate(5,java.sql.Date.valueOf(model.getDateRappel()));
-        st.setBoolean(6, model.isRappel());
-        st.execute();
+
         // ajotu du model dans la liste
-        TodoModel.oTodo.add(model);
+        oTodo.add(model);
         titre.getScene().getWindow().hide();
     }
 
@@ -85,6 +77,10 @@ public class AjoutTodoController implements Initializable {
 
     public void setIdPerson(long idPerson) {
         this.idPerson = idPerson;
+    }
+
+    public void setoTodo(ObservableList<TodoModel> oTodo) {
+        this.oTodo = oTodo;
     }
     
 }

@@ -21,13 +21,15 @@ import javafx.collections.ObservableList;
  */
 public class TodoModel extends Model
 {
-    public static ObservableList<TodoModel> oTodo = FXCollections.observableArrayList();
     private final StringProperty text = new SimpleStringProperty();
     private final StringProperty titre = new SimpleStringProperty();
     private final ObjectProperty<LocalDate> dateRappel = new SimpleObjectProperty<>();
     private final ObjectProperty<LocalDate> dateCreation = new SimpleObjectProperty<>();
     private final BooleanProperty rappel = new SimpleBooleanProperty();
+  
 
+   
+    
     public boolean isRappel() {
         return rappel.get();
     }
