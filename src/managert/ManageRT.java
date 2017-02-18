@@ -87,6 +87,7 @@ public class ManageRT extends Application
             rootPane = FXMLLoader.load(getClass().getResource("MainView.fxml"));
             Scene scene = new Scene(rootPane);
             stage.setScene(scene);
+            stage.setMaximized(true);
             stage.show();
             // showtablepersonview
             this.ShowTablePersonView();
