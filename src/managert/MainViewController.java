@@ -6,6 +6,7 @@
 package managert;
 
 import Models.ConnectionSQL;
+import Models.DocumentModel;
 import Models.PersonModel;
 import PersonViewPackage.PersonController;
 import java.io.IOException;
@@ -21,6 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -31,6 +34,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
@@ -75,6 +79,10 @@ public class MainViewController implements Initializable {
     private Label labelVille;
     @FXML
     private ImageView photo;
+    
+    // Documents
+    @FXML
+    private ListView listDocuments;
     
     @FXML
     private void onNewIdentity(ActionEvent event) throws SQLException
@@ -230,6 +238,7 @@ public class MainViewController implements Initializable {
             }
             else
             {
+                // Information
                 labelNom.textProperty().bind(model.nomProperty());
                 labelPrenom.textProperty().bind(model.prenomProperty());
                 labelDateNaissance.textProperty().bind(new SimpleObjectProperty<String>(model.getDateNaissance().toString()));
@@ -245,6 +254,26 @@ public class MainViewController implements Initializable {
                 }
                 else
                     photo.setImage(null);
+                
+                // Documents
+                String sql = "select * from t_documents"
+                        + " where ref_id_identity = ?";
+                PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
+                st.setLong(1, model.getId());
+                ResultSet result = st.executeQuery();
+                
+                ObservableList<DocumentModel> oDocuments = FXCollections.observableArrayList();
+                
+                while(result.next())
+                {
+                 DocumentModel dModel = new DocumentModel();
+                 dModel.setId(result.getLong("id"));
+                 dModel.setNom(result.getString("nom"));
+                 dModel.setCommentaire(result.getString("commentaire"));
+                 dModel.setFichier(result.getBlob("fichier"));
+                 oDocuments.add(dModel);
+                }
+                listDocuments.setItems(oDocuments);
             }
         }
         
