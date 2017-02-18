@@ -50,9 +50,6 @@ public class ManageRT extends Application
 {
     private BorderPane rootPane;
     
-   private TablePersonController tpc;
-  
-    
     // class static de connection
     public static ConnectionSQL connectionSQL;
     
@@ -96,7 +93,7 @@ public class ManageRT extends Application
             stage.setMaximized(true);
             stage.show();
             // showtablepersonview
-            this.ShowTablePersonView();
+           
         }
         
           try {
@@ -109,7 +106,7 @@ public class ManageRT extends Application
             {
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Rappel de tâches");
-                alert.setContentText("Des tâches sont arrivées à échéances, voulez-vous voir un récapitulatif des tâches concernées ?");
+                alert.setContentText("Des tâches sont arrivées à échéance, voulez-vous voir un récapitulatif des tâches concernées ?");
                 ButtonType bOui = new ButtonType("Oui");
                 ButtonType bNon = new ButtonType("Non");
                 alert.getButtonTypes().setAll(bOui,bNon);
@@ -127,21 +124,7 @@ public class ManageRT extends Application
         }
     }
     
-    public void ShowTablePersonView() throws IOException
-    {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("TablePersonView.fxml"));
-        // chargement de la vue
-        BorderPane borderPane = loader.load();
-        // récupération du controller
-        TablePersonController tpc = loader.getController();
-
-        // set du borderPane dans le rootPane
-        rootPane.setCenter(borderPane);
-       
-        
-    }
-    
-
+   
     /**
      * @param args the command line arguments
      */
