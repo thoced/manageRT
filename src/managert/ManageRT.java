@@ -57,9 +57,7 @@ public class ManageRT extends Application
         {
             // creation de l'objet static
             connectionSQL = new ConnectionSQL();
-           
-         
-            
+             
         } catch (SQLException ex) {
             Logger.getLogger(ManageRT.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

@@ -10,6 +10,7 @@ import PersonViewPackage.PersonController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -29,17 +31,19 @@ import javafx.stage.Stage;
  */
 public class MainViewController implements Initializable {
     
-   
-    
     @FXML
     private void onNewIdentity(ActionEvent event) throws SQLException
     {
       // creation d'une nouvelle identité
        PersonModel model = new PersonModel();
+       model.setNom("Nouvelle personne");
+       model.setPrenom("Nouvelle personne");
+       model.setDateNaissance(LocalDate.now());
+       // ajout dans la list
+       PersonModel.listPerson.add(model);
       // insert tronk 
-       model.insert();
+      // model.insert();
        
-     
        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/PersonViewPackage/PersonView.fxml"));
               try 
@@ -47,15 +51,13 @@ public class MainViewController implements Initializable {
                   AnchorPane ap = loader.load();
                   // recuperation du controller
                   PersonController pc = loader.getController();
-                 
-                  if(model != null)
-                      model.select(model.getId());
                   // set du model
                   pc.setModel(model);
                   // création de la scene
                   Scene scene = new Scene(ap);
                   // creatin du stage
                   Stage stage = new Stage();
+                  stage.initModality(Modality.APPLICATION_MODAL);
                   // ajout de la scene au stage
                   stage.setScene(scene);
                   // affichage de la vue

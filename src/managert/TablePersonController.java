@@ -30,6 +30,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -107,6 +108,19 @@ public class TablePersonController implements Initializable, EventListener {
                 model.setPrenom(result.getString("prenom"));
                 model.setPriorite(result.getString("priorite"));
                 model.setCategorie(result.getString("categorie"));
+                model.setNom(result.getString("nom"));
+                model.setPrenom(result.getString("prenom"));
+                model.setNumNational(result.getString("num_national"));
+                java.sql.Date d = result.getDate("date_naissance");
+                model.setDateNaissance(d.toLocalDate());
+                model.setAdresse(result.getString("adresse"));
+                model.setNumero(result.getString("numero"));
+                model.setBoite(result.getString("boite"));
+                model.setVille(result.getString("ville"));
+                model.setCodePostal(result.getString("code_postal"));
+                model.setCategorie(result.getString("categorie"));
+                model.setPriorite(result.getString("priorite"));
+                model.setPhoto(result.getBlob("photo"));
                 // ajout dans le tableview
                 PersonModel.listPerson.add(model);
             }
@@ -114,13 +128,23 @@ public class TablePersonController implements Initializable, EventListener {
         } catch (SQLException ex) {
             Logger.getLogger(TablePersonController.class.getName()).log(Level.SEVERE, null, ex);
         } 
+        
+        // listener
+        TablePersonChangeListener listener = new TablePersonChangeListener();
+        PersonModel.listPerson.addListener(listener);
     }
     
     @FXML
     public void handleClic(Event event) throws SQLException
     {
-        if(event.getSource() == table)
+        if(event.getSource() == table )
         {
+            MouseEvent ev = (MouseEvent)event;
+            if(ev.getClickCount() < 2)
+                return;
+            
+            
+            
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/PersonViewPackage/PersonView.fxml"));
             try 
             {
@@ -129,8 +153,8 @@ public class TablePersonController implements Initializable, EventListener {
                 PersonController pc = loader.getController();
                 // récupération du model
                 PersonModel model = (PersonModel)((TableView)event.getSource()).getSelectionModel().getSelectedItem();
-                if(model != null)
-                    model.select(model.getId());
+                if(model == null)
+                    return;
                 // set du model
                 pc.setModel(model);
                 // création de la scene
@@ -145,8 +169,7 @@ public class TablePersonController implements Initializable, EventListener {
                 stage.setScene(scene);
                 // affichage de la vue
                 stage.showAndWait();
-                // select de la nouvelle vue
-                this.refreshView();
+              
                 
             } catch (IOException ex) {
                 Logger.getLogger(ManageRT.class.getName()).log(Level.SEVERE, null, ex);

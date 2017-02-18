@@ -21,6 +21,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -104,7 +105,7 @@ public class PersonController implements Initializable {
     public void initialize(URL url, ResourceBundle rb)
     {
         // modification de la couleur de fond du imageview
-      
+        dateNaissance.setValue(LocalDate.now());
         
        if(comboPriorite != null)
        {
@@ -157,7 +158,6 @@ public class PersonController implements Initializable {
     @FXML
     public void cancel(ActionEvent event)
     {
-
        if(anchor != null)
          anchor.getScene().getWindow().hide();
         
@@ -168,8 +168,6 @@ public class PersonController implements Initializable {
     {
         // enregistrement
        model.update();
-       // ajout dans la liste
-       PersonModel.listPerson.add(model);
       
        if(anchor != null)
            anchor.getScene().getWindow().hide();
