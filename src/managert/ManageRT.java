@@ -13,8 +13,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -26,6 +29,9 @@ import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
@@ -80,6 +86,8 @@ public class ManageRT extends Application
         st.initStyle(StageStyle.UNDECORATED);
         st.showAndWait();
         
+        
+        
         if(controller.isIsLogin()) // si la connexion est établie et acceptée
         {
             rootPane = FXMLLoader.load(getClass().getResource("MainView.fxml"));
@@ -89,6 +97,33 @@ public class ManageRT extends Application
             stage.show();
             // showtablepersonview
             this.ShowTablePersonView();
+        }
+        
+          try {
+            // recherche des todo de rappel
+            String sql = "select * from t_todo where DATE(NOW()) >= date_rappel AND rappel = true";
+            Statement stat = ConnectionSQL.getCon().createStatement();
+            ResultSet result = stat.executeQuery(sql);
+            result.last();
+            if(result.getRow() > 0)
+            {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Rappel de tâches");
+                alert.setContentText("Des tâches sont arrivées à échéances, voulez-vous voir un récapitulatif des tâches concernées ?");
+                ButtonType bOui = new ButtonType("Oui");
+                ButtonType bNon = new ButtonType("Non");
+                alert.getButtonTypes().setAll(bOui,bNon);
+                Optional<ButtonType> ret = alert.showAndWait();
+                if(ret.get() == bOui)
+                {
+                    
+                }
+                 
+            }
+           
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

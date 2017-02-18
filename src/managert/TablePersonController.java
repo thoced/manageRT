@@ -139,42 +139,46 @@ public class TablePersonController implements Initializable, EventListener {
     {
         if(event.getSource() == table )
         {
+            
+            PersonModel model = (PersonModel)((TableView)event.getSource()).getSelectionModel().getSelectedItem();
+            if(model == null)
+                   return;
+            
             MouseEvent ev = (MouseEvent)event;
-            if(ev.getClickCount() < 2)
-                return;
-            
-            
-            
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/PersonViewPackage/PersonView.fxml"));
-            try 
+            if(ev.getClickCount() > 1)
             {
-                AnchorPane ap = loader.load();
-                // recuperation du controller
-                PersonController pc = loader.getController();
-                // récupération du model
-                PersonModel model = (PersonModel)((TableView)event.getSource()).getSelectionModel().getSelectedItem();
-                if(model == null)
-                    return;
-                // set du model
-                pc.setModel(model);
-                // création de la scene
-                Scene scene = new Scene(ap);
-                // creatin du stage
-                Stage stage = new Stage();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setMaximized(false);
-                stage.setFullScreen(false);
-                stage.initStyle(StageStyle.UNIFIED);
-                // ajout de la scene au stage
-                stage.setScene(scene);
-                // affichage de la vue
-                stage.showAndWait();
-              
+            
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/PersonViewPackage/PersonView.fxml"));
+                try 
+                {
+                    AnchorPane ap = loader.load();
+                    // recuperation du controller
+                    PersonController pc = loader.getController();
+                    // set du model
+                    pc.setModel(model);
+                    // création de la scene
+                    Scene scene = new Scene(ap);
+                    // creatin du stage
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setMaximized(false);
+                    stage.setFullScreen(false);
+                    stage.initStyle(StageStyle.UNIFIED);
+                    // ajout de la scene au stage
+                    stage.setScene(scene);
+                    // affichage de la vue
+                    stage.showAndWait();
+
+
+                } catch (IOException ex) {
+                    Logger.getLogger(ManageRT.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (CloneNotSupportedException ex) {
+                    Logger.getLogger(ManageRT.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else
+            {
                 
-            } catch (IOException ex) {
-                Logger.getLogger(ManageRT.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(ManageRT.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
