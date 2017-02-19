@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DocumentViewPackage;
+package Models;
 
-import GestionPackage.OTodoChangeListener;
 import Models.ConnectionSQL;
 import Models.DocumentModel;
 import Models.TodoModel;
@@ -22,18 +21,24 @@ import javafx.collections.ListChangeListener;
 public class ODocumentsChangeListener implements ListChangeListener{
 
     private long idPerson;
+    
+    
 
     public ODocumentsChangeListener(long idPerson) 
     {
         this.idPerson = idPerson;
+        
+      
     }
+
     
     @Override
     public void onChanged(Change c) 
     {
+      
         while(c.next())
             {
-                if(c.wasAdded()) // si c'et ajouté
+                if(c.wasAdded()) // si c'est ajouté
                 {
                     for(Object m : c.getAddedSubList())
                     {

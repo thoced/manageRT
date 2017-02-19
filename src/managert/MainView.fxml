@@ -43,7 +43,7 @@
    <bottom>
       <TabPane>
          <tabs>
-            <Tab text="Information">
+            <Tab closable="false" text="Information">
                <content>
                   <TitledPane text="Information" BorderPane.alignment="CENTER">
                     <content>
@@ -115,7 +115,7 @@
                   </TitledPane>
                </content>
             </Tab>
-            <Tab text="Documents">
+            <Tab closable="false" text="Documents">
                <content>
                   <TitledPane alignment="TOP_LEFT" text="Documents" textAlignment="CENTER">
                     <content>
@@ -130,6 +130,22 @@
                     </content>
                   </TitledPane>
                </content>
+            </Tab>
+            <Tab closable="false" text="Tâches">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableTodos" layoutX="14.0" layoutY="3.0" prefHeight="200.0" prefWidth="491.0">
+                          <columns>
+                            <TableColumn fx:id="columnTitre" prefWidth="101.0" text="Titre" />
+                            <TableColumn fx:id="columnDateCreation" prefWidth="122.0" text="Date création" />
+                              <TableColumn fx:id="columnDateRappel" prefWidth="155.0" text="Date de rappel" />
+                              <TableColumn fx:id="columnRappel" prefWidth="75.0" text="Rappel" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
          </tabs>
       </TabPane>

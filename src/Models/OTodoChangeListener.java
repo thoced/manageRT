@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GestionPackage;
+package Models;
 
 import Models.ConnectionSQL;
 import Models.TodoModel;
@@ -24,12 +24,13 @@ public class OTodoChangeListener implements ListChangeListener{
 
     private long idPerson;
     
+ 
+    
     public OTodoChangeListener(long idPerson) 
     {
         this.idPerson = idPerson;
     }
 
-    
     
     @Override
     public void onChanged(Change c) 

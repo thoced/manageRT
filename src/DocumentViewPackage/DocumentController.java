@@ -5,6 +5,7 @@
  */
 package DocumentViewPackage;
 
+import ControllerInterface.Controller;
 import Models.ConnectionSQL;
 import Models.DocumentModel;
 import Models.PersonModel;
@@ -49,7 +50,7 @@ import javax.sql.rowset.serial.SerialBlob;
  *
  * @author Thonon
  */
-public class DocumentController implements Initializable 
+public class DocumentController extends Controller implements Initializable 
 {
      @FXML
      private ListView listDocuments;
@@ -67,33 +68,14 @@ public class DocumentController implements Initializable
      
      private long personId = -1;
      
-     private PersonModel model;
+    
 
     public void setPersonId(long id)
     {
         personId = id;
-        // chargement des données
-        this.refreshView();
-    }
-
-    public PersonModel getModel() {
-        return model;
-    }
-
-    public void setModel(PersonModel model) 
-    {
-        this.model = model;
-        
-        this.listDocuments.setItems(this.model.getoDocuments());
-    }
-  
-    
-    
-    private void refreshView()
-    {
        
-         
     }
+
     
      @FXML
     public void handleDeleteDocument() throws SQLException
@@ -114,7 +96,7 @@ public class DocumentController implements Initializable
                 return;
 
             //
-            oDocuments.remove(model);
+            this.model.getoDocuments().remove(model);
             commentaire.setText("");
         }
     }
@@ -141,8 +123,7 @@ public class DocumentController implements Initializable
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/DocumentViewPackage/NewDocumentView.fxml"));
         AnchorPane pane = loader.load();  
         NewDocumentController controller = loader.getController();
-        controller.setoDocuments(oDocuments);
-        controller.setId(personId);
+        controller.setModel(this.model);
         Scene scene = new Scene(pane);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -189,5 +170,19 @@ public class DocumentController implements Initializable
     {
          
     }    
+
+    @Override
+    public PersonModel getModel() 
+    {
+        return this.model;
+    }
+
+    @Override
+    public void setModel(PersonModel model) 
+    {
+      this.model = model;
+      
+      this.listDocuments.setItems(this.model.getoDocuments());
+    }
     
 }

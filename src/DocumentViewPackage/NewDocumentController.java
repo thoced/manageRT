@@ -5,8 +5,10 @@
  */
 package DocumentViewPackage;
 
+import ControllerInterface.Controller;
 import Models.ConnectionSQL;
 import Models.DocumentModel;
+import Models.PersonModel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,7 +29,7 @@ import javax.sql.rowset.serial.SerialBlob;
  *
  * @author Thonon
  */
-public class NewDocumentController implements Initializable 
+public class NewDocumentController extends Controller implements Initializable 
 {
      @FXML
      private TextField titre;
@@ -72,13 +74,12 @@ public class NewDocumentController implements Initializable
     @FXML
     public void handleValider() throws SQLException
     {
-        if(id < 0)
-            return;
+       
         DocumentModel model = new DocumentModel();
         model.setNom(titre.getText());
         model.setCommentaire(commentaire.getText());
         model.setFichier(documentBlob);
-        oDocuments.add(model);
+        this.model.getoDocuments().add(model);
 
         // hide de la vue
         titre.getScene().getWindow().hide();
@@ -104,6 +105,18 @@ public class NewDocumentController implements Initializable
 
     public void setoDocuments(ObservableList<DocumentModel> oDocuments) {
         this.oDocuments = oDocuments;
+    }
+
+    @Override
+    public PersonModel getModel() 
+    {
+        return this.model;
+    }
+
+    @Override
+    public void setModel(PersonModel model) 
+    {
+       this.model = model;
     }
     
     

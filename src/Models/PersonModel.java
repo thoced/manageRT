@@ -6,9 +6,7 @@
 package Models;
 
 import DocumentViewPackage.DocumentController;
-import DocumentViewPackage.ODocumentsChangeListener;
 import GestionPackage.GestionController;
-import GestionPackage.OTodoChangeListener;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Blob;
@@ -40,8 +38,11 @@ public class PersonModel extends Model implements IDataModel
    // public static  ObservableList<PersonModel> listPerson = FXCollections.observableArrayList();
     
     private ObservableList<DocumentModel> oDocuments;
-    
     private ObservableList<TodoModel> oTodos;
+    
+    // listener
+    private ODocumentsChangeListener listenerDocuments;
+    private OTodoChangeListener listenerTodos;
     
     private final StringProperty nom = new SimpleStringProperty();
     private final StringProperty prenom = new SimpleStringProperty();
@@ -76,7 +77,6 @@ public class PersonModel extends Model implements IDataModel
         this.oTodos = oTodos;
     }
 
-    
     
     public Blob getPhoto() {
         return photo;
@@ -203,10 +203,6 @@ public class PersonModel extends Model implements IDataModel
         return numNational;
     }
     
-    
-    
-    
-
     public String getNom() {
         return nom.get();
     }
@@ -218,11 +214,7 @@ public class PersonModel extends Model implements IDataModel
     public StringProperty nomProperty() {
         return nom;
     }
-    
-    
   
-    
-
     public String getPrenom() {
         return prenom.get();
     }
@@ -242,6 +234,7 @@ public class PersonModel extends Model implements IDataModel
       oDocuments = FXCollections.observableArrayList();
       
       oTodos = FXCollections.observableArrayList();
+
    }
      
    
@@ -358,6 +351,11 @@ public class PersonModel extends Model implements IDataModel
     @Override
     public void loadData() 
     {
+        if(listenerDocuments != null)
+            this.oDocuments.removeListener(listenerDocuments);
+        if(listenerTodos != null)
+            this.oTodos.removeListener(listenerTodos);
+        
         // Chargement de la liste des documents
          String sql = "select * from t_documents where ref_id_identity = ?";
          try 
@@ -410,9 +408,15 @@ public class PersonModel extends Model implements IDataModel
        // OTodoChangeListener listener = new OTodoChangeListener(this.getIdPerson());
         //oTodo.addListener(listener);
        
-         // listener
-         //ODocumentsChangeListener listener = new ODocumentsChangeListener(this.personId);
-         //oDocuments.addListener(listener);
+          //listener
+          if(listenerDocuments == null)
+             listenerDocuments = new ODocumentsChangeListener(this.getId());
+          
+          if(listenerTodos == null)
+              listenerTodos = new OTodoChangeListener(this.getId());
+          
+         oDocuments.addListener(listenerDocuments);
+         oTodos.addListener(listenerTodos);
     }
 
     @Override

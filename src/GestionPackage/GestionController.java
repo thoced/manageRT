@@ -5,6 +5,7 @@
  */
 package GestionPackage;
 
+import ControllerInterface.Controller;
 import Models.ConnectionSQL;
 import Models.PersonModel;
 import Models.TodoModel;
@@ -46,7 +47,7 @@ import javax.swing.event.ChangeListener;
  *
  * @author Thonon
  */
-public class GestionController implements  Initializable {
+public class GestionController extends Controller implements  Initializable {
 
     private long idPerson;
     @FXML
@@ -79,9 +80,8 @@ public class GestionController implements  Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-            oTodo = FXCollections.observableArrayList();
-            // bind de la l iste
-            tabTodo.setItems(oTodo);
+           
+          
             // bind des colonnes
             columnTodo.setCellValueFactory(cellData->cellData.getValue().titreProperty());
             columnDateCreation.setCellValueFactory(cellData->cellData.getValue().dateCreationProperty());
@@ -102,33 +102,7 @@ public class GestionController implements  Initializable {
      
     private void refreshData()
     {
-         // clear de la liste
-        try{
-            oTodo.clear();
-            // chargement des valeurs depuis le model db
-            String sql = "select * from t_todo where ref_id_identity = ?";
-            PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
-            st.setLong(1, this.getIdPerson());
-            ResultSet result = st.executeQuery();
-            while(result.next())
-            {
-                TodoModel model = new TodoModel();
-                model.setId(result.getLong("id"));
-                model.setTitre(result.getString("titre"));
-                model.setText(result.getString("text"));
-                model.setDateCreation(result.getDate("date_creation").toLocalDate());
-                model.setDateRappel(result.getDate("date_rappel").toLocalDate());
-                model.setRappel(result.getBoolean("rappel"));
-                oTodo.add(model);
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(GestionController.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
-        // listener
-        OTodoChangeListener listener = new OTodoChangeListener(this.getIdPerson());
-        oTodo.addListener(listener);
         
     }
     
@@ -202,7 +176,6 @@ public class GestionController implements  Initializable {
     public void handleValider()
     {
         
-        
         commentaire.getScene().getWindow().hide();
     }
     
@@ -213,6 +186,19 @@ public class GestionController implements  Initializable {
     public void setIdPerson(long idPerson) {
         this.idPerson = idPerson;
         this.refreshData();
+    }
+
+    @Override
+    public PersonModel getModel() 
+    {
+        return this.model;
+    }
+
+    @Override
+    public void setModel(PersonModel model) {
+       this.model = model;
+       
+       this.tabTodo.setItems(this.model.getoTodos());
     }
 
    

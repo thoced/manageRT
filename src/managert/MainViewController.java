@@ -5,10 +5,13 @@
  */
 package managert;
 
+import GestionPackage.DateRappelTableCell;
+import GestionPackage.RappelTableCell;
 import Models.ConnectionSQL;
 import Models.DataModel;
 import Models.DocumentModel;
 import Models.PersonModel;
+import Models.TodoModel;
 import PersonViewPackage.PersonController;
 import java.io.IOException;
 import java.net.URL;
@@ -86,6 +89,17 @@ public class MainViewController implements Initializable {
     // Documents
     @FXML
     private ListView listDocuments;
+    // Todos
+    @FXML
+    private TableView tableTodos;
+    @FXML
+    private TableColumn<TodoModel,String> columnTitre;
+    @FXML
+    private TableColumn<TodoModel,LocalDate> columnDateCreation;
+    @FXML
+    private TableColumn<TodoModel,LocalDate> columnDateRappel;
+    @FXML
+    private TableColumn<TodoModel,Boolean> columnRappel;
     
     @FXML
     private void onNewIdentity(ActionEvent event) throws SQLException
@@ -223,6 +237,16 @@ public class MainViewController implements Initializable {
                 
                // listedocuments
                 listDocuments.setItems(model.getoDocuments());
+                // listeTodos
+               // columnTodo.setCellValueFactory(cellData->cellData.getValue().titreProperty());
+                columnTitre.setCellValueFactory(cellData->cellData.getValue().titreProperty());
+                columnDateCreation.setCellValueFactory(cellData->cellData.getValue().dateCreationProperty());
+                columnDateRappel.setCellValueFactory(cellData->cellData.getValue().dateRappelProperty());
+                columnDateRappel.setCellFactory(a->new DateRappelTableCell());
+                columnRappel.setCellValueFactory(cellData->cellData.getValue().rappelProperty());
+                columnRappel.setCellFactory(a->new RappelTableCell());
+                tableTodos.setItems(model.getoTodos());
+                
             }
         }
         

@@ -177,7 +177,7 @@ public class PersonController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GestionPackage/GestionView.fxml"));
         AnchorPane pane = loader.load();
         GestionController controller = (GestionController)loader.getController();
-        controller.setIdPerson(model.getId());
+        controller.setModel(this.model);
         Scene scene = new Scene(pane);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
