@@ -5,10 +5,14 @@
  */
 package Models;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 /**
  *
@@ -22,9 +26,14 @@ public class ConnectionSQL
     private static String user = "paquot";
     private static String password = "paquotolivier";
     
-    public ConnectionSQL() throws SQLException, ClassNotFoundException
+    public ConnectionSQL() throws SQLException, ClassNotFoundException, FileNotFoundException, IOException
     {
-      
+      // chargement du fichier de configuration
+        Properties properties = new Properties();
+        FileInputStream input = new FileInputStream(System.getProperty("user.dir") + System.getProperty("file.separator") + "managertconfig" + System.getProperty("file.separator") + "managert.ini");
+        properties.load(input);
+        url = properties.getProperty("url_database");
+ 
     }
     
     public static void Connect() throws SQLException, ClassNotFoundException

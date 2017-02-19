@@ -65,6 +65,13 @@ public class ManageRT extends Application
             Logger.getLogger(ManageRT.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ManageRT.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) 
+        {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erreur I/O");
+            alert.setContentText("Erreur de chargement du fichier de configuration managert.ini (" + ex.getMessage());
+            alert.showAndWait();
+                    
         }
     }
     

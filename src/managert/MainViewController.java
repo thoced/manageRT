@@ -5,6 +5,8 @@
  */
 package managert;
 
+import DocumentViewPackage.DocumentController;
+import DocumentViewPackage.NewDocumentController;
 import GestionPackage.DateRappelTableCell;
 import GestionPackage.RappelTableCell;
 import Models.ConnectionSQL;
@@ -36,6 +38,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -56,6 +59,8 @@ import javafx.stage.StageStyle;
 public class MainViewController implements Initializable {
     
     public static DataModel dataModel = new DataModel();
+    
+    private PersonModel currentModel;
     
      @FXML
     private TableView table;
@@ -89,6 +94,12 @@ public class MainViewController implements Initializable {
     // Documents
     @FXML
     private ListView listDocuments;
+    @FXML
+    private Button bAjoutDocument;
+    @FXML
+    private Button bSuppressionDocument;
+    @FXML
+    private Button bVoirDocument;
     // Todos
     @FXML
     private TableView tableTodos;
@@ -100,7 +111,26 @@ public class MainViewController implements Initializable {
     private TableColumn<TodoModel,LocalDate> columnDateRappel;
     @FXML
     private TableColumn<TodoModel,Boolean> columnRappel;
+    @FXML
+    private Button bAjoutTodo;
+    @FXML
+    private Button bSuppressionDocumentTodo;
+  
+    @FXML
+    private void handleAjoutDocument(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/DocumentViewPackage/NewDocumentView.fxml"));
+        AnchorPane pane = loader.load();  
+        NewDocumentController controller = loader.getController();
+        controller.setModel(this.currentModel);
+        Scene scene = new Scene(pane);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
     
+   
     @FXML
     private void onNewIdentity(ActionEvent event) throws SQLException
     {
@@ -177,12 +207,12 @@ public class MainViewController implements Initializable {
         if(event.getSource() == table )
         {
             
-            PersonModel model = (PersonModel)((TableView)event.getSource()).getSelectionModel().getSelectedItem();
-            if(model == null)
+           currentModel = (PersonModel)((TableView)event.getSource()).getSelectionModel().getSelectedItem();
+            if(currentModel == null)
                    return;
             
             // chargement des données du model
-            model.loadData();
+            currentModel.loadData();
             
             MouseEvent ev = (MouseEvent)event;
             if(ev.getClickCount() > 1)
@@ -195,7 +225,7 @@ public class MainViewController implements Initializable {
                     // recuperation du controller
                     PersonController pc = loader.getController();
                     // set du model
-                    pc.setModel(model);
+                    pc.setModel(currentModel);
                     // création de la scene
                     Scene scene = new Scene(ap);
                     // creatin du stage
@@ -219,24 +249,24 @@ public class MainViewController implements Initializable {
             else
             {
                 // Information
-                labelNom.textProperty().bind(model.nomProperty());
-                labelPrenom.textProperty().bind(model.prenomProperty());
-                labelDateNaissance.textProperty().bind(new SimpleObjectProperty<String>(model.getDateNaissance().toString()));
-                labelAdresse.textProperty().bind(model.adresseProperty());
-                labelNumero.textProperty().bind(model.numeroProperty());
-                labelCodePostal.textProperty().bind(model.codePostalProperty());
-                labelVille.textProperty().bind(model.villeProperty());
+                labelNom.textProperty().bind(currentModel.nomProperty());
+                labelPrenom.textProperty().bind(currentModel.prenomProperty());
+                labelDateNaissance.textProperty().bind(new SimpleObjectProperty<String>(currentModel.getDateNaissance().toString()));
+                labelAdresse.textProperty().bind(currentModel.adresseProperty());
+                labelNumero.textProperty().bind(currentModel.numeroProperty());
+                labelCodePostal.textProperty().bind(currentModel.codePostalProperty());
+                labelVille.textProperty().bind(currentModel.villeProperty());
                // labelAdresse.setText(model.getAdresse() + " " + model.getNumero() + " à " + model.getCodePostal() + " " + model.getVille());
-                if(model.getPhoto() != null)
+                if(currentModel.getPhoto() != null)
                 {
-                    Image ima = new Image(model.getPhoto().getBinaryStream());
+                    Image ima = new Image(currentModel.getPhoto().getBinaryStream());
                     photo.setImage(ima);
                 }
                 else
                     photo.setImage(null);
                 
                // listedocuments
-                listDocuments.setItems(model.getoDocuments());
+                listDocuments.setItems(currentModel.getoDocuments());
                 // listeTodos
                // columnTodo.setCellValueFactory(cellData->cellData.getValue().titreProperty());
                 columnTitre.setCellValueFactory(cellData->cellData.getValue().titreProperty());
@@ -245,7 +275,7 @@ public class MainViewController implements Initializable {
                 columnDateRappel.setCellFactory(a->new DateRappelTableCell());
                 columnRappel.setCellValueFactory(cellData->cellData.getValue().rappelProperty());
                 columnRappel.setCellFactory(a->new RappelTableCell());
-                tableTodos.setItems(model.getoTodos());
+                tableTodos.setItems(currentModel.getoTodos());
                 
             }
         }
@@ -256,3 +286,4 @@ public class MainViewController implements Initializable {
 
     
 }
+  

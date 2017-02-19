@@ -71,7 +71,7 @@ public class LoginController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             isLogin = false;
-            messageError.setText("Le profil n'est pas accepté par le système, veuillez contacter l'administrateur");
+            messageError.setText("Le profil n'est pas accepté par le système, veuillez contacter l'administrateur (" + ex.getMessage() +")");
             
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);

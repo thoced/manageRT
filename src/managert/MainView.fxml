@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -121,9 +122,31 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <HBox alignment="CENTER_LEFT" layoutX="44.0" layoutY="40.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="14.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <ListView fx:id="listDocuments" prefHeight="161.0" prefWidth="500.0" />
+                                    <ListView fx:id="listDocuments" prefHeight="160.0" prefWidth="450.0" />
+                                    <VBox alignment="TOP_CENTER" prefHeight="142.0" prefWidth="98.0" spacing="8.0">
+                                       <children>
+                                          <Button fx:id="bAjoutDocument" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAjoutDocument" text="Ajouter">
+                                             <padding>
+                                                <Insets bottom="10.0" top="10.0" />
+                                             </padding>
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="bSuppressionDocument" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Supprimer">
+                                             <padding>
+                                                <Insets bottom="10.0" top="10.0" />
+                                             </padding>
+                                          </Button>
+                                          <Button fx:id="bVoirDocument" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Voir le document">
+                                             <padding>
+                                                <Insets bottom="10.0" top="10.0" />
+                                             </padding>
+                                          </Button>
+                                       </children>
+                                    </VBox>
                                  </children>
                               </HBox>
                            </children></AnchorPane>
@@ -133,18 +156,43 @@
             </Tab>
             <Tab closable="false" text="Tâches">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="tableTodos" layoutX="14.0" layoutY="3.0" prefHeight="200.0" prefWidth="491.0">
-                          <columns>
-                            <TableColumn fx:id="columnTitre" prefWidth="101.0" text="Titre" />
-                            <TableColumn fx:id="columnDateCreation" prefWidth="122.0" text="Date création" />
-                              <TableColumn fx:id="columnDateRappel" prefWidth="155.0" text="Date de rappel" />
-                              <TableColumn fx:id="columnRappel" prefWidth="75.0" text="Rappel" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
+                  <TitledPane text="Taches">
+                     <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="11.0" prefHeight="182.0" prefWidth="994.0">
+                                 <children>
+                                    <TableView fx:id="tableTodos" prefHeight="160.0" prefWidth="450.0">
+                                      <columns>
+                                        <TableColumn fx:id="columnTitre" prefWidth="101.0" text="Titre" />
+                                        <TableColumn fx:id="columnDateCreation" prefWidth="122.0" text="Date création" />
+                                          <TableColumn fx:id="columnDateRappel" prefWidth="155.0" text="Date de rappel" />
+                                          <TableColumn fx:id="columnRappel" prefWidth="75.0" text="Rappel" />
+                                      </columns>
+                                    </TableView>
+                                    <VBox alignment="TOP_CENTER" prefHeight="142.0" prefWidth="98.0" spacing="8.0">
+                                       <children>
+                                          <Button fx:id="bAjoutTodo" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Ajouter">
+                                             <padding>
+                                                <Insets bottom="10.0" top="10.0" />
+                                             </padding>
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="bSuppressionDocumentTodo" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Supprimer">
+                                             <padding>
+                                                <Insets bottom="10.0" top="10.0" />
+                                             </padding>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
               </content>
             </Tab>
          </tabs>

@@ -8,6 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DocumentViewPackage.NewDocumentController">
    <children>
+      <Pane focusTraversable="true" layoutX="47.0" layoutY="28.0" prefHeight="383.0" prefWidth="689.0" style="-fx-border-radius: 8; -fx-border-width: 8; -fx-border-color: lightblue;" />
       <Label layoutX="65.0" layoutY="64.0" text="Titre du document" />
       <TextField fx:id="titre" layoutX="184.0" layoutY="60.0" prefHeight="25.0" prefWidth="511.0" />
       <TextArea fx:id="commentaire" layoutX="185.0" layoutY="119.0" prefHeight="200.0" prefWidth="518.0" />  
