@@ -5,6 +5,10 @@
  */
 package Models;
 
+import DocumentViewPackage.DocumentController;
+import DocumentViewPackage.ODocumentsChangeListener;
+import GestionPackage.GestionController;
+import GestionPackage.OTodoChangeListener;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Blob;
@@ -31,9 +35,13 @@ import javafx.collections.ObservableList;
  *
  * @author Thonon
  */
-public class PersonModel extends Model implements ISQL
+public class PersonModel extends Model implements IDataModel
 {
-    public static  ObservableList<PersonModel> listPerson = FXCollections.observableArrayList();;
+   // public static  ObservableList<PersonModel> listPerson = FXCollections.observableArrayList();
+    
+    private ObservableList<DocumentModel> oDocuments;
+    
+    private ObservableList<TodoModel> oTodos;
     
     private final StringProperty nom = new SimpleStringProperty();
     private final StringProperty prenom = new SimpleStringProperty();
@@ -50,6 +58,26 @@ public class PersonModel extends Model implements ISQL
     private final ObjectProperty<LocalDate> dateNaissance = new SimpleObjectProperty<>();
     private Blob photo;
 
+    
+    
+    public ObservableList<DocumentModel> getoDocuments() {
+        return oDocuments;
+    }
+
+    public void setoDocuments(ObservableList<DocumentModel> oDocuments) {
+        this.oDocuments = oDocuments;
+    }
+
+    public ObservableList<TodoModel> getoTodos() {
+        return oTodos;
+    }
+
+    public void setoTodos(ObservableList<TodoModel> oTodos) {
+        this.oTodos = oTodos;
+    }
+
+    
+    
     public Blob getPhoto() {
         return photo;
     }
@@ -58,9 +86,7 @@ public class PersonModel extends Model implements ISQL
         this.photo = photo;
     }
     
-    
-    
-    public LocalDate getDateNaissance() {
+        public LocalDate getDateNaissance() {
         return dateNaissance.get();
     }
 
@@ -213,50 +239,13 @@ public class PersonModel extends Model implements ISQL
   
    public PersonModel()
    {
+      oDocuments = FXCollections.observableArrayList();
       
+      oTodos = FXCollections.observableArrayList();
    }
      
-    @Override
-    public void select(long id) 
-    {
-        String sql = "select * from t_identity where id = ?";
-        
-        PreparedStatement st;
-        try 
-        {
-            st = ConnectionSQL.getCon().prepareStatement(sql);
-            
-            st.setLong(1, id);
-            
-            ResultSet result = st.executeQuery();
-            result.first();
-            if(result != null)
-            {
-                this.setNom(result.getString("nom"));
-                this.setPrenom(result.getString("prenom"));
-                this.setNumNational(result.getString("num_national"));
-                java.sql.Date d = result.getDate("date_naissance");
-                this.setDateNaissance(d.toLocalDate());
-                this.setAdresse(result.getString("adresse"));
-                this.setNumero(result.getString("numero"));
-                this.setBoite(result.getString("boite"));
-                this.setVille(result.getString("ville"));
-                this.setCodePostal(result.getString("code_postal"));
-                this.setCategorie(result.getString("categorie"));
-                this.setPriorite(result.getString("priorite"));
-                this.setPhoto(result.getBlob("photo"));
-            }
-        }
-        catch(SQLException ex) 
-        {
-            
-        }
-       
-        
-    }
-
-  
-    @Override
+   
+    /*@Override
     public void insert() 
     {
          //String sql = "insert into t_identity (nom,prenom,date_naissance,sexe,adresse,num,commune,zipcode,categorie,priorite) values (?,?,?,?,?,?,?,?,?,?)";
@@ -300,8 +289,8 @@ public class PersonModel extends Model implements ISQL
         }
        
     }
-
-    @Override
+*/
+  /*  @Override
     public void update() 
     {
        String sql = "update t_identity set nom = ?,"
@@ -341,8 +330,8 @@ public class PersonModel extends Model implements ISQL
             Logger.getLogger(PersonModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    @Override
+*/
+  /*  @Override
     public void delete() 
     {
         try {
@@ -364,7 +353,73 @@ public class PersonModel extends Model implements ISQL
      
     }
 
- 
+ */
+
+    @Override
+    public void loadData() 
+    {
+        // Chargement de la liste des documents
+         String sql = "select * from t_documents where ref_id_identity = ?";
+         try 
+         {
+             // statement
+             PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
+             st.setLong(1, this.getId());
+             ResultSet result = st.executeQuery();
+             oDocuments.clear();
+             while(result.next())
+             {
+                 DocumentModel model = new DocumentModel();
+                 model.setId(result.getLong("id"));
+                 model.setNom(result.getString("nom"));
+                 model.setCommentaire(result.getString("commentaire"));
+                 model.setFichier(result.getBlob("fichier"));
+                 oDocuments.add(model);
+             }
+             
+         } catch (SQLException ex) {
+             Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         
+         // Chargement de la liste des ToDo
+         try{
+            
+            // chargement des valeurs depuis le model db
+            String sql2 = "select * from t_todo where ref_id_identity = ?";
+            PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql2);
+            st.setLong(1,this.getId());
+            ResultSet result = st.executeQuery();
+            oTodos.clear();
+            while(result.next())
+            {
+                TodoModel model = new TodoModel();
+                model.setId(result.getLong("id"));
+                model.setTitre(result.getString("titre"));
+                model.setText(result.getString("text"));
+                model.setDateCreation(result.getDate("date_creation").toLocalDate());
+                model.setDateRappel(result.getDate("date_rappel").toLocalDate());
+                model.setRappel(result.getBoolean("rappel"));
+                oTodos.add(model);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // listener
+       // OTodoChangeListener listener = new OTodoChangeListener(this.getIdPerson());
+        //oTodo.addListener(listener);
+       
+         // listener
+         //ODocumentsChangeListener listener = new ODocumentsChangeListener(this.personId);
+         //oDocuments.addListener(listener);
+    }
+
+    @Override
+    public void writeData() 
+    {
+       
+    }
    
     
 }

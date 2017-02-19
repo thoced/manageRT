@@ -7,6 +7,7 @@ package DocumentViewPackage;
 
 import Models.ConnectionSQL;
 import Models.DocumentModel;
+import Models.PersonModel;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -65,6 +66,8 @@ public class DocumentController implements Initializable
     private ObservableList<DocumentModel> oDocuments;
      
      private long personId = -1;
+     
+     private PersonModel model;
 
     public void setPersonId(long id)
     {
@@ -72,40 +75,23 @@ public class DocumentController implements Initializable
         // chargement des données
         this.refreshView();
     }
+
+    public PersonModel getModel() {
+        return model;
+    }
+
+    public void setModel(PersonModel model) 
+    {
+        this.model = model;
+        
+        this.listDocuments.setItems(this.model.getoDocuments());
+    }
   
+    
+    
     private void refreshView()
     {
-         if(personId < 0)
-           return;
-        // clear de la liste des documents
-        oDocuments.clear();
-         
-           // chargement de la liste des documents attachés à la personne
-       String sql = "select * from t_documents where ref_id_identity = ?";
-         try 
-         {
-             // statement
-             PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
-             st.setLong(1, personId);
-             ResultSet result = st.executeQuery();
-             while(result.next())
-             {
-                 DocumentModel model = new DocumentModel();
-                 model.setId(result.getLong("id"));
-                 model.setNom(result.getString("nom"));
-                 model.setCommentaire(result.getString("commentaire"));
-                 model.setFichier(result.getBlob("fichier"));
-                 //oDocuments.add(model);
-                 oDocuments.add(model);
-             }
-             
-         } catch (SQLException ex) {
-             Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
-         }
        
-         // listener
-         ODocumentsChangeListener listener = new ODocumentsChangeListener(this.personId);
-         oDocuments.addListener(listener);
          
     }
     
@@ -201,11 +187,7 @@ public class DocumentController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-            // instance de oDocuments
-            oDocuments = FXCollections.observableArrayList();
-            // bind
-            listDocuments.setItems(oDocuments);
-       
+         
     }    
     
 }

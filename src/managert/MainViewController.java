@@ -6,6 +6,7 @@
 package managert;
 
 import Models.ConnectionSQL;
+import Models.DataModel;
 import Models.DocumentModel;
 import Models.PersonModel;
 import PersonViewPackage.PersonController;
@@ -51,6 +52,8 @@ import javafx.stage.StageStyle;
  */
 public class MainViewController implements Initializable {
     
+    public static DataModel dataModel = new DataModel();
+    
      @FXML
     private TableView table;
     @FXML
@@ -93,7 +96,7 @@ public class MainViewController implements Initializable {
        model.setPrenom("Nouvelle personne");
        model.setDateNaissance(LocalDate.now());
        // ajout dans la list
-       PersonModel.listPerson.add(model);
+       dataModel.getoPersons().add(model);
       // insert tronk 
       // model.insert();
        
@@ -130,10 +133,11 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
+        dataModel.loadData();
         // instance de listPerson
         //listPerson = FXCollections.observableArrayList();
         // bind de listPerson avec la tableview
-        table.setItems(PersonModel.listPerson);
+        table.setItems(dataModel.getoPersons());
       
        // bind des colonnes
         nomColumn.setCellValueFactory(cellData->cellData.getValue().nomProperty());
@@ -150,48 +154,7 @@ public class MainViewController implements Initializable {
     
     public void refreshView()
     {
-        // clear du list person
-        PersonModel.listPerson.clear();
-        // requete sql de chargement de l'ensemble des personnes
-        String sql = "select * from t_identity";
-        try 
-        {
-            PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
-            
-            ResultSet result = st.executeQuery();
-            //result.first();
-            while(result.next())
-            {
-                PersonModel model = new PersonModel();
-                model.setId(result.getInt("id"));
-                model.setNom(result.getString("nom"));
-                model.setPrenom(result.getString("prenom"));
-                model.setPriorite(result.getString("priorite"));
-                model.setCategorie(result.getString("categorie"));
-                model.setNom(result.getString("nom"));
-                model.setPrenom(result.getString("prenom"));
-                model.setNumNational(result.getString("num_national"));
-                java.sql.Date d = result.getDate("date_naissance");
-                model.setDateNaissance(d.toLocalDate());
-                model.setAdresse(result.getString("adresse"));
-                model.setNumero(result.getString("numero"));
-                model.setBoite(result.getString("boite"));
-                model.setVille(result.getString("ville"));
-                model.setCodePostal(result.getString("code_postal"));
-                model.setCategorie(result.getString("categorie"));
-                model.setPriorite(result.getString("priorite"));
-                model.setPhoto(result.getBlob("photo"));
-                // ajout dans le tableview
-                PersonModel.listPerson.add(model);
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
-        // listener
-        TablePersonChangeListener listener = new TablePersonChangeListener();
-        PersonModel.listPerson.addListener(listener);
+      
     }
     
     @FXML
@@ -203,6 +166,9 @@ public class MainViewController implements Initializable {
             PersonModel model = (PersonModel)((TableView)event.getSource()).getSelectionModel().getSelectedItem();
             if(model == null)
                    return;
+            
+            // chargement des données du model
+            model.loadData();
             
             MouseEvent ev = (MouseEvent)event;
             if(ev.getClickCount() > 1)
@@ -255,25 +221,8 @@ public class MainViewController implements Initializable {
                 else
                     photo.setImage(null);
                 
-                // Documents
-                String sql = "select * from t_documents"
-                        + " where ref_id_identity = ?";
-                PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
-                st.setLong(1, model.getId());
-                ResultSet result = st.executeQuery();
-                
-                ObservableList<DocumentModel> oDocuments = FXCollections.observableArrayList();
-                
-                while(result.next())
-                {
-                 DocumentModel dModel = new DocumentModel();
-                 dModel.setId(result.getLong("id"));
-                 dModel.setNom(result.getString("nom"));
-                 dModel.setCommentaire(result.getString("commentaire"));
-                 dModel.setFichier(result.getBlob("fichier"));
-                 oDocuments.add(dModel);
-                }
-                listDocuments.setItems(oDocuments);
+               // listedocuments
+                listDocuments.setItems(model.getoDocuments());
             }
         }
         

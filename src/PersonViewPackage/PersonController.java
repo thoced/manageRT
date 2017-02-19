@@ -166,9 +166,7 @@ public class PersonController implements Initializable {
      @FXML
     public void ok(ActionEvent event)
     {
-        // enregistrement
-       model.update();
-      
+            
        if(anchor != null)
            anchor.getScene().getWindow().hide();
     }
@@ -193,7 +191,7 @@ public class PersonController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/DocumentViewPackage/DocumentView.fxml"));
         AnchorPane pane = loader.load();
         DocumentController controller = (DocumentController)loader.getController();
-        controller.setPersonId(model.getId());
+        controller.setModel(this.model);
         Scene scene = new Scene(pane);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
