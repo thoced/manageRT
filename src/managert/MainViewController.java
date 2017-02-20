@@ -44,6 +44,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -100,6 +101,9 @@ public class MainViewController implements Initializable {
     private Button bSuppressionDocument;
     @FXML
     private Button bVoirDocument;
+    @FXML
+    private TextArea areaCommentaire;
+    
     // Todos
     @FXML
     private TableView tableTodos;
@@ -116,6 +120,20 @@ public class MainViewController implements Initializable {
     @FXML
     private Button bSuppressionDocumentTodo;
   
+    private DocumentModel backDocument;
+    
+     @FXML
+    private void handleClicDocument() throws IOException
+    {
+      DocumentModel model = (DocumentModel) listDocuments.getSelectionModel().getSelectedItem();
+       
+      if(model != null)
+       {
+        areaCommentaire.textProperty().bind(model.commentaireProperty());
+       }
+      
+    }
+    
     @FXML
     private void handleAjoutDocument(ActionEvent event) throws IOException
     {
@@ -130,6 +148,27 @@ public class MainViewController implements Initializable {
         stage.showAndWait();
     }
     
+    @FXML
+    private void handleSuppressionDocument(ActionEvent event) throws IOException
+    {
+        DocumentModel model = (DocumentModel) listDocuments.getSelectionModel().getSelectedItem();
+        if(model != null)
+        {
+            // view de confirmation
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Suppression d'un document");
+            alert.setContentText("Etes-vous sûr de supprimer le document '" + model.getNom() + "' ?");
+            ButtonType buttonOui = new ButtonType("Oui");
+            ButtonType buttonNon = new ButtonType("Non");
+            alert.getButtonTypes().setAll(buttonNon,buttonOui);
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.get() == buttonNon)
+                return;
+
+            //
+            this.currentModel.getoDocuments().remove(model);
+         }
+    }
    
     @FXML
     private void onNewIdentity(ActionEvent event) throws SQLException
@@ -193,7 +232,11 @@ public class MainViewController implements Initializable {
         prioriteColumn.setCellFactory(a->new ProprieteTableCell());
       // categorieColumn.setCellFactory(tableCell->new ProprieteTableCell());
       // refresh view
-      this.refreshView();
+      
+     
+      
+     
+      
     }    
     
     public void refreshView()

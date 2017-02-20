@@ -31,16 +31,6 @@
         </menus>
       </MenuBar>
    </top>
-   <center>
-      <TableView fx:id="table" onMouseClicked="#handleClic" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn fx:id="nomColumn" prefWidth="197.0" text="Nom" />
-          <TableColumn fx:id="prenomColumn" minWidth="0.0" prefWidth="191.0" text="Prenom" />
-            <TableColumn fx:id="prioriteColumn" prefWidth="176.0" text="Priorité" />
-            <TableColumn fx:id="categorieColumn" prefWidth="242.0" text="Catégorie" />
-        </columns>
-      </TableView>
-   </center>
    <bottom>
       <TabPane>
          <tabs>
@@ -124,7 +114,7 @@
                            <children>
                               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="14.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <ListView fx:id="listDocuments" prefHeight="160.0" prefWidth="450.0" />
+                                    <ListView fx:id="listDocuments" onMousePressed="#handleClicDocument" prefHeight="160.0" prefWidth="450.0" />
                                     <VBox alignment="TOP_CENTER" prefHeight="142.0" prefWidth="98.0" spacing="8.0">
                                        <children>
                                           <Button fx:id="bAjoutDocument" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAjoutDocument" text="Ajouter">
@@ -135,7 +125,7 @@
                                                 <Insets />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="bSuppressionDocument" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Supprimer">
+                                          <Button fx:id="bSuppressionDocument" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSuppressionDocument" text="Supprimer">
                                              <padding>
                                                 <Insets bottom="10.0" top="10.0" />
                                              </padding>
@@ -147,6 +137,7 @@
                                           </Button>
                                        </children>
                                     </VBox>
+                                    <TextArea fx:id="areaCommentaire" prefHeight="161.0" prefWidth="446.0" />
                                  </children>
                               </HBox>
                            </children></AnchorPane>
@@ -198,4 +189,14 @@
          </tabs>
       </TabPane>
    </bottom>
+   <center>
+      <TableView fx:id="table" onMouseClicked="#handleClic" prefHeight="508.0" prefWidth="1026.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="nomColumn" prefWidth="197.0" text="Nom" />
+          <TableColumn fx:id="prenomColumn" minWidth="0.0" prefWidth="191.0" text="Prenom" />
+            <TableColumn fx:id="prioriteColumn" prefWidth="176.0" text="Priorité" />
+            <TableColumn fx:id="categorieColumn" prefWidth="242.0" text="Catégorie" />
+        </columns>
+      </TableView>
+   </center>
 </BorderPane>

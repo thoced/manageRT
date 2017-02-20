@@ -141,8 +141,7 @@ public class GestionController extends Controller implements  Initializable {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/GestionPackage/AjoutTodoView.fxml"));
         AnchorPane anchor = loader.load();
         AjoutTodoController controller = loader.getController();
-        controller.setIdPerson(idPerson);
-        controller.setoTodo(oTodo);
+        controller.setModel(this.model); 
         Scene scene = new Scene(anchor);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);

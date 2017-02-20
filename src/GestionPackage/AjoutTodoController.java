@@ -5,7 +5,9 @@
  */
 package GestionPackage;
 
+import ControllerInterface.Controller;
 import Models.ConnectionSQL;
+import Models.PersonModel;
 import Models.TodoModel;
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +29,7 @@ import javafx.scene.control.TextField;
  *
  * @author Thonon
  */
-public class AjoutTodoController implements Initializable {
+public class AjoutTodoController extends Controller implements Initializable {
 
     private long idPerson;
     @FXML
@@ -67,7 +69,7 @@ public class AjoutTodoController implements Initializable {
         model.rappelProperty().bind(rappel.selectedProperty());
 
         // ajotu du model dans la liste
-        oTodo.add(model);
+        this.model.getoTodos().add(model);
         titre.getScene().getWindow().hide();
     }
 
@@ -81,6 +83,17 @@ public class AjoutTodoController implements Initializable {
 
     public void setoTodo(ObservableList<TodoModel> oTodo) {
         this.oTodo = oTodo;
+    }
+
+    @Override
+    public PersonModel getModel() 
+    {
+        return this.model;
+    }
+
+    @Override
+    public void setModel(PersonModel model) {
+        this.model = model;
     }
     
 }
