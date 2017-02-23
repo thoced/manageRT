@@ -15,8 +15,10 @@ import Models.DocumentModel;
 import Models.PersonModel;
 import Models.TodoModel;
 import PersonViewPackage.PersonController;
+import UtilPackage.ViewPdfController;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -119,6 +121,7 @@ public class MainViewController implements Initializable {
     private Button bAjoutTodo;
     @FXML
     private Button bSuppressionDocumentTodo;
+   
   
     private DocumentModel backDocument;
     
@@ -130,8 +133,33 @@ public class MainViewController implements Initializable {
       if(model != null)
        {
         areaCommentaire.textProperty().bind(model.commentaireProperty());
+        // si le model ne possède pas de fichier pdf attaché, disable du bouton view document
+        if(model.getFichier() == null)
+            bVoirDocument.setDisable(true);
+        else
+            bVoirDocument.setDisable(false);
        }
       
+    }
+    
+      @FXML
+    private void handleViewDocument(ActionEvent event) throws IOException
+    {
+        DocumentModel model = (DocumentModel) listDocuments.getSelectionModel().getSelectedItem();
+        if(model != null)
+        {
+            Blob blob = model.getFichier();
+            if(blob != null)
+            {
+                try
+                {
+                    ViewPdfController vpc = new ViewPdfController(model.getNom(),model.getFichier());
+                    vpc.ShowPDFDocument();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
     
     @FXML

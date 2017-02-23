@@ -130,7 +130,7 @@
                                                 <Insets bottom="10.0" top="10.0" />
                                              </padding>
                                           </Button>
-                                          <Button fx:id="bVoirDocument" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Voir le document">
+                                          <Button fx:id="bVoirDocument" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleViewDocument" text="Voir le document">
                                              <padding>
                                                 <Insets bottom="10.0" top="10.0" />
                                              </padding>

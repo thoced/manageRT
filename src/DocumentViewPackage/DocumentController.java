@@ -9,6 +9,7 @@ import ControllerInterface.Controller;
 import Models.ConnectionSQL;
 import Models.DocumentModel;
 import Models.PersonModel;
+import UtilPackage.ViewPdfController;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -139,29 +140,8 @@ public class DocumentController extends Controller implements Initializable
         DocumentModel model = (DocumentModel) listDocuments.getSelectionModel().getSelectedItem();
         if(model != null && model.getFichier() != null)
         {
-           File temp = File.createTempFile(model.getNom() + new Date().getTime(), ".pdf");
-           temp.deleteOnExit();
-           FileOutputStream stream = new FileOutputStream(temp);
-           stream.write(model.getFichier().getBytes(1,(int)model.getFichier().length()));
-           stream.flush();
-           stream.close();
-          
-         if(System.getProperty("os.name").contains("Windows"))
-         {
-            Runtime runtime = Runtime.getRuntime();
-            String[] args = { "cmd.exe","/C", temp.getAbsolutePath() };
-            final Process process = runtime.exec(args);
-         }
-         else
-         {
-             if(System.getProperty("os.name").contains("Linux"))
-             {
-                 Runtime runtime = Runtime.getRuntime();
-                 String[] args = { "/bin/sh", "-c",temp.getAbsolutePath()  };
-                 final Process process = runtime.exec(args);
-             }
-
-         }
+          ViewPdfController vpc = new ViewPdfController(model.getNom(),model.getFichier());
+          vpc.ShowPDFDocument();
         }
     }
     
