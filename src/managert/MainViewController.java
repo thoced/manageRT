@@ -75,6 +75,8 @@ public class MainViewController implements Initializable {
     private TableColumn<PersonModel,String> prioriteColumn;
     @FXML
     private TableColumn<PersonModel,String> categorieColumn;
+    @FXML
+    private TableColumn<PersonModel,Boolean> evenementColumn;
     
     // information
     @FXML
@@ -122,6 +124,8 @@ public class MainViewController implements Initializable {
     @FXML
     private Button bSuppressionDocumentTodo;
    
+    // Evenement
+    
   
     private DocumentModel backDocument;
     
@@ -264,9 +268,11 @@ public class MainViewController implements Initializable {
         prenomColumn.setCellValueFactory(cellData->cellData.getValue().prenomProperty());
         prioriteColumn.setCellValueFactory(cellData->cellData.getValue().prioriteProperty());
         categorieColumn.setCellValueFactory(cellData->cellData.getValue().categorieProperty());
+        evenementColumn.setCellValueFactory(cellData->cellData.getValue().evenementRappelProperty());
        
         // tablecell 
         prioriteColumn.setCellFactory(a->new ProprieteTableCell());
+        evenementColumn.setCellFactory(a->new EvenementRappelTableCell());
       // categorieColumn.setCellFactory(tableCell->new ProprieteTableCell());
       // refresh view
       

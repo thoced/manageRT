@@ -66,6 +66,7 @@ public class DataModel implements IDataModel
                 model.setCodePostal(result.getString("code_postal"));
                 model.setCategorie(result.getString("categorie"));
                 model.setPriorite(result.getString("priorite"));
+                model.setEvenementRappel(result.getBoolean("evenement_rappel"));
                 model.setPhoto(result.getBlob("photo"));
                 // ajout dans le tableview
                 this.oPersons.add(model);

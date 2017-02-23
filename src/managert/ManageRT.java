@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -111,18 +112,17 @@ public class ManageRT extends Application
             result.last();
             if(result.getRow() > 0)
             {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Rappel de tâches");
-                alert.setContentText("Des tâches sont arrivées à échéance, voulez-vous voir un récapitulatif des tâches concernées ?");
-                ButtonType bOui = new ButtonType("Oui");
-                ButtonType bNon = new ButtonType("Non");
-                alert.getButtonTypes().setAll(bOui,bNon);
-                Optional<ButtonType> ret = alert.showAndWait();
-                if(ret.get() == bOui)
+               // si il existe des rappels, on modifie le flag evenentRappel dans les model PersonModel concernés
+                result.beforeFirst();
+                while(result.next())
                 {
-                    
+                    long id_person = result.getLong("ref_id_identity");
+                    // modification du flag
+                    String sqlPerson = "update t_identity set evenement_rappel = true where id = ?";
+                    PreparedStatement stPerson = ConnectionSQL.getCon().prepareStatement(sqlPerson);
+                    stPerson.setLong(1, id_person);
+                    stPerson.execute();
                 }
-                 
             }
            
             

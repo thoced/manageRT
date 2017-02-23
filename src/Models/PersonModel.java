@@ -58,6 +58,20 @@ public class PersonModel extends Model implements IDataModel
     private final StringProperty priorite = new SimpleStringProperty();
     private final ObjectProperty<LocalDate> dateNaissance = new SimpleObjectProperty<>();
     private Blob photo;
+    private final BooleanProperty evenementRappel = new SimpleBooleanProperty();
+
+    public boolean isEvenementRappel() {
+        return evenementRappel.get();
+    }
+
+    public void setEvenementRappel(boolean value) {
+        evenementRappel.set(value);
+    }
+
+    public BooleanProperty evenementRappelProperty() {
+        return evenementRappel;
+    }
+    
 
     
     
