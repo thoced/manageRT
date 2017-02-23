@@ -125,6 +125,13 @@ public class MainViewController implements Initializable {
   
     private DocumentModel backDocument;
     
+      @FXML
+    private void handleQuitter() throws IOException
+    {
+        // fermeture du programme
+        table.getScene().getWindow().hide();
+    }
+    
      @FXML
     private void handleClicDocument() throws IOException
     {
@@ -195,6 +202,8 @@ public class MainViewController implements Initializable {
 
             //
             this.currentModel.getoDocuments().remove(model);
+            areaCommentaire.setText("");
+            
          }
     }
    
