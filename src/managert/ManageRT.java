@@ -99,6 +99,7 @@ public class ManageRT extends Application
             Scene scene = new Scene(rootPane);
             stage.setScene(scene);
             stage.setMaximized(true);
+            stage.setTitle("Manager Radicalisme / Terrorisme");
             stage.show();
             // showtablepersonview
            

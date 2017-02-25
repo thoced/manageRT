@@ -55,8 +55,35 @@ public class PersonModel extends Model implements IDataModel
     private final StringProperty boite = new SimpleStringProperty();
     private final StringProperty ville = new SimpleStringProperty();
     private final StringProperty codePostal = new SimpleStringProperty();
-    private final StringProperty categorie = new SimpleStringProperty();
-    private final StringProperty priorite = new SimpleStringProperty();
+    private final ObjectProperty<CategorieModel> categorie = new SimpleObjectProperty<>();
+    private final ObjectProperty<PrioriteModel> priorite = new SimpleObjectProperty<>();
+
+    public CategorieModel getCategorie() {
+        return categorie.get();
+    }
+
+    public void setCategorie(CategorieModel value) {
+        categorie.set(value);
+    }
+
+    public ObjectProperty categorieProperty() {
+        return categorie;
+    }
+    
+
+    public PrioriteModel getPriorite() {
+        return priorite.get();
+    }
+
+    public void setPriorite(PrioriteModel value) {
+        priorite.set(value);
+    }
+
+    public ObjectProperty prioriteProperty() {
+        return priorite;
+    }
+    
+    
     private final ObjectProperty<LocalDate> dateNaissance = new SimpleObjectProperty<>();
     private Blob photo;
     private final BooleanProperty evenementRappel = new SimpleBooleanProperty();
@@ -113,33 +140,6 @@ public class PersonModel extends Model implements IDataModel
         return dateNaissance;
     }
 
-    
-    
-    public String getPriorite() {
-        return priorite.get();
-    }
-
-    public void setPriorite(String value) {
-        priorite.set(value);
-    }
-
-    public StringProperty prioriteProperty() {
-        return priorite;
-    }
-    
-
-    public String getCategorie() {
-        return categorie.get();
-    }
-
-    public void setCategorie(String value) {
-        categorie.set(value);
-    }
-
-    public StringProperty categorieProperty() {
-        return categorie;
-    }
-    
 
     public String getCodePostal() {
         return codePostal.get();
@@ -315,8 +315,8 @@ public class PersonModel extends Model implements IDataModel
                 this.setId(result.getInt("id"));
                 this.setNom(result.getString("nom"));
                 this.setPrenom(result.getString("prenom"));
-                this.setPriorite(result.getString("priorite"));
-                this.setCategorie(result.getString("categorie"));
+                this.setPriorite(new PrioriteModel(result.getString("priorite")));
+                this.setCategorie(new CategorieModel(result.getString("categorie")));
                 this.setNom(result.getString("nom"));
                 this.setPrenom(result.getString("prenom"));
                 this.setNumNational(result.getString("num_national"));
@@ -327,8 +327,8 @@ public class PersonModel extends Model implements IDataModel
                 this.setBoite(result.getString("boite"));
                 this.setVille(result.getString("ville"));
                 this.setCodePostal(result.getString("code_postal"));
-                this.setCategorie(result.getString("categorie"));
-                this.setPriorite(result.getString("priorite"));
+               // this.setCategorie(result.getString("categorie"));
+               // this.setPriorite(result.getString("priorite"));
                 this.setEvenementRappel(result.getBoolean("evenement_rappel"));
                 this.setPhoto(result.getBlob("photo"));
                 
@@ -368,8 +368,8 @@ public class PersonModel extends Model implements IDataModel
             st.setString(7, this.getBoite()); // boite
             st.setString(8, this.getVille()); // ville
             st.setString(9, this.getCodePostal()); // code_postal
-            st.setString(10, this.getCategorie()); // categorie
-            st.setString(11, this.getPriorite()); // priorite
+            st.setString(10, this.getCategorie().getType()); // categorie
+            st.setString(11, this.getPriorite().getType()); // priorite
             st.setBlob(12, this.getPhoto());
             st.setBoolean(13, this.isEvenementRappel());
             st.setLong(14, this.getId());

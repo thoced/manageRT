@@ -11,10 +11,12 @@ import GestionPackage.AjoutTodoController;
 import GestionPackage.DateRappelTableCell;
 import GestionPackage.RappelTableCell;
 import GestionPackage.RappelTableRow;
+import Models.CategorieModel;
 import Models.ConnectionSQL;
 import Models.DataModel;
 import Models.DocumentModel;
 import Models.PersonModel;
+import Models.PrioriteModel;
 import Models.TodoModel;
 import PersonViewPackage.PersonController;
 import UtilPackage.ViewPdfController;
@@ -77,9 +79,9 @@ public class MainViewController implements Initializable {
     @FXML
     private TableColumn<PersonModel,String> prenomColumn;
     @FXML
-    private TableColumn<PersonModel,String> prioriteColumn;
+    private TableColumn<PersonModel,PrioriteModel> prioriteColumn;
     @FXML
-    private TableColumn<PersonModel,String> categorieColumn;
+    private TableColumn<PersonModel,CategorieModel> categorieColumn;
     @FXML
     private TableColumn<PersonModel,Boolean> evenementColumn;
     

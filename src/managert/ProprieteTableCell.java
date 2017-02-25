@@ -6,6 +6,7 @@
 package managert;
 
 import Models.PersonModel;
+import Models.PrioriteModel;
 import javafx.scene.control.TableCell;
 import javafx.scene.paint.Color;
 
@@ -13,18 +14,18 @@ import javafx.scene.paint.Color;
  *
  * @author Thonon
  */
-public class ProprieteTableCell extends TableCell<PersonModel,String>
+public class ProprieteTableCell extends TableCell<PersonModel,PrioriteModel>
 {
 
     @Override
-    protected void updateItem(String item, boolean empty)
+    protected void updateItem(PrioriteModel item, boolean empty)
     {
         super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
 
         if(item != null)
         {
             String style;
-            switch(item)
+            switch(item.getType())
             {
                 // propriete
                 case "Surveillance normale": style = "-fx-background-color:lightblue";
@@ -38,7 +39,7 @@ public class ProprieteTableCell extends TableCell<PersonModel,String>
                 break;
  
             }
-            this.setText(item);
+            this.setText(item.getType());
             this.setStyle(style);
         }
 

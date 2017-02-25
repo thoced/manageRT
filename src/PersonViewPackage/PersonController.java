@@ -7,7 +7,9 @@ package PersonViewPackage;
 
 import DocumentViewPackage.DocumentController;
 import GestionPackage.GestionController;
+import Models.DataModel;
 import Models.PersonModel;
+import Models.PrioriteModel;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -25,6 +27,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -109,20 +112,23 @@ public class PersonController implements Initializable {
         
        if(comboPriorite != null)
        {
-           oListPriorite = FXCollections.observableArrayList();
+           /*oListPriorite = FXCollections.observableArrayList();
            oListPriorite.add("Surveillance normale");
            oListPriorite.add("Surveillance régulière");
            oListPriorite.add("Surveillance accrue");
-           comboPriorite.setItems(oListPriorite);
+           comboPriorite.setItems(oListPriorite);*/
+           
+           comboPriorite.setItems(DataModel.getoPriorites());
        }
        
        if(comboCategorie != null)
        {
-           oListCategorie = FXCollections.observableArrayList();
+          /* oListCategorie = FXCollections.observableArrayList();
            oListCategorie.add("Radicalisé");
            oListCategorie.add("Retour de zone de combat");
-           oListCategorie.add("Retour après refoulement");
-           comboCategorie.setItems(oListCategorie);
+           oListCategorie.add("Retour après refoulement");*/
+        
+           comboCategorie.setItems(DataModel.getoCategories());
        }
            
     
