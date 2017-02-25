@@ -24,7 +24,10 @@ import java.net.URLDecoder;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
@@ -36,9 +39,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.image.Image;
@@ -119,6 +124,7 @@ public class PersonController implements Initializable {
            comboPriorite.setItems(oListPriorite);*/
            
            comboPriorite.setItems(DataModel.getoPriorites());
+         
        }
        
        if(comboCategorie != null)
@@ -129,6 +135,7 @@ public class PersonController implements Initializable {
            oListCategorie.add("Retour après refoulement");*/
         
            comboCategorie.setItems(DataModel.getoCategories());
+          
        }
            
     
@@ -164,8 +171,15 @@ public class PersonController implements Initializable {
     @FXML
     public void cancel(ActionEvent event)
     {
-        // undo du PersonModel
-        this.model.undo();
+        try 
+        {
+            // undo du PersonModel
+            this.model.undo();
+            
+        } catch (SQLException | NullPointerException  ex)
+        {
+            Logger.getLogger(PersonController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
        if(anchor != null)
          anchor.getScene().getWindow().hide();
@@ -175,11 +189,24 @@ public class PersonController implements Initializable {
      @FXML
     public void ok(ActionEvent event)
     {
-        // modification du PersonModel
-       this.model.update();
-        
-       if(anchor != null)
+        try 
+        {
+          // modification du PersonModel
+          this.model.update();
+            
+          if(anchor != null)
            anchor.getScene().getWindow().hide();
+          
+        } catch (SQLException | NullPointerException  ex ) 
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setContentText("Sélectionnez une priorité et une catégorie");
+            alert.showAndWait();
+           
+        }
+        
+      
     }
 
      @FXML

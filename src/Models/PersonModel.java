@@ -298,13 +298,11 @@ public class PersonModel extends Model implements IDataModel
        
     }
 */
-   public void undo()
+   public void undo() throws SQLException, NullPointerException
    {
        String sql = "select * from t_identity where id = ?";
        
-       try 
-        {
-         
+       
             PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
             st.setLong(1, this.getId());
             ResultSet result = st.executeQuery();
@@ -332,13 +330,11 @@ public class PersonModel extends Model implements IDataModel
                 this.setEvenementRappel(result.getBoolean("evenement_rappel"));
                 this.setPhoto(result.getBlob("photo"));
                 
-            }
-                } catch (SQLException ex) {
-                    Logger.getLogger(DataModel.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
    }
    
-    public void update() 
+    public void update() throws SQLException,NullPointerException 
     {
        String sql = "update t_identity set nom = ?,"
                + "prenom = ?,"
@@ -356,8 +352,7 @@ public class PersonModel extends Model implements IDataModel
                
                + " where id = ?";
        
-        try 
-        {
+       
             PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
             st.setString(1, this.getNom()); // nom
             st.setString(2, this.getPrenom()); // prenom
@@ -376,9 +371,7 @@ public class PersonModel extends Model implements IDataModel
             
             // update
             st.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(PersonModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      
     }
 /*
   /*  @Override
