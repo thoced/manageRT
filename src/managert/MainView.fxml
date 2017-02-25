@@ -166,7 +166,7 @@
                                     </TableView>
                                     <VBox alignment="TOP_CENTER" prefHeight="182.0" prefWidth="100.0" spacing="8.0">
                                        <children>
-                                          <Button fx:id="bAjoutTodo" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Ajouter">
+                                          <Button fx:id="bAjoutTodo" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAjoutTodo" text="Ajouter">
                                              <padding>
                                                 <Insets bottom="10.0" top="10.0" />
                                              </padding>

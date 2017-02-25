@@ -7,6 +7,7 @@ package managert;
 
 import DocumentViewPackage.DocumentController;
 import DocumentViewPackage.NewDocumentController;
+import GestionPackage.AjoutTodoController;
 import GestionPackage.DateRappelTableCell;
 import GestionPackage.RappelTableCell;
 import GestionPackage.RappelTableRow;
@@ -153,14 +154,7 @@ public class MainViewController implements Initializable {
         areaTodoCommentaire.setText("");
           
     }
-    
-     @FXML
-    private void handleLostFocusTodo() throws IOException
-    {
-        areaTodoCommentaire.setText("");
-    }
-    
-    
+   
      @FXML
     private void handleClicDocument() throws IOException
     {
@@ -204,6 +198,20 @@ public class MainViewController implements Initializable {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/DocumentViewPackage/NewDocumentView.fxml"));
         AnchorPane pane = loader.load();  
         NewDocumentController controller = loader.getController();
+        controller.setModel(this.currentModel);
+        Scene scene = new Scene(pane);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+    
+     @FXML
+    private void handleAjoutTodo(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/GestionPackage/AjoutTodoView.fxml"));
+        AnchorPane pane = loader.load();  
+        AjoutTodoController controller = loader.getController();
         controller.setModel(this.currentModel);
         Scene scene = new Scene(pane);
         Stage stage = new Stage();
