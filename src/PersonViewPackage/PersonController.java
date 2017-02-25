@@ -158,6 +158,9 @@ public class PersonController implements Initializable {
     @FXML
     public void cancel(ActionEvent event)
     {
+        // undo du PersonModel
+        this.model.undo();
+        
        if(anchor != null)
          anchor.getScene().getWindow().hide();
         

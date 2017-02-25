@@ -13,6 +13,7 @@ import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.logging.Level;
@@ -297,6 +298,46 @@ public class PersonModel extends Model implements IDataModel
        
     }
 */
+   public void undo()
+   {
+       String sql = "select * from t_identity where id = ?";
+       
+       try 
+        {
+         
+            PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
+            st.setLong(1, this.getId());
+            ResultSet result = st.executeQuery();
+         
+            while(result.next())
+            {
+                PersonModel model = new PersonModel();
+                this.setId(result.getInt("id"));
+                this.setNom(result.getString("nom"));
+                this.setPrenom(result.getString("prenom"));
+                this.setPriorite(result.getString("priorite"));
+                this.setCategorie(result.getString("categorie"));
+                this.setNom(result.getString("nom"));
+                this.setPrenom(result.getString("prenom"));
+                this.setNumNational(result.getString("num_national"));
+                java.sql.Date d = result.getDate("date_naissance");
+                this.setDateNaissance(d.toLocalDate());
+                this.setAdresse(result.getString("adresse"));
+                this.setNumero(result.getString("numero"));
+                this.setBoite(result.getString("boite"));
+                this.setVille(result.getString("ville"));
+                this.setCodePostal(result.getString("code_postal"));
+                this.setCategorie(result.getString("categorie"));
+                this.setPriorite(result.getString("priorite"));
+                this.setEvenementRappel(result.getBoolean("evenement_rappel"));
+                this.setPhoto(result.getBlob("photo"));
+                
+            }
+                } catch (SQLException ex) {
+                    Logger.getLogger(DataModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
+   
     public void update() 
     {
        String sql = "update t_identity set nom = ?,"
