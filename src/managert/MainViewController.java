@@ -271,6 +271,27 @@ public class MainViewController implements Initializable {
          }
     }
    
+    @FXML
+    private void onDeleteIdentity(ActionEvent event) throws SQLException
+    {
+        PersonModel model = (PersonModel)table.getSelectionModel().getSelectedItem();
+        if(model != null)
+        {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Suppression d'une fiche personne");
+            alert.setContentText("Etes-vous sûr de supprimer la fiche personne '" + model.getNom() + " " + model.getPrenom() +  "' ?");
+            ButtonType buttonOui = new ButtonType("Oui");
+            ButtonType buttonNon = new ButtonType("Non");
+            alert.getButtonTypes().setAll(buttonNon,buttonOui);
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.get() == buttonNon)
+                return;
+            
+            // suppression de la fiche en cours dans l'observablelist
+            DataModel.getoPersons().remove(model);
+        }
+    }
+    
    
     @FXML
     private void onNewIdentity(ActionEvent event) throws SQLException
@@ -281,7 +302,7 @@ public class MainViewController implements Initializable {
        model.setPrenom("Nouvelle personne");
        model.setDateNaissance(LocalDate.now());
        // ajout dans la list
-       dataModel.getoPersons().add(model);
+       DataModel.getoPersons().add(model);
       // insert tronk 
       // model.insert();
        
@@ -380,7 +401,7 @@ public class MainViewController implements Initializable {
     @FXML
     public void handleClic(Event event) throws SQLException
     {
-        if(event.getSource() == table )
+        if(event.getSource() == table)
         {
             // disable du bouton ('voir document')
             bVoirDocument.setDisable(true);

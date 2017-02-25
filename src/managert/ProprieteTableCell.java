@@ -22,6 +22,9 @@ public class ProprieteTableCell extends TableCell<PersonModel,PrioriteModel>
     {
         super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
 
+        this.setText(null);
+        this.setStyle(null);
+        
         if(item != null)
         {
             String style;

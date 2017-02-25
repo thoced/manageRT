@@ -26,6 +26,22 @@ public class TablePersonChangeListener implements ListChangeListener
     {
        while(c.next())
        {
+           if(c.wasRemoved())
+           {
+               for(Object o : c.getRemoved())
+               {
+                   try {
+                       String sql = "delete from t_identity where id = ?";
+                       PreparedStatement ps = ConnectionSQL.getCon().prepareStatement(sql);
+                       ps.setLong(1, ((PersonModel)o).getId());
+                       ps.execute();
+                   } catch (SQLException ex) {
+                       Logger.getLogger(TablePersonChangeListener.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+                   
+               }
+           }
+           
            if(c.wasAdded())
            {
                for(Object o : c.getAddedSubList())

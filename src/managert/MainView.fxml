@@ -20,7 +20,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Gestion">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#onNewIdentity" text="Ajouter une nouvelle identité" />
+              <MenuItem mnemonicParsing="false" onAction="#onNewIdentity" text="Créer une nouvelle fiche personne" />
+                  <MenuItem mnemonicParsing="false" onAction="#onDeleteIdentity" text="Supprimer la fiche sélectionnée" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Aide">
