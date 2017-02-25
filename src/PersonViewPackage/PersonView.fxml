@@ -74,17 +74,5 @@
                </cursor></ImageView>
          </children>
       </Pane>
-      <Button fx:id="bDocuments" layoutX="400.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleDocuments" text="Documents" />
-      <Button layoutX="400.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleGestion" prefHeight="25.0" prefWidth="77.0" text="Gestion" />
-      <Label layoutX="484.0" layoutY="322.0" text="gestion des documents">
-         <font>
-            <Font name="Corbel Italic" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="484.0" layoutY="404.0" text="gestion des tâches">
-         <font>
-            <Font name="Corbel Italic" size="12.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>

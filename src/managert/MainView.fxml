@@ -174,7 +174,7 @@
                                                 <Insets />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="bSuppressionDocumentTodo" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Supprimer">
+                                          <Button fx:id="bSuppressionDocumentTodo" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSuppressionTodo" text="Supprimer">
                                              <padding>
                                                 <Insets bottom="10.0" top="10.0" />
                                              </padding>

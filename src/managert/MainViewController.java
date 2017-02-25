@@ -243,6 +243,32 @@ public class MainViewController implements Initializable {
             
          }
     }
+    
+      @FXML
+    private void handleSuppressionTodo(ActionEvent event) throws IOException
+    {
+        TodoModel model = (TodoModel) tableTodos.getSelectionModel().getSelectedItem();
+        if(model != null)
+        {
+            // view de confirmation
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Suppression d'une tâche");
+            alert.setContentText("Etes-vous sûr de supprimer la tâche '" + model.getTitre() + "' ?");
+            ButtonType buttonOui = new ButtonType("Oui");
+            ButtonType buttonNon = new ButtonType("Non");
+            alert.getButtonTypes().setAll(buttonNon,buttonOui);
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.get() == buttonNon)
+                return;
+
+            //
+            this.currentModel.getoTodos().remove(model);
+            areaTodoCommentaire.textProperty().unbind();
+            areaTodoCommentaire.setText("");
+            
+         }
+    }
+   
    
     @FXML
     private void onNewIdentity(ActionEvent event) throws SQLException
@@ -312,10 +338,36 @@ public class MainViewController implements Initializable {
         tableTodos.setRowFactory(a->new RappelTableRow());
       
     
-    
-             
-     
-      
+      // listener de perte de focus
+           
+            listDocuments.itemsProperty().addListener(new ChangeListener() 
+            {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) 
+            {
+                if(listDocuments.getSelectionModel().isEmpty())
+                {
+                    areaCommentaire.textProperty().unbind();
+                    areaCommentaire.setText("");
+                }
+            }
+        });
+            
+            
+            tableTodos.itemsProperty().addListener(new ChangeListener() 
+            {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) 
+            {
+                if(tableTodos.getSelectionModel().isEmpty())
+                {
+                    areaTodoCommentaire.textProperty().unbind();
+                    areaTodoCommentaire.setText("");
+                }
+            }
+        });
+           
+                  
     }    
     
     public void refreshView()
@@ -392,7 +444,6 @@ public class MainViewController implements Initializable {
                // listedocuments
                 listDocuments.setItems(currentModel.getoDocuments());
                 // listeTodos
-               // columnTodo.setCellValueFactory(cellData->cellData.getValue().titreProperty());
                 columnTitre.setCellValueFactory(cellData->cellData.getValue().titreProperty());
                 columnDateCreation.setCellValueFactory(cellData->cellData.getValue().dateCreationProperty());
                 columnDateRappel.setCellValueFactory(cellData->cellData.getValue().dateRappelProperty());
