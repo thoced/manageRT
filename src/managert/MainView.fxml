@@ -115,7 +115,7 @@
                               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="14.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <ListView fx:id="listDocuments" onMousePressed="#handleClicDocument" prefHeight="160.0" prefWidth="450.0" />
-                                    <VBox alignment="TOP_CENTER" prefHeight="142.0" prefWidth="98.0" spacing="8.0">
+                                    <VBox alignment="TOP_CENTER" prefHeight="142.0" prefWidth="100.0" spacing="8.0">
                                        <children>
                                           <Button fx:id="bAjoutDocument" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAjoutDocument" text="Ajouter">
                                              <padding>
@@ -130,12 +130,15 @@
                                                 <Insets bottom="10.0" top="10.0" />
                                              </padding>
                                           </Button>
-                                          <Button fx:id="bVoirDocument" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleViewDocument" text="Voir le document">
+                                          <Button fx:id="bVoirDocument" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleViewDocument" text="Voir Doc">
                                              <padding>
                                                 <Insets bottom="10.0" top="10.0" />
                                              </padding>
                                           </Button>
                                        </children>
+                                       <padding>
+                                          <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                       </padding>
                                     </VBox>
                                     <TextArea fx:id="areaCommentaire" prefHeight="161.0" prefWidth="446.0" />
                                  </children>
@@ -153,15 +156,15 @@
                            <children>
                               <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="11.0" prefHeight="182.0" prefWidth="994.0">
                                  <children>
-                                    <TableView fx:id="tableTodos" prefHeight="160.0" prefWidth="450.0">
+                                    <TableView fx:id="tableTodos" onMouseClicked="#handleClicTodo" prefHeight="182.0" prefWidth="593.0">
                                       <columns>
-                                        <TableColumn fx:id="columnTitre" prefWidth="101.0" text="Titre" />
-                                        <TableColumn fx:id="columnDateCreation" prefWidth="122.0" text="Date création" />
-                                          <TableColumn fx:id="columnDateRappel" prefWidth="155.0" text="Date de rappel" />
-                                          <TableColumn fx:id="columnRappel" prefWidth="75.0" text="Rappel" />
+                                        <TableColumn fx:id="columnTitre" prefWidth="249.0" text="Titre" />
+                                        <TableColumn fx:id="columnDateCreation" prefWidth="148.0" text="Date création" />
+                                          <TableColumn fx:id="columnDateRappel" prefWidth="126.0" text="Date de rappel" />
+                                          <TableColumn fx:id="columnRappel" minWidth="4.0" prefWidth="63.0" text="Rappel" />
                                       </columns>
                                     </TableView>
-                                    <VBox alignment="TOP_CENTER" prefHeight="142.0" prefWidth="98.0" spacing="8.0">
+                                    <VBox alignment="TOP_CENTER" prefHeight="182.0" prefWidth="100.0" spacing="8.0">
                                        <children>
                                           <Button fx:id="bAjoutTodo" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Ajouter">
                                              <padding>
@@ -177,7 +180,11 @@
                                              </padding>
                                           </Button>
                                        </children>
+                                       <padding>
+                                          <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                       </padding>
                                     </VBox>
+                                    <TextArea fx:id="areaTodoCommentaire" prefHeight="86.0" prefWidth="315.0" />
                                  </children>
                               </HBox>
                            </children>

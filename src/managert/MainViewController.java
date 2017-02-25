@@ -31,6 +31,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -55,6 +57,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 
 /**
  *
@@ -121,6 +124,8 @@ public class MainViewController implements Initializable {
     @FXML
     private TableColumn<TodoModel,Boolean> columnRappel;
     @FXML
+    private TextArea areaTodoCommentaire;
+    @FXML
     private Button bAjoutTodo;
     @FXML
     private Button bSuppressionDocumentTodo;
@@ -136,6 +141,25 @@ public class MainViewController implements Initializable {
         // fermeture du programme
         table.getScene().getWindow().hide();
     }
+    
+    @FXML
+    private void handleClicTodo() throws IOException
+    {
+      TodoModel model = (TodoModel) tableTodos.getSelectionModel().getSelectedItem();
+       
+      if(model != null)
+        areaTodoCommentaire.textProperty().bind(model.textProperty());
+       else
+        areaTodoCommentaire.setText("");
+          
+    }
+    
+     @FXML
+    private void handleLostFocusTodo() throws IOException
+    {
+        areaTodoCommentaire.setText("");
+    }
+    
     
      @FXML
     private void handleClicDocument() throws IOException
@@ -263,9 +287,7 @@ public class MainViewController implements Initializable {
         //listPerson = FXCollections.observableArrayList();
         // bind de listPerson avec la tableview
         table.setItems(dataModel.getoPersons());
-        
-      
-      
+
        // bind des colonnes
         nomColumn.setCellValueFactory(cellData->cellData.getValue().nomProperty());
         prenomColumn.setCellValueFactory(cellData->cellData.getValue().prenomProperty());
@@ -281,8 +303,9 @@ public class MainViewController implements Initializable {
       // ajout callback à la table todo
         tableTodos.setRowFactory(a->new RappelTableRow());
       
-     
-      
+    
+    
+             
      
       
     }    
@@ -297,6 +320,8 @@ public class MainViewController implements Initializable {
     {
         if(event.getSource() == table )
         {
+            // disable du bouton ('voir document')
+            bVoirDocument.setDisable(true);
             
            currentModel = (PersonModel)((TableView)event.getSource()).getSelectionModel().getSelectedItem();
             if(currentModel == null)
