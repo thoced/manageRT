@@ -20,19 +20,19 @@ import javafx.collections.ObservableList;
 public class DataModel implements IDataModel
 {
     // liste des personnes
-    private static ObservableList<PersonModel> oPersons;
+    private static ObservableList<PersonModel> oPersons  = FXCollections.observableArrayList();;
     private OPersonChangeListener listenerPersons; 
     
     // liste des types de priorité
-    private static ObservableList<PrioriteModel> oPriorites;
+    private static ObservableList<PrioriteModel> oPriorites = FXCollections.observableArrayList();;
     // liste des types de catégorie
-    private static ObservableList<CategorieModel> oCategories;
+    private static ObservableList<CategorieModel> oCategories = FXCollections.observableArrayList();;
 
     public DataModel() 
     {
-        oPersons = FXCollections.observableArrayList();
+        /*oPersons = FXCollections.observableArrayList();
         oPriorites = FXCollections.observableArrayList();
-        oCategories = FXCollections.observableArrayList();
+        oCategories = FXCollections.observableArrayList();*/
         
     }
 
@@ -54,12 +54,12 @@ public class DataModel implements IDataModel
 
     
     
-    public ObservableList<PersonModel> getoPersons() {
+    public static ObservableList<PersonModel> getoPersons() {
         return oPersons;
     }
 
-    public void setoPersons(ObservableList<PersonModel> oPersons) {
-        this.oPersons = oPersons;
+    public static void setoPersons(ObservableList<PersonModel> oPersons) {
+        oPersons = oPersons;
     }
     
 

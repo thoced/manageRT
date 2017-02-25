@@ -5,6 +5,7 @@
  */
 package GestionPackage;
 
+import Models.DataModel;
 import Models.TodoModel;
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
@@ -26,10 +27,9 @@ public class RappelTableRow extends TableRow<TodoModel>
         {
             if(item.isRappel())
             {
-                if(item.getDateRappel().isBefore((ChronoLocalDate)LocalDate.now()))
+                if(item.getDateRappel().isEqual((ChronoLocalDate)LocalDate.now()) || item.getDateRappel().isBefore((ChronoLocalDate)LocalDate.now()))
                 {
-                 this.setStyle("-fx-background-color:lightgreen");
-                 
+                 this.setStyle("-fx-background-color:lightgreen"); 
                 }
                 else
                   this.setStyle(null);
