@@ -91,6 +91,9 @@ public class GestionController extends Controller implements  Initializable {
             columnRappel.setCellFactory(a->new RappelTableCell());
             columnDateRappel.setCellFactory(a->new DateRappelTableCell());
             
+            // ajout du callback tablerow sur la table todo pour changer la couleur en fonction d'un rappel
+            tabTodo.setRowFactory(a->new RappelTableRow());
+            
             
             // listener d'enregistrement automatique sur la perte du focus
             listener = new CommentaireChangeListener();

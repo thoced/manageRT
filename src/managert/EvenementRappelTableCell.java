@@ -19,10 +19,12 @@ public class EvenementRappelTableCell extends TableCell<PersonModel,Boolean>
     protected void updateItem(Boolean item, boolean empty) 
     {
         super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+        this.setText("");
+        this.setStyle("null");
         
         if(item != null)
         {
-            this.setText("");
+           
             if(item.booleanValue())
             {
                 this.setText("RAPPEL !!!");

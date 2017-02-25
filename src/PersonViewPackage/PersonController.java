@@ -166,7 +166,9 @@ public class PersonController implements Initializable {
      @FXML
     public void ok(ActionEvent event)
     {
-            
+        // modification du PersonModel
+       this.model.update();
+        
        if(anchor != null)
            anchor.getScene().getWindow().hide();
     }

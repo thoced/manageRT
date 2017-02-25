@@ -21,6 +21,8 @@ public class DataModel implements IDataModel
 {
     // liste des personnes
     private ObservableList<PersonModel> oPersons;
+    
+    private OPersonChangeListener listenerPersons; 
 
     public DataModel() 
     {
@@ -40,6 +42,9 @@ public class DataModel implements IDataModel
     @Override
     public void loadData() 
     {
+        if(listenerPersons != null)
+            this.oPersons.removeListener(listenerPersons);
+        
         try 
         {
             String sql = "select * from t_identity";
@@ -74,6 +79,14 @@ public class DataModel implements IDataModel
         } catch (SQLException ex) {
             Logger.getLogger(DataModel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        if(listenerPersons == null)
+            listenerPersons = new OPersonChangeListener();
+        
+        // ajout du listener 
+        this.oPersons.addListener(listenerPersons);
+        
+        
     }
 
     @Override

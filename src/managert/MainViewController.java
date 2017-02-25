@@ -9,6 +9,7 @@ import DocumentViewPackage.DocumentController;
 import DocumentViewPackage.NewDocumentController;
 import GestionPackage.DateRappelTableCell;
 import GestionPackage.RappelTableCell;
+import GestionPackage.RappelTableRow;
 import Models.ConnectionSQL;
 import Models.DataModel;
 import Models.DocumentModel;
@@ -262,6 +263,8 @@ public class MainViewController implements Initializable {
         //listPerson = FXCollections.observableArrayList();
         // bind de listPerson avec la tableview
         table.setItems(dataModel.getoPersons());
+        
+      
       
        // bind des colonnes
         nomColumn.setCellValueFactory(cellData->cellData.getValue().nomProperty());
@@ -275,6 +278,8 @@ public class MainViewController implements Initializable {
         evenementColumn.setCellFactory(a->new EvenementRappelTableCell());
       // categorieColumn.setCellFactory(tableCell->new ProprieteTableCell());
       // refresh view
+      // ajout callback à la table todo
+        tableTodos.setRowFactory(a->new RappelTableRow());
       
      
       

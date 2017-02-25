@@ -297,7 +297,6 @@ public class PersonModel extends Model implements IDataModel
        
     }
 */
-  /*  @Override
     public void update() 
     {
        String sql = "update t_identity set nom = ?,"
@@ -311,7 +310,9 @@ public class PersonModel extends Model implements IDataModel
                + "code_postal = ?,"
                + "categorie = ?,"
                + "priorite = ?,"
-               + "photo = ?"
+               + "photo = ?,"
+               + "evenement_rappel = ?"
+               
                + " where id = ?";
        
         try 
@@ -329,7 +330,8 @@ public class PersonModel extends Model implements IDataModel
             st.setString(10, this.getCategorie()); // categorie
             st.setString(11, this.getPriorite()); // priorite
             st.setBlob(12, this.getPhoto());
-            st.setLong(13, this.getId());
+            st.setBoolean(13, this.isEvenementRappel());
+            st.setLong(14, this.getId());
             
             // update
             st.execute();
@@ -337,7 +339,7 @@ public class PersonModel extends Model implements IDataModel
             Logger.getLogger(PersonModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-*/
+/*
   /*  @Override
     public void delete() 
     {
@@ -360,8 +362,9 @@ public class PersonModel extends Model implements IDataModel
      
     }
 
- */
+ 
 
+*/
     @Override
     public void loadData() 
     {
@@ -431,6 +434,7 @@ public class PersonModel extends Model implements IDataModel
           
          oDocuments.addListener(listenerDocuments);
          oTodos.addListener(listenerTodos);
+         
     }
 
     @Override
