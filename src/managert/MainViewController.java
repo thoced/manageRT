@@ -205,6 +205,7 @@ public class MainViewController implements Initializable {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
+        stage.setTitle("Création d'un document");
         stage.showAndWait();
     }
     
@@ -219,6 +220,7 @@ public class MainViewController implements Initializable {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
+        stage.setTitle("Créatio d'une tâche");
         stage.showAndWait();
     }
     
