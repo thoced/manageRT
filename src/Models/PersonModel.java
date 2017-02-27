@@ -425,10 +425,15 @@ public class PersonModel extends Model implements IDataModel
                  model.setFichier(result.getBlob("fichier"));
                  oDocuments.add(model);
              }
+             // fermeture
+             st.close();
              
-         } catch (SQLException ex) {
+         } catch (SQLException ex) 
+         {
              Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            
          }
+         
          
          // Chargement de la liste des ToDo
          try{
@@ -450,6 +455,8 @@ public class PersonModel extends Model implements IDataModel
                 model.setRappel(result.getBoolean("rappel"));
                 oTodos.add(model);
             }
+            // fermeture
+            st.close();
             
         } catch (SQLException ex) {
             Logger.getLogger(GestionController.class.getName()).log(Level.SEVERE, null, ex);

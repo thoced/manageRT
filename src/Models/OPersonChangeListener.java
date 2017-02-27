@@ -35,6 +35,7 @@ public class OPersonChangeListener  implements ListChangeListener{
                             PreparedStatement ps = ConnectionSQL.getCon().prepareStatement(sql);
                             ps.setLong(1, ((PersonModel)o).getId());
                             ps.execute();
+                            ps.close();
                         } catch (SQLException ex) {
                             Logger.getLogger(TablePersonChangeListener.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -82,6 +83,8 @@ public class OPersonChangeListener  implements ListChangeListener{
                             {
                                 p.setId(result.getLong(1));
                             }
+                            // fermeture
+                            st.close();
 
 
                         } catch (SQLException ex) {

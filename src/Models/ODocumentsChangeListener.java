@@ -52,6 +52,8 @@ public class ODocumentsChangeListener implements ListChangeListener{
                             st.setBlob(3, model.getFichier());
                             st.setLong(4, this.getIdPerson());
                             st.execute();
+                            // fermeture
+                            st.close();
                         } catch (SQLException ex) {
                             Logger.getLogger(OTodoChangeListener.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -69,6 +71,8 @@ public class ODocumentsChangeListener implements ListChangeListener{
                             PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
                             st.setLong(1, model.getId());
                             st.execute();
+                            // fermeture
+                            st.close();
                         } catch (SQLException ex) {
                             Logger.getLogger(OTodoChangeListener.class.getName()).log(Level.SEVERE, null, ex);
                         }

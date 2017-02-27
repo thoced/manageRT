@@ -86,6 +86,7 @@ public class DataModel implements IDataModel
             st_priorite.close();
             
             
+            
             // chargement de la liste des catégorie
             String sql_categorie = "select * from t_type_categorie";
             Statement st_categorie = ConnectionSQL.getCon().createStatement();
@@ -132,6 +133,8 @@ public class DataModel implements IDataModel
                     // ajout dans le tableview
                     this.oPersons.add(model);
                 }
+                // fermeture
+                st.close();
            
             
             if(listenerPersons == null)

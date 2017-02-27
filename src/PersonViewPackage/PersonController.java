@@ -112,6 +112,7 @@ public class PersonController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        
         // modification de la couleur de fond du imageview
         dateNaissance.setValue(LocalDate.now());
         

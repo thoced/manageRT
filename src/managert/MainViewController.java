@@ -241,6 +241,7 @@ public class MainViewController implements Initializable {
 
             //
             this.currentModel.getoDocuments().remove(model);
+            areaCommentaire.textProperty().unbind();
             areaCommentaire.setText("");
             
          }
@@ -436,6 +437,7 @@ public class MainViewController implements Initializable {
                     // ajout de la scene au stage
                     stage.setScene(scene);
                     // affichage de la vue
+                    stage.setTitle("Fiche personne");
                     stage.showAndWait();
 
 
