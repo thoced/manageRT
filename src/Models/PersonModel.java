@@ -40,6 +40,7 @@ public class PersonModel extends Model implements IDataModel
     
     private ObservableList<DocumentModel> oDocuments;
     private ObservableList<TodoModel> oTodos;
+    private ObservableList<PersonModel> oLinks;
     
     // listener
     private ODocumentsChangeListener listenerDocuments;
@@ -249,6 +250,8 @@ public class PersonModel extends Model implements IDataModel
       oDocuments = FXCollections.observableArrayList();
       
       oTodos = FXCollections.observableArrayList();
+      
+      oLinks = FXCollections.observableArrayList();
 
    }
      
@@ -402,79 +405,130 @@ public class PersonModel extends Model implements IDataModel
     @Override
     public void loadData() 
     {
-        if(listenerDocuments != null)
-            this.oDocuments.removeListener(listenerDocuments);
-        if(listenerTodos != null)
-            this.oTodos.removeListener(listenerTodos);
-        
-        // Chargement de la liste des documents
-         String sql = "select * from t_documents where ref_id_identity = ?";
          try 
          {
-             // statement
-             PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
+             if(listenerDocuments != null)
+                 this.oDocuments.removeListener(listenerDocuments);
+             if(listenerTodos != null)
+                 this.oTodos.removeListener(listenerTodos);
+             
+             // Chargement de la liste des documents
+             String sql = "select * from t_documents where ref_id_identity = ?";
+             try
+             {
+                 // statement
+                 PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
+                 st.setLong(1, this.getId());
+                 ResultSet result = st.executeQuery();
+                 oDocuments.clear();
+                 while(result.next())
+                 {
+                     DocumentModel model = new DocumentModel();
+                     model.setId(result.getLong("id"));
+                     model.setNom(result.getString("nom"));
+                     model.setCommentaire(result.getString("commentaire"));
+                     model.setFichier(result.getBlob("fichier"));
+                     oDocuments.add(model);
+                 }
+                 // fermeture
+                 st.close();
+                 
+             } catch (SQLException ex)
+             {
+                 Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                 
+             }
+             
+             
+             // Chargement de la liste des ToDo
+             try{
+                 
+                 // chargement des valeurs depuis le model db
+                 String sql2 = "select * from t_todo where ref_id_identity = ?";
+                 PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql2);
+                 st.setLong(1,this.getId());
+                 ResultSet result = st.executeQuery();
+                 oTodos.clear();
+                 while(result.next())
+                 {
+                     TodoModel model = new TodoModel();
+                     model.setId(result.getLong("id"));
+                     model.setTitre(result.getString("titre"));
+                     model.setText(result.getString("text"));
+                     model.setDateCreation(result.getDate("date_creation").toLocalDate());
+                     model.setDateRappel(result.getDate("date_rappel").toLocalDate());
+                     model.setRappel(result.getBoolean("rappel"));
+                     oTodos.add(model);
+                 }
+                 // fermeture
+                 st.close();
+                 
+             } catch (SQLException ex) {
+                 Logger.getLogger(GestionController.class.getName()).log(Level.SEVERE, null, ex);
+             }
+             
+             // Chargement de la list links
+             String sql_l = "select distinct * from t_identity where t_identity.id <> ? AND t_identity.id IN "
+                     + "(select ref_id_identity01 from t_link_identity where ref_id_identity01 = ? "
+                     + "OR "
+                     + "ref_id_identity02 = ? "
+                     + "UNION "
+                     + "select ref_id_identity02 from t_link_identity where ref_id_identity01 = ? "
+                     + "OR ref_id_identity02 = ?)";
+             
+             PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql_l);
              st.setLong(1, this.getId());
+             st.setLong(2, this.getId());
+             st.setLong(3, this.getId());
+             st.setLong(4, this.getId());
+             st.setLong(5, this.getId());
              ResultSet result = st.executeQuery();
-             oDocuments.clear();
              while(result.next())
              {
-                 DocumentModel model = new DocumentModel();
-                 model.setId(result.getLong("id"));
-                 model.setNom(result.getString("nom"));
-                 model.setCommentaire(result.getString("commentaire"));
-                 model.setFichier(result.getBlob("fichier"));
-                 oDocuments.add(model);
+                 PersonModel model = new PersonModel();
+                    model.setId(result.getInt("id"));
+                    model.setNom(result.getString("nom"));
+                    model.setPrenom(result.getString("prenom"));
+                    model.setPriorite(new PrioriteModel(result.getString("priorite")));
+                    model.setCategorie(new CategorieModel(result.getString("categorie")));
+                    model.setNumNational(result.getString("num_national"));
+                    java.sql.Date d = result.getDate("date_naissance");
+                    model.setDateNaissance(d.toLocalDate());
+                    model.setAdresse(result.getString("adresse"));
+                    model.setNumero(result.getString("numero"));
+                    model.setBoite(result.getString("boite"));
+                    model.setVille(result.getString("ville"));
+                    model.setCodePostal(result.getString("code_postal"));
+                   // model.setCategorie(result.getString("categorie"));
+                   // model.setPriorite(result.getString("priorite"));
+                    model.setEvenementRappel(result.getBoolean("evenement_rappel"));
+                    model.setPhoto(result.getBlob("photo"));
+                    // ajout dans le tableview
+                    this.oLinks.add(model);
              }
-             // fermeture
+             //fermeture 
              st.close();
+             
+             
+             // listener
+             // OTodoChangeListener listener = new OTodoChangeListener(this.getIdPerson());
+             //oTodo.addListener(listener);
+             
+             //listener
+             if(listenerDocuments == null)
+                 listenerDocuments = new ODocumentsChangeListener(this.getId());
+             
+             if(listenerTodos == null)
+                 listenerTodos = new OTodoChangeListener(this.getId());
+             
+             oDocuments.addListener(listenerDocuments);
+             oTodos.addListener(listenerTodos);
              
          } catch (SQLException ex) 
          {
-             Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(PersonModel.class.getName()).log(Level.SEVERE, null, ex);
             
          }
-         
-         
-         // Chargement de la liste des ToDo
-         try{
-            
-            // chargement des valeurs depuis le model db
-            String sql2 = "select * from t_todo where ref_id_identity = ?";
-            PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql2);
-            st.setLong(1,this.getId());
-            ResultSet result = st.executeQuery();
-            oTodos.clear();
-            while(result.next())
-            {
-                TodoModel model = new TodoModel();
-                model.setId(result.getLong("id"));
-                model.setTitre(result.getString("titre"));
-                model.setText(result.getString("text"));
-                model.setDateCreation(result.getDate("date_creation").toLocalDate());
-                model.setDateRappel(result.getDate("date_rappel").toLocalDate());
-                model.setRappel(result.getBoolean("rappel"));
-                oTodos.add(model);
-            }
-            // fermeture
-            st.close();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(GestionController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        // listener
-       // OTodoChangeListener listener = new OTodoChangeListener(this.getIdPerson());
-        //oTodo.addListener(listener);
-       
-          //listener
-          if(listenerDocuments == null)
-             listenerDocuments = new ODocumentsChangeListener(this.getId());
-          
-          if(listenerTodos == null)
-              listenerTodos = new OTodoChangeListener(this.getId());
-          
-         oDocuments.addListener(listenerDocuments);
-         oTodos.addListener(listenerTodos);
          
     }
 

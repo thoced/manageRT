@@ -25,7 +25,7 @@ public class ProprieteTableCell extends TableCell<PersonModel,PrioriteModel>
         this.setText(null);
         this.setStyle(null);
         
-        if(item != null)
+        if(item != null && item.getType() != null)
         {
             String style;
             switch(item.getType())

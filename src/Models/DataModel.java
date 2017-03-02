@@ -8,6 +8,7 @@ package Models;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -101,9 +102,6 @@ public class DataModel implements IDataModel
             }
             st_categorie.close();
             
-            
-            
-           
                 String sql = "select * from t_identity";
                 Statement st = ConnectionSQL.getCon().createStatement();
                 ResultSet result = st.executeQuery(sql);
@@ -120,7 +118,10 @@ public class DataModel implements IDataModel
                     model.setPrenom(result.getString("prenom"));
                     model.setNumNational(result.getString("num_national"));
                     java.sql.Date d = result.getDate("date_naissance");
-                    model.setDateNaissance(d.toLocalDate());
+                    if(d != null)
+                        model.setDateNaissance(d.toLocalDate());
+                    else
+                        model.setDateNaissance(LocalDate.now());
                     model.setAdresse(result.getString("adresse"));
                     model.setNumero(result.getString("numero"));
                     model.setBoite(result.getString("boite"));

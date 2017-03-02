@@ -132,6 +132,10 @@ public class MainViewController implements Initializable {
     private Button bAjoutTodo;
     @FXML
     private Button bSuppressionDocumentTodo;
+    
+    // Links
+    @FXML
+    private ListView listLinks;
    
     // Evenement
     
@@ -478,6 +482,9 @@ public class MainViewController implements Initializable {
                 columnRappel.setCellValueFactory(cellData->cellData.getValue().rappelProperty());
                 columnRappel.setCellFactory(a->new RappelTableCell());
                 tableTodos.setItems(currentModel.getoTodos());
+                
+                // listLinks
+                
                 
             }
         }
