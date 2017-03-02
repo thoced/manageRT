@@ -83,8 +83,8 @@ public class MainViewController implements Initializable {
     private TableColumn<PersonModel,PrioriteModel> prioriteColumn;
     @FXML
     private TableColumn<PersonModel,CategorieModel> categorieColumn;
-    @FXML
-    private TableColumn<PersonModel,Boolean> evenementColumn;
+   // @FXML
+   // private TableColumn<PersonModel,Boolean> evenementColumn;
     
     // information
     @FXML
@@ -400,11 +400,11 @@ public class MainViewController implements Initializable {
         prenomColumn.setCellValueFactory(cellData->cellData.getValue().prenomProperty());
         prioriteColumn.setCellValueFactory(cellData->cellData.getValue().prioriteProperty());
         categorieColumn.setCellValueFactory(cellData->cellData.getValue().categorieProperty());
-        evenementColumn.setCellValueFactory(cellData->cellData.getValue().evenementRappelProperty());
+        //evenementColumn.setCellValueFactory(cellData->cellData.getValue().evenementRappelProperty());
        
         // tablecell 
         prioriteColumn.setCellFactory(a->new ProprieteTableCell());
-        evenementColumn.setCellFactory(a->new EvenementRappelTableCell());
+       // evenementColumn.setCellFactory(a->new EvenementRappelTableCell());
       // categorieColumn.setCellFactory(tableCell->new ProprieteTableCell());
       // refresh view
       // ajout callback à la table todo
