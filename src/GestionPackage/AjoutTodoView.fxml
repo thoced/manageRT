@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -9,15 +10,13 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GestionPackage.AjoutTodoController">
    <children>
-      <Button defaultButton="true" layoutX="733.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleValider" text="Valider" />
-      <Button cancelButton="true" layoutX="660.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleUndo" text="Annuler" />
-      <Pane layoutX="54.0" layoutY="434.0" prefHeight="93.0" prefWidth="535.0" style="-fx-border-radius: 12; -fx-border-color: orange; -fx-border-width: 8;">
+      <Pane layoutX="32.0" layoutY="424.0" prefHeight="93.0" prefWidth="535.0" style="-fx-border-radius: 12; -fx-border-color: orange; -fx-border-width: 8;">
          <children>
             <Label layoutX="36.0" layoutY="30.0" text="Voulez-vous être rappelé automatiquement lors du dépassement de la date de rappel ?" />
             <CheckBox fx:id="rappel" layoutX="36.0" layoutY="55.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Etre rappelé" />
          </children>
       </Pane>
-      <Pane layoutX="54.0" layoutY="35.0" prefHeight="376.0" prefWidth="695.0" style="-fx-border-color: lightblue; -fx-border-radius: 8; -fx-border-width: 8;">
+      <Pane layoutX="54.0" layoutY="35.0" prefHeight="376.0" prefWidth="695.0" style="-fx-border-color: lightblue; -fx-border-radius: 8; -fx-border-width: 8;" AnchorPane.bottomAnchor="189.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="32.0">
          <children>
             <Label layoutX="35.0" layoutY="27.0" text="Titre Todo" />
             <TextField fx:id="titre" layoutX="154.0" layoutY="23.0" prefHeight="25.0" prefWidth="511.0" />
@@ -27,5 +26,22 @@
             <Label layoutX="35.0" layoutY="329.0" text="Date de rappel:" />
          </children>
       </Pane>
+      <HBox alignment="CENTER_RIGHT" layoutX="-14.0" layoutY="522.0" prefHeight="64.0" prefWidth="200.0" spacing="8.0" AnchorPane.leftAnchor="-14.0" AnchorPane.rightAnchor="14.0">
+         <children>
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleValider" text="Valider">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Button>
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#handleUndo" text="Annuler">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+      </HBox>
    </children>
 </AnchorPane>

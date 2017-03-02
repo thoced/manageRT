@@ -238,7 +238,6 @@
           <TableColumn fx:id="prenomColumn" minWidth="0.0" prefWidth="191.0" text="Prenom" />
             <TableColumn fx:id="prioriteColumn" prefWidth="176.0" text="Priorité" />
             <TableColumn fx:id="categorieColumn" prefWidth="242.0" text="Catégorie" />
-            <TableColumn fx:id="evenementColumn" prefWidth="101.0" text="Evenement" />
         </columns>
       </TableView>
    </center>
