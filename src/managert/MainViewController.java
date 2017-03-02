@@ -150,7 +150,7 @@ public class MainViewController implements Initializable {
     @FXML
     private void handleAddLink() throws IOException
     {
-          // chargement de la vue linkview
+        // chargement de la vue linkview
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/LinkPackage/LinkView.fxml"));
         AnchorPane pane = loader.load();
         LinkController controller = loader.getController();
@@ -162,15 +162,27 @@ public class MainViewController implements Initializable {
         stage.setScene(scene);
         stage.showAndWait();
         
-       
-      
-       
     }
     
     @FXML
-    private void handleMouseMovedLink(MouseEvent event) throws IOException
+    private void handleDeleteLink() throws IOException
     {
-        
+        PersonModel model = (PersonModel) listLinks.getSelectionModel().getSelectedItem();
+        if(model != null)
+        {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Suppresion d'un lien");
+            alert.setContentText("Etes vous sûr de supprimer ce lien ?");
+            ButtonType bOui = new ButtonType("Oui");
+            ButtonType bNon = new ButtonType("Non");
+            alert.getButtonTypes().setAll(bNon,bOui);
+            Optional<ButtonType> ret = alert.showAndWait();
+            if(ret.get() == bOui)
+            {
+                currentModel.getoLinks().remove(model);
+            }
+            
+        }
     }
     
     @FXML

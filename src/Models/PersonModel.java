@@ -46,6 +46,7 @@ public class PersonModel extends Model implements IDataModel
     // listener
     private ODocumentsChangeListener listenerDocuments;
     private OTodoChangeListener listenerTodos;
+    private OLinkChangeListener listenerLinks;
     
     private final StringProperty nom = new SimpleStringProperty();
     private final StringProperty prenom = new SimpleStringProperty();
@@ -425,6 +426,8 @@ public class PersonModel extends Model implements IDataModel
                  this.oDocuments.removeListener(listenerDocuments);
              if(listenerTodos != null)
                  this.oTodos.removeListener(listenerTodos);
+             if(listenerLinks != null)
+                 this.oLinks.removeListener(listenerLinks);
              
              // Chargement de la liste des documents
              String sql = "select * from t_documents where ref_id_identity = ?";
@@ -541,8 +544,12 @@ public class PersonModel extends Model implements IDataModel
              if(listenerTodos == null)
                  listenerTodos = new OTodoChangeListener(this.getId());
              
+             if(listenerLinks == null)
+                 listenerLinks = new OLinkChangeListener(this.getId());
+             
              oDocuments.addListener(listenerDocuments);
              oTodos.addListener(listenerTodos);
+             oLinks.addListener(listenerLinks);
              
          } catch (SQLException ex) 
          {
