@@ -203,6 +203,23 @@
                               <HBox layoutX="43.0" layoutY="30.0" prefHeight="110.0" prefWidth="920.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <ListView fx:id="listLinks" prefHeight="200.0" prefWidth="593.0" />
+                                    <VBox prefHeight="161.0" prefWidth="132.0" spacing="8.0">
+                                       <children>
+                                          <Button fx:id="bAddLink" mnemonicParsing="false" onAction="#handleAddLink" text="Ajouter un lien">
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Supprimer un lien">
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </Button>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                       </padding>
+                                    </VBox>
                                  </children>
                               </HBox>
                            </children>
@@ -215,7 +232,7 @@
       </TabPane>
    </bottom>
    <center>
-      <TableView fx:id="table" onMouseClicked="#handleClic" prefHeight="508.0" prefWidth="1026.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="table" onMouseClicked="#handleClic" onMouseMoved="#handleMouseMovedLink" prefHeight="508.0" prefWidth="1026.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="nomColumn" prefWidth="197.0" text="Nom" />
           <TableColumn fx:id="prenomColumn" minWidth="0.0" prefWidth="191.0" text="Prenom" />

@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +60,16 @@ public class PersonModel extends Model implements IDataModel
     private final ObjectProperty<CategorieModel> categorie = new SimpleObjectProperty<>();
     private final ObjectProperty<PrioriteModel> priorite = new SimpleObjectProperty<>();
 
+    public ObservableList<PersonModel> getoLinks() {
+        return oLinks;
+    }
+
+    public void setoLinks(ObservableList<PersonModel> oLinks) {
+        this.oLinks = oLinks;
+    }
+
+    
+    
     public CategorieModel getCategorie() {
         return categorie.get();
     }
@@ -100,9 +111,6 @@ public class PersonModel extends Model implements IDataModel
     public BooleanProperty evenementRappelProperty() {
         return evenementRappel;
     }
-    
-
-    
     
     public ObservableList<DocumentModel> getoDocuments() {
         return oDocuments;
@@ -241,6 +249,12 @@ public class PersonModel extends Model implements IDataModel
 
     public StringProperty prenomProperty() {
         return prenom;
+    }
+
+    @Override
+    public String toString() 
+    {
+        return nom.getValue() + " " + prenom.getValue() + " (" + dateNaissance.getValue().format(DateTimeFormatter.ofPattern("d MMM uuuu")) + ")";
     }
 
    
@@ -468,7 +482,7 @@ public class PersonModel extends Model implements IDataModel
              }
              
              // Chargement de la list links
-             String sql_l = "select distinct * from t_identity where t_identity.id <> ? AND t_identity.id IN "
+             String sql_l = "select distinct id,nom,prenom,date_naissance from t_identity where t_identity.id <> ? AND t_identity.id IN "
                      + "(select ref_id_identity01 from t_link_identity where ref_id_identity01 = ? "
                      + "OR "
                      + "ref_id_identity02 = ? "
@@ -483,13 +497,19 @@ public class PersonModel extends Model implements IDataModel
              st.setLong(4, this.getId());
              st.setLong(5, this.getId());
              ResultSet result = st.executeQuery();
+             this.oLinks.clear();
              while(result.next())
              {
                  PersonModel model = new PersonModel();
                     model.setId(result.getInt("id"));
                     model.setNom(result.getString("nom"));
                     model.setPrenom(result.getString("prenom"));
-                    model.setPriorite(new PrioriteModel(result.getString("priorite")));
+                    java.sql.Date d = result.getDate("date_naissance");
+                    if(d != null)
+                        model.setDateNaissance(d.toLocalDate());
+                    else
+                        model.setDateNaissance(LocalDate.now());
+                   /* model.setPriorite(new PrioriteModel(result.getString("priorite")));
                     model.setCategorie(new CategorieModel(result.getString("categorie")));
                     model.setNumNational(result.getString("num_national"));
                     java.sql.Date d = result.getDate("date_naissance");
@@ -502,7 +522,7 @@ public class PersonModel extends Model implements IDataModel
                    // model.setCategorie(result.getString("categorie"));
                    // model.setPriorite(result.getString("priorite"));
                     model.setEvenementRappel(result.getBoolean("evenement_rappel"));
-                    model.setPhoto(result.getBlob("photo"));
+                    model.setPhoto(result.getBlob("photo"));*/
                     // ajout dans le tableview
                     this.oLinks.add(model);
              }

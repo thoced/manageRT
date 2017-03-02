@@ -136,13 +136,32 @@ public class MainViewController implements Initializable {
     // Links
     @FXML
     private ListView listLinks;
+    @FXML
+    private Button bAddLink;
+    
+    
    
     // Evenement
     
   
     private DocumentModel backDocument;
     
-      @FXML
+    @FXML
+    private void handleAddLink() throws IOException
+    {
+          // changement d'état
+       
+      
+       
+    }
+    
+    @FXML
+    private void handleMouseMovedLink(MouseEvent event) throws IOException
+    {
+        
+    }
+    
+    @FXML
     private void handleQuitter() throws IOException
     {
         // fermeture du programme
@@ -484,7 +503,7 @@ public class MainViewController implements Initializable {
                 tableTodos.setItems(currentModel.getoTodos());
                 
                 // listLinks
-                
+                listLinks.setItems(currentModel.getoLinks());
                 
             }
         }
