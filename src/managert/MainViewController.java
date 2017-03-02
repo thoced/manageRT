@@ -11,6 +11,7 @@ import GestionPackage.AjoutTodoController;
 import GestionPackage.DateRappelTableCell;
 import GestionPackage.RappelTableCell;
 import GestionPackage.RappelTableRow;
+import LinkPackage.LinkController;
 import Models.CategorieModel;
 import Models.ConnectionSQL;
 import Models.DataModel;
@@ -149,7 +150,18 @@ public class MainViewController implements Initializable {
     @FXML
     private void handleAddLink() throws IOException
     {
-          // changement d'état
+          // chargement de la vue linkview
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/LinkPackage/LinkView.fxml"));
+        AnchorPane pane = loader.load();
+        LinkController controller = loader.getController();
+        controller.setModel(currentModel);
+        Scene scene = new Scene(pane);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Selectionner les liaisons");
+        stage.setScene(scene);
+        stage.showAndWait();
+        
        
       
        
