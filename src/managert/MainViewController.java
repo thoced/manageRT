@@ -394,6 +394,8 @@ public class MainViewController implements Initializable {
         //listPerson = FXCollections.observableArrayList();
         // bind de listPerson avec la tableview
         table.setItems(DataModel.getoPersons());
+        // ajout du tablerowfactory
+        table.setRowFactory(a->new EvenementTableRow());
 
        // bind des colonnes
         nomColumn.setCellValueFactory(cellData->cellData.getValue().nomProperty());

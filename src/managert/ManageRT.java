@@ -92,9 +92,28 @@ public class ManageRT extends Application
         st.showAndWait();
         
         
-        
         if(controller.isIsLogin()) // si la connexion est établie et acceptée
         {
+             try 
+          {
+            // suppression des evenemnt rappel
+            String sql = "update t_identity set evenement_rappel = false";
+            Statement stat = ConnectionSQL.getCon().createStatement();
+            stat.executeUpdate(sql);
+              
+            // recherche des todo de rappel
+            sql = "update t_identity set evenement_rappel = true "
+                    + "where id IN (select ref_id_identity from t_todo "
+                    + "where DATE(NOW()) >= date_rappel AND rappel = true)";
+            
+            stat.executeUpdate(sql);
+            stat.close();
+            
+           } catch (SQLException ex)
+        {
+            Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
             rootPane = FXMLLoader.load(getClass().getResource("MainView.fxml"));
             Scene scene = new Scene(rootPane);
             stage.setScene(scene);
@@ -105,31 +124,7 @@ public class ManageRT extends Application
            
         }
         
-          try {
-            // recherche des todo de rappel
-            String sql = "select * from t_todo where DATE(NOW()) >= date_rappel AND rappel = true";
-            Statement stat = ConnectionSQL.getCon().createStatement();
-            ResultSet result = stat.executeQuery(sql);
-            result.last();
-            if(result.getRow() > 0)
-            {
-               // si il existe des rappels, on modifie le flag evenentRappel dans les model PersonModel concernés
-                result.beforeFirst();
-                while(result.next())
-                {
-                    long id_person = result.getLong("ref_id_identity");
-                    // modification du flag
-                    String sqlPerson = "update t_identity set evenement_rappel = true where id = ?";
-                    PreparedStatement stPerson = ConnectionSQL.getCon().prepareStatement(sqlPerson);
-                    stPerson.setLong(1, id_person);
-                    stPerson.execute();
-                }
-            }
-           
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         
     }
     
    
