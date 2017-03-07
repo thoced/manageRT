@@ -167,6 +167,8 @@ public class MainViewController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Selectionner les liaisons");
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UTILITY);
+        stage.setResizable(false);
         stage.showAndWait();
         
     }
@@ -260,6 +262,8 @@ public class MainViewController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.setTitle("Création d'un document");
+        stage.initStyle(StageStyle.UTILITY);
+        stage.setResizable(false);
         stage.showAndWait();
     }
     
@@ -275,6 +279,8 @@ public class MainViewController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.setTitle("Créatio d'une tâche");
+        stage.initStyle(StageStyle.UTILITY);
+        stage.setResizable(false);
         stage.showAndWait();
     }
     
@@ -342,6 +348,8 @@ public class MainViewController implements Initializable {
             stage.setScene(scene);
             // affichage de la vue
             stage.setTitle("Aide");
+            stage.initStyle(StageStyle.UTILITY);
+            stage.setResizable(false);
             stage.showAndWait();
         } catch (IOException ex) {
             Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -399,6 +407,8 @@ public class MainViewController implements Initializable {
                   stage.initModality(Modality.APPLICATION_MODAL);
                   // ajout de la scene au stage
                   stage.setScene(scene);
+                  stage.initStyle(StageStyle.UTILITY);
+                  stage.setResizable(false);
                   // affichage de la vue
                   stage.showAndWait();
                 
@@ -515,6 +525,8 @@ public class MainViewController implements Initializable {
                     // ajout de la scene au stage
                     stage.setScene(scene);
                     // affichage de la vue
+                    stage.initStyle(StageStyle.UTILITY);
+                    stage.setResizable(false);
                     stage.setTitle("Fiche personne");
                     stage.showAndWait();
 

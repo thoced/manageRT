@@ -12,7 +12,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="pane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="HelpPackage.HelpController">
    <children>
-      <Label layoutX="332.0" layoutY="119.0" text="Manager Radicalisme Terrorisme - Police Locale" textFill="#6979a1">
+      <Label layoutX="148.0" layoutY="123.0" text="Manager Radicalisme Terrorisme - Police Locale" textFill="#6979a1">
          <font>
             <Font size="10.0" />
          </font>
@@ -23,7 +23,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="228.0" layoutY="35.0" prefHeight="76.0" prefWidth="344.0" text="Manage RT" textAlignment="CENTER" textFill="#6979a1" textOverrun="WORD_ELLIPSIS" underline="true">
+      <Label layoutX="146.0" layoutY="43.0" prefHeight="76.0" prefWidth="344.0" text="Manage RT" textAlignment="CENTER" textFill="#6979a1" textOverrun="WORD_ELLIPSIS" underline="true">
          <font>
             <Font name="Liberation Mono" size="60.0" />
          </font>
