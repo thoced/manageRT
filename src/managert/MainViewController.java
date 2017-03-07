@@ -327,6 +327,26 @@ public class MainViewController implements Initializable {
             
          }
     }
+    
+    @FXML
+    private void onHelp(ActionEvent event) throws SQLException
+    {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/HelpPackage/HelpView.fxml"));
+            AnchorPane ap = loader.load();
+            Scene scene = new Scene(ap);
+            // creatin du stage
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            // ajout de la scene au stage
+            stage.setScene(scene);
+            // affichage de la vue
+            stage.setTitle("Aide");
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
    
     @FXML
     private void onDeleteIdentity(ActionEvent event) throws SQLException
