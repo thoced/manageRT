@@ -17,7 +17,7 @@
             <Font size="10.0" />
          </font>
       </Label>
-      <Line endX="-50.0" endY="-50.0" layoutX="188.0" layoutY="188.0" startX="-50.0" startY="250.0" />
+      <Line endX="-50.0" endY="-50.0" layoutX="160.0" layoutY="188.0" startX="-50.0" startY="320.0" />
       <Label layoutX="148.0" layoutY="158.0" opacity="0.45" text="Programmé par THONON Cédric" underline="true">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -33,7 +33,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextArea layoutX="148.0" layoutY="216.0" prefHeight="221.0" prefWidth="340.0" text="- Version Alpha:&#10;&#10;- Module information&#10;- Gestion des documents&#10;- Gestion des Taches&#10;- Gestion des Liens&#10;&#10;Todo:&#10;&#10;- Génération des apostilles&#10;- Modules Lieux/Mtp&#10;- Generation de rapport " />
+      <TextArea layoutX="148.0" layoutY="216.0" prefHeight="256.0" prefWidth="512.0" text="- Version Alpha:&#10;&#10;- Module information&#10;- Gestion des documents&#10;- Gestion des Taches&#10;- Gestion des Liens&#10;&#10;Todo:&#10;&#10;- Génération des apostilles&#10;- Modules Lieux/Mtp&#10;- Generation de rapport " />
       <HBox alignment="CENTER_RIGHT" layoutY="522.0" prefHeight="64.0" prefWidth="781.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Button alignment="CENTER_RIGHT" defaultButton="true" mnemonicParsing="false" onAction="#handleCancel" text="Annuler">
