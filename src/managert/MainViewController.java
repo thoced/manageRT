@@ -8,6 +8,7 @@ package managert;
 import DocumentViewPackage.DocumentController;
 import DocumentViewPackage.NewDocumentController;
 import GestionPackage.AjoutTodoController;
+import GestionPackage.Apostille;
 import GestionPackage.DateRappelTableCell;
 import GestionPackage.RappelTableCell;
 import GestionPackage.RappelTableRow;
@@ -146,6 +147,12 @@ public class MainViewController implements Initializable {
     
   
     private DocumentModel backDocument;
+    
+    @FXML
+    private void handleCreateApostille() throws IOException
+    {
+        Apostille apo = new Apostille();
+    }
     
     @FXML
     private void handleAddLink() throws IOException

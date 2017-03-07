@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="managert.MainViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1162.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="managert.MainViewController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -155,21 +155,21 @@
                      <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="11.0" prefHeight="182.0" prefWidth="994.0">
+                              <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="11.0" prefHeight="182.0" prefWidth="994.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                  <children>
-                                    <TableView fx:id="tableTodos" onMouseClicked="#handleClicTodo" prefHeight="182.0" prefWidth="593.0">
+                                    <TableView fx:id="tableTodos" onMouseClicked="#handleClicTodo" prefHeight="182.0" prefWidth="644.0">
                                       <columns>
                                         <TableColumn fx:id="columnTitre" prefWidth="249.0" text="Titre" />
                                         <TableColumn fx:id="columnDateCreation" prefWidth="148.0" text="Date création" />
                                           <TableColumn fx:id="columnDateRappel" prefWidth="126.0" text="Date de rappel" />
-                                          <TableColumn fx:id="columnRappel" minWidth="4.0" prefWidth="63.0" text="Rappel" />
+                                          <TableColumn fx:id="columnRappel" minWidth="4.0" prefWidth="83.0" text="Rappel" />
                                       </columns>
                                     </TableView>
-                                    <VBox alignment="TOP_CENTER" prefHeight="182.0" prefWidth="100.0" spacing="8.0">
+                                    <VBox alignment="TOP_CENTER" prefHeight="182.0" prefWidth="119.0" spacing="8.0">
                                        <children>
                                           <Button fx:id="bAjoutTodo" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAjoutTodo" text="Ajouter">
                                              <padding>
-                                                <Insets bottom="10.0" top="10.0" />
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </padding>
                                              <VBox.margin>
                                                 <Insets />
@@ -177,7 +177,12 @@
                                           </Button>
                                           <Button fx:id="bSuppressionDocumentTodo" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSuppressionTodo" text="Supprimer">
                                              <padding>
-                                                <Insets bottom="10.0" top="10.0" />
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#handleCreateApostille" text="Apostille">
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </padding>
                                           </Button>
                                        </children>
@@ -185,7 +190,7 @@
                                           <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                        </padding>
                                     </VBox>
-                                    <TextArea fx:id="areaTodoCommentaire" prefHeight="86.0" prefWidth="315.0" />
+                                    <TextArea fx:id="areaTodoCommentaire" maxWidth="1.7976931348623157E308" prefHeight="182.0" prefWidth="464.0" HBox.hgrow="ALWAYS" />
                                  </children>
                               </HBox>
                            </children>
@@ -232,7 +237,7 @@
       </TabPane>
    </bottom>
    <center>
-      <TableView fx:id="table" onMouseClicked="#handleClic" prefHeight="508.0" prefWidth="1026.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="table" onMouseClicked="#handleClic" prefHeight="508.0" prefWidth="1124.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="nomColumn" prefWidth="197.0" text="Nom" />
           <TableColumn fx:id="prenomColumn" minWidth="0.0" prefWidth="191.0" text="Prenom" />
