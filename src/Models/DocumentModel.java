@@ -23,7 +23,9 @@ public class DocumentModel extends Model
     private final StringProperty commentaire = new SimpleStringProperty();
     private Blob fichier;
     private String suffix;
+    
 
+   
     
     public Blob getFichier() {
         return fichier;
@@ -58,6 +60,8 @@ public class DocumentModel extends Model
     public StringProperty nomProperty() {
         return nom;
     }
+    
+    
 
     @Override
     public String toString() 

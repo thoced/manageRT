@@ -149,6 +149,49 @@
                   </TitledPane>
                </content>
             </Tab>
+            <Tab text="Apostilles">
+              <content>
+                  <TitledPane text="Apostilles">
+                     <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ListView fx:id="listApostilles" onMousePressed="#handleClicDocument" prefHeight="160.0" prefWidth="450.0" />
+                                    <VBox alignment="TOP_CENTER" prefHeight="142.0" prefWidth="100.0" spacing="8.0">
+                                       <children>
+                                          <Button fx:id="bAjoutApostilles" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAjoutDocument" text="Ajouter">
+                                             <padding>
+                                                <Insets bottom="10.0" top="10.0" />
+                                             </padding>
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="bSuppressionApostille" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSuppressionDocument" text="Supprimer">
+                                             <padding>
+                                                <Insets bottom="10.0" top="10.0" />
+                                             </padding>
+                                          </Button>
+                                          <Button fx:id="bVoirApostille" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleViewDocument" text="Voir Doc">
+                                             <padding>
+                                                <Insets bottom="10.0" top="10.0" />
+                                             </padding>
+                                          </Button>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                       </padding>
+                                    </VBox>
+                                    <TextArea fx:id="areaApostilles" prefHeight="161.0" prefWidth="446.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+              </content>
+            </Tab>
             <Tab closable="false" text="Tâches">
               <content>
                   <TitledPane text="Taches">

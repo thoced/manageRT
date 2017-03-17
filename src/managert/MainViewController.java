@@ -117,6 +117,18 @@ public class MainViewController implements Initializable {
     @FXML
     private TextArea areaCommentaire;
     
+     // Documents
+    @FXML
+    private ListView listApostilles;
+    @FXML
+    private Button bAjoutApostilles;
+    @FXML
+    private Button bSuppressionApostille;
+    @FXML
+    private Button bVoirApostille;
+    @FXML
+    private TextArea areaApostilles;
+    
     // Todos
     @FXML
     private TableView tableTodos;

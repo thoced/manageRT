@@ -40,6 +40,8 @@ public class PersonModel extends Model implements IDataModel
    // public static  ObservableList<PersonModel> listPerson = FXCollections.observableArrayList();
     
     private ObservableList<DocumentModel> oDocuments;
+    private ObservableList<DocumentModel> oApostilles;
+    
     private ObservableList<TodoModel> oTodos;
     private ObservableList<PersonModel> oLinks;
     
@@ -264,6 +266,8 @@ public class PersonModel extends Model implements IDataModel
    {
       oDocuments = FXCollections.observableArrayList();
       
+      oApostilles = FXCollections.observableArrayList();
+      
       oTodos = FXCollections.observableArrayList();
       
       oLinks = FXCollections.observableArrayList();
@@ -430,7 +434,7 @@ public class PersonModel extends Model implements IDataModel
                  this.oLinks.removeListener(listenerLinks);
              
              // Chargement de la liste des documents
-             String sql = "select * from t_documents where ref_id_identity = ?";
+             String sql = "select * from t_documents where ref_id_identity = ? where";
              try
              {
                  // statement
@@ -440,12 +444,26 @@ public class PersonModel extends Model implements IDataModel
                  oDocuments.clear();
                  while(result.next())
                  {
-                     DocumentModel model = new DocumentModel();
-                     model.setId(result.getLong("id"));
-                     model.setNom(result.getString("nom"));
-                     model.setCommentaire(result.getString("commentaire"));
-                     model.setFichier(result.getBlob("fichier"));
-                     oDocuments.add(model);
+                      
+                     if(result.getString("type").equals("doc"))
+                     {
+                         DocumentModel model = new DocumentModel();
+                         model.setId(result.getLong("id"));
+                         model.setNom(result.getString("nom"));
+                         model.setCommentaire(result.getString("commentaire"));
+                         model.setFichier(result.getBlob("fichier"));
+                         oDocuments.add(model);
+                     }
+                     
+                     if(result.getString("type").equals("apo"))
+                     {
+                         ApostilleModel model = new ApostilleModel();
+                         model.setId(result.getLong("id"));
+                         model.setNom(result.getString("nom"));
+                         model.setCommentaire(result.getString("commentaire"));
+                         model.setFichier(result.getBlob("fichier"));
+                         oApostilles.add(model);
+                     }
                  }
                  // fermeture
                  st.close();
