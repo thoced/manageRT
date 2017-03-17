@@ -6,6 +6,7 @@
 package DocumentViewPackage;
 
 import ControllerInterface.Controller;
+import Models.ApostilleModel;
 import Models.ConnectionSQL;
 import Models.DocumentModel;
 import Models.PersonModel;
@@ -41,7 +42,11 @@ public class NewDocumentController extends Controller implements Initializable
      
      private long id = -1;
      
-      private ObservableList<DocumentModel> oDocuments;
+     private ObservableList<DocumentModel> oDocuments;
+     
+     public enum TYPE_DOCUMENT {DOC,APO};
+     
+     private TYPE_DOCUMENT type = TYPE_DOCUMENT.DOC; // type de document à créer
      
     @Override
     public void initialize(URL location, ResourceBundle resources) 
@@ -74,12 +79,23 @@ public class NewDocumentController extends Controller implements Initializable
     @FXML
     public void handleValider() throws SQLException
     {
-       
+       if(type == TYPE_DOCUMENT.DOC)
+       {
         DocumentModel model = new DocumentModel();
         model.setNom(titre.getText());
         model.setCommentaire(commentaire.getText());
         model.setFichier(documentBlob);
         this.model.getoDocuments().add(model);
+       }
+       
+       if(type == TYPE_DOCUMENT.APO)
+       {
+        ApostilleModel model = new ApostilleModel();
+        model.setNom(titre.getText());
+        model.setCommentaire(commentaire.getText());
+        model.setFichier(documentBlob);
+        this.model.getoApostilles().add(model);
+       }
 
         // hide de la vue
         titre.getScene().getWindow().hide();
@@ -118,6 +134,16 @@ public class NewDocumentController extends Controller implements Initializable
     {
        this.model = model;
     }
+
+    public TYPE_DOCUMENT getType() {
+        return type;
+    }
+
+    public void setType(TYPE_DOCUMENT type) {
+        this.type = type;
+    }
+    
+    
     
     
 }

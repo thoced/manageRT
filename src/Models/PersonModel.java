@@ -123,6 +123,16 @@ public class PersonModel extends Model implements IDataModel
         this.oDocuments = oDocuments;
     }
 
+    public ObservableList<DocumentModel> getoApostilles() {
+        return oApostilles;
+    }
+
+    public void setoApostilles(ObservableList<DocumentModel> oApostilles) {
+        this.oApostilles = oApostilles;
+    }
+    
+    
+
     public ObservableList<TodoModel> getoTodos() {
         return oTodos;
     }
@@ -434,7 +444,7 @@ public class PersonModel extends Model implements IDataModel
                  this.oLinks.removeListener(listenerLinks);
              
              // Chargement de la liste des documents
-             String sql = "select * from t_documents where ref_id_identity = ? where";
+             String sql = "select * from t_documents where ref_id_identity = ?";
              try
              {
                  // statement
@@ -445,7 +455,7 @@ public class PersonModel extends Model implements IDataModel
                  while(result.next())
                  {
                       
-                     if(result.getString("type").equals("doc"))
+                     if(result.getString("type_document").equals("doc"))
                      {
                          DocumentModel model = new DocumentModel();
                          model.setId(result.getLong("id"));
@@ -455,7 +465,7 @@ public class PersonModel extends Model implements IDataModel
                          oDocuments.add(model);
                      }
                      
-                     if(result.getString("type").equals("apo"))
+                     if(result.getString("type_document").equals("apo"))
                      {
                          ApostilleModel model = new ApostilleModel();
                          model.setId(result.getLong("id"));

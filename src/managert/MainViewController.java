@@ -7,6 +7,7 @@ package managert;
 
 import DocumentViewPackage.DocumentController;
 import DocumentViewPackage.NewDocumentController;
+import DocumentViewPackage.NewDocumentController.TYPE_DOCUMENT;
 import GestionPackage.AjoutTodoController;
 import GestionPackage.Apostille;
 import GestionPackage.DateRappelTableCell;
@@ -268,6 +269,25 @@ public class MainViewController implements Initializable {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/DocumentViewPackage/NewDocumentView.fxml"));
         AnchorPane pane = loader.load();  
         NewDocumentController controller = loader.getController();
+        controller.setType(TYPE_DOCUMENT.DOC); // on specifie que c'est un document de type doc
+        controller.setModel(this.currentModel);
+        Scene scene = new Scene(pane);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.setTitle("Création d'un document");
+        stage.initStyle(StageStyle.UTILITY);
+        stage.setResizable(false);
+        stage.showAndWait();
+    }
+    
+    @FXML
+    private void handleAjoutApostille(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/DocumentViewPackage/NewDocumentView.fxml"));
+        AnchorPane pane = loader.load();  
+        NewDocumentController controller = loader.getController();
+        controller.setType(TYPE_DOCUMENT.APO); // on specifie que c'est un document de type doc
         controller.setModel(this.currentModel);
         Scene scene = new Scene(pane);
         Stage stage = new Stage();
