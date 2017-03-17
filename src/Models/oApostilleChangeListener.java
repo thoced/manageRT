@@ -5,9 +5,6 @@
  */
 package Models;
 
-import Models.ConnectionSQL;
-import Models.DocumentModel;
-import Models.TodoModel;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -18,19 +15,16 @@ import javafx.collections.ListChangeListener;
  *
  * @author Thonon
  */
-public class ODocumentsChangeListener implements ListChangeListener{
+public class oApostilleChangeListener implements ListChangeListener{
 
     private long idPerson;
     
-    
-
-    public ODocumentsChangeListener(long idPerson) 
+    public oApostilleChangeListener(long idPerson) 
     {
         this.idPerson = idPerson;
         
       
     }
-
     
     @Override
     public void onChanged(Change c) 
@@ -45,7 +39,7 @@ public class ODocumentsChangeListener implements ListChangeListener{
                         try {
                             DocumentModel model = (DocumentModel)m;
                              // creation de la requete sql d'ajout
-                            String sql = "insert into t_documents (nom,commentaire,fichier,ref_id_identity,type_document) values (?,?,?,?,'doc')";
+                            String sql = "insert into t_documents (nom,commentaire,fichier,ref_id_identity,type_document) values (?,?,?,?,'apo')";
                             PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
                             st.setString(1, model.getNom());
                             st.setString(2, model.getCommentaire());
@@ -88,6 +82,5 @@ public class ODocumentsChangeListener implements ListChangeListener{
     public void setIdPerson(long idPerson) {
         this.idPerson = idPerson;
     }
-    
     
 }
