@@ -14,6 +14,7 @@ import GestionPackage.DateRappelTableCell;
 import GestionPackage.RappelTableCell;
 import GestionPackage.RappelTableRow;
 import LinkPackage.LinkController;
+import Models.ApostilleModel;
 import Models.CategorieModel;
 import Models.ConnectionSQL;
 import Models.DataModel;
@@ -243,6 +244,23 @@ public class MainViewController implements Initializable {
       
     }
     
+     @FXML
+    private void handleClicApostille() throws IOException
+    {
+      ApostilleModel model = (ApostilleModel) listApostilles.getSelectionModel().getSelectedItem();
+       
+      if(model != null)
+       {
+        areaApostilles.textProperty().bind(model.commentaireProperty());
+        // si le model ne possède pas de fichier pdf attaché, disable du bouton view document
+        if(model.getFichier() == null)
+            bVoirApostille.setDisable(true);
+        else
+            bVoirApostille.setDisable(false);
+       }
+      
+    }
+    
       @FXML
     private void handleViewDocument(ActionEvent event) throws IOException
     {
@@ -337,6 +355,33 @@ public class MainViewController implements Initializable {
             this.currentModel.getoDocuments().remove(model);
             areaCommentaire.textProperty().unbind();
             areaCommentaire.setText("");
+            bVoirDocument.setDisable(true);
+            
+         }
+    }
+    
+    @FXML
+    private void handleSuppressionApostille(ActionEvent event) throws IOException
+    {
+        ApostilleModel model = (ApostilleModel) listApostilles.getSelectionModel().getSelectedItem();
+        if(model != null)
+        {
+            // view de confirmation
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Suppression d'une apostille");
+            alert.setContentText("Etes-vous sûr de supprimer l'apostille '" + model.getNom() + "' ?");
+            ButtonType buttonOui = new ButtonType("Oui");
+            ButtonType buttonNon = new ButtonType("Non");
+            alert.getButtonTypes().setAll(buttonNon,buttonOui);
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.get() == buttonNon)
+                return;
+
+            //
+            this.currentModel.getoApostilles().remove(model);
+            areaApostilles.textProperty().unbind();
+            areaApostilles.setText("");
+            bVoirApostille.setDisable(true);
             
          }
     }
@@ -526,6 +571,7 @@ public class MainViewController implements Initializable {
         {
             // disable du bouton ('voir document')
             bVoirDocument.setDisable(true);
+            bVoirApostille.setDisable(true);
             
            currentModel = (PersonModel)((TableView)event.getSource()).getSelectionModel().getSelectedItem();
             if(currentModel == null)
@@ -599,6 +645,8 @@ public class MainViewController implements Initializable {
                 columnRappel.setCellFactory(a->new RappelTableCell());
                 tableTodos.setItems(currentModel.getoTodos());
                 
+               // listeApostilles
+                listApostilles.setItems(currentModel.getoApostilles());
                 // listLinks
                 listLinks.setItems(currentModel.getoLinks());
                 

@@ -157,10 +157,10 @@
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <ListView fx:id="listApostilles" onMousePressed="#handleClicDocument" prefHeight="160.0" prefWidth="450.0" />
+                                    <ListView fx:id="listApostilles" onMousePressed="#handleClicApostille" prefHeight="160.0" prefWidth="450.0" />
                                     <VBox alignment="TOP_CENTER" prefHeight="142.0" prefWidth="100.0" spacing="8.0">
                                        <children>
-                                          <Button fx:id="bAjoutApostilles" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAjoutDocument" text="Ajouter">
+                                          <Button fx:id="bAjoutApostilles" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAjoutApostille" text="Ajouter">
                                              <padding>
                                                 <Insets bottom="10.0" top="10.0" />
                                              </padding>
@@ -168,7 +168,7 @@
                                                 <Insets />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="bSuppressionApostille" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSuppressionDocument" text="Supprimer">
+                                          <Button fx:id="bSuppressionApostille" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSuppressionApostille" text="Supprimer">
                                              <padding>
                                                 <Insets bottom="10.0" top="10.0" />
                                              </padding>

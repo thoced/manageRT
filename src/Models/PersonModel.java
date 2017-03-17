@@ -40,13 +40,14 @@ public class PersonModel extends Model implements IDataModel
    // public static  ObservableList<PersonModel> listPerson = FXCollections.observableArrayList();
     
     private ObservableList<DocumentModel> oDocuments;
-    private ObservableList<DocumentModel> oApostilles;
+    private ObservableList<ApostilleModel> oApostilles;
     
     private ObservableList<TodoModel> oTodos;
     private ObservableList<PersonModel> oLinks;
     
     // listener
     private ODocumentsChangeListener listenerDocuments;
+    private oApostilleChangeListener listenerApostilles;
     private OTodoChangeListener listenerTodos;
     private OLinkChangeListener listenerLinks;
     
@@ -123,11 +124,11 @@ public class PersonModel extends Model implements IDataModel
         this.oDocuments = oDocuments;
     }
 
-    public ObservableList<DocumentModel> getoApostilles() {
+    public ObservableList<ApostilleModel> getoApostilles() {
         return oApostilles;
     }
 
-    public void setoApostilles(ObservableList<DocumentModel> oApostilles) {
+    public void setoApostilles(ObservableList<ApostilleModel> oApostilles) {
         this.oApostilles = oApostilles;
     }
     
@@ -438,6 +439,8 @@ public class PersonModel extends Model implements IDataModel
          {
              if(listenerDocuments != null)
                  this.oDocuments.removeListener(listenerDocuments);
+              if(listenerApostilles != null)
+                 this.oApostilles.removeListener(listenerApostilles);
              if(listenerTodos != null)
                  this.oTodos.removeListener(listenerTodos);
              if(listenerLinks != null)
@@ -569,6 +572,9 @@ public class PersonModel extends Model implements IDataModel
              if(listenerDocuments == null)
                  listenerDocuments = new ODocumentsChangeListener(this.getId());
              
+              if(listenerApostilles == null)
+                 listenerApostilles = new oApostilleChangeListener(this.getId());
+             
              if(listenerTodos == null)
                  listenerTodos = new OTodoChangeListener(this.getId());
              
@@ -576,6 +582,7 @@ public class PersonModel extends Model implements IDataModel
                  listenerLinks = new OLinkChangeListener(this.getId());
              
              oDocuments.addListener(listenerDocuments);
+             oApostilles.addListener(listenerApostilles);
              oTodos.addListener(listenerTodos);
              oLinks.addListener(listenerLinks);
              

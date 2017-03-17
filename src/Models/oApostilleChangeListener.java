@@ -22,7 +22,6 @@ public class oApostilleChangeListener implements ListChangeListener{
     public oApostilleChangeListener(long idPerson) 
     {
         this.idPerson = idPerson;
-        
       
     }
     
@@ -37,7 +36,7 @@ public class oApostilleChangeListener implements ListChangeListener{
                     for(Object m : c.getAddedSubList())
                     {
                         try {
-                            DocumentModel model = (DocumentModel)m;
+                            ApostilleModel model = (ApostilleModel)m;
                              // creation de la requete sql d'ajout
                             String sql = "insert into t_documents (nom,commentaire,fichier,ref_id_identity,type_document) values (?,?,?,?,'apo')";
                             PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
@@ -59,7 +58,7 @@ public class oApostilleChangeListener implements ListChangeListener{
                     for(Object m : c.getRemoved())
                     {
                         try {
-                            DocumentModel model = (DocumentModel)m;
+                            ApostilleModel model = (ApostilleModel)m;
                              // suppression dans la base
                             String sql = "delete from t_documents where id = ?";
                             PreparedStatement st = ConnectionSQL.getCon().prepareStatement(sql);
