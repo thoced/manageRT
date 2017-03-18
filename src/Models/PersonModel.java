@@ -41,9 +41,9 @@ public class PersonModel extends Model implements IDataModel
     
     private ObservableList<DocumentModel> oDocuments;
     private ObservableList<ApostilleModel> oApostilles;
-    
     private ObservableList<TodoModel> oTodos;
     private ObservableList<PersonModel> oLinks;
+    private ObservableList<MemoModel> oMemos;
     
     // listener
     private ODocumentsChangeListener listenerDocuments;
@@ -282,6 +282,8 @@ public class PersonModel extends Model implements IDataModel
       oTodos = FXCollections.observableArrayList();
       
       oLinks = FXCollections.observableArrayList();
+      
+      oMemos = FXCollections.observableArrayList();
 
    }
      
@@ -562,6 +564,23 @@ public class PersonModel extends Model implements IDataModel
              }
              //fermeture 
              st.close();
+             
+             // Chargement de la liste des mémos
+             this.oMemos.clear();
+             String sql_memo = "select * from t_memo where ref_id_identity = ?";
+             PreparedStatement pst = ConnectionSQL.getCon().prepareStatement(sql_memo);
+             pst.setLong(1, this.getId());
+             ResultSet result_memo = pst.executeQuery();
+             while(result_memo.next())
+             {
+                 MemoModel model = new MemoModel();
+                 model.setId(result_memo.getLong("id"));
+                 model.setText(result_memo.getString("text"));
+                 this.oMemos.add(model);  
+             }
+             
+                 
+             
              
              
              // listener
