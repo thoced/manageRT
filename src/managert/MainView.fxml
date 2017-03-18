@@ -149,7 +149,7 @@
                   </TitledPane>
                </content>
             </Tab>
-            <Tab text="Apostilles">
+            <Tab closable="false" text="Apostilles">
               <content>
                   <TitledPane text="Apostilles">
                      <content>
@@ -272,6 +272,15 @@
                               </HBox>
                            </children>
                         </AnchorPane>
+                     </content>
+                  </TitledPane>
+              </content>
+            </Tab>
+            <Tab closable="false" text="Memos">
+              <content>
+                  <TitledPane text="Memos">
+                     <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
                   </TitledPane>
               </content>
