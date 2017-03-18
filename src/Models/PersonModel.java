@@ -265,6 +265,12 @@ public class PersonModel extends Model implements IDataModel
         return prenom;
     }
 
+    public ObservableList<MemoModel> getoMemos() {
+        return oMemos;
+    }
+    
+    
+
     @Override
     public String toString() 
     {

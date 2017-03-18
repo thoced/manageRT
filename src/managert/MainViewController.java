@@ -19,6 +19,7 @@ import Models.CategorieModel;
 import Models.ConnectionSQL;
 import Models.DataModel;
 import Models.DocumentModel;
+import Models.MemoModel;
 import Models.PersonModel;
 import Models.PrioriteModel;
 import Models.TodoModel;
@@ -154,8 +155,11 @@ public class MainViewController implements Initializable {
     private ListView listLinks;
     @FXML
     private Button bAddLink;
-    
-    
+    // Memos
+     @FXML
+     private TextArea textMemo;
+     @FXML
+     private ListView listMemos;
    
     // Evenement
     
@@ -166,6 +170,32 @@ public class MainViewController implements Initializable {
     private void handleCreateApostille() throws IOException
     {
         Apostille apo = new Apostille();
+    }
+    
+    @FXML
+    private void handleAddMemo() throws IOException
+    {
+        // on récupère le text inscrit dans le textMemo
+        if(!textMemo.getText().isEmpty())
+        {
+            MemoModel model = new MemoModel();
+            model.setText(textMemo.getText());
+            this.currentModel.getoMemos().add(model);
+            // effacement du text dans la vue
+            textMemo.clear();
+        }
+    }
+    
+    @FXML
+    private void handleDeleteMemo() throws IOException
+    {
+       MemoModel model = (MemoModel) listMemos.getSelectionModel().getSelectedItem();
+       if(model != null)
+       {
+           this.currentModel.getoMemos().remove(model);
+           // clear du text de la vue
+           textMemo.clear();
+       }
     }
     
     @FXML
@@ -555,7 +585,8 @@ public class MainViewController implements Initializable {
                 }
             }
         });
-           
+           // configuration du listMemos
+         
                   
     }    
     
@@ -649,7 +680,8 @@ public class MainViewController implements Initializable {
                 listApostilles.setItems(currentModel.getoApostilles());
                 // listLinks
                 listLinks.setItems(currentModel.getoLinks());
-                
+                // listMemos
+                listMemos.setItems(currentModel.getoMemos());
             }
         }
         

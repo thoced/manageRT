@@ -28,5 +28,15 @@ public class MemoModel extends Model
     public StringProperty textProperty() {
         return text;
     }
+
+    @Override
+    public String toString() {
+        
+        if(this.getText().length() >= 64)
+            return this.getText().substring(0, 64).concat("..."); //To change body of generated methods, choose Tools | Templates.
+        else
+            return this.getText();
+    }
+    
     
 }
