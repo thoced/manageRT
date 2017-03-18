@@ -33,6 +33,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -159,7 +160,12 @@ public class MainViewController implements Initializable {
      @FXML
      private TextArea textMemo;
      @FXML
-     private ListView listMemos;
+     private TableView tableMemos;
+     @FXML
+     private TableColumn<MemoModel,LocalDateTime> memoDateTimeColumn;
+     @FXML
+     private TableColumn<MemoModel,String> memoTextColumn;
+     
    
     // Evenement
     
@@ -175,7 +181,7 @@ public class MainViewController implements Initializable {
     @FXML
     private void handleClicMemo() throws IOException
     {
-            MemoModel model = (MemoModel) listMemos.getSelectionModel().getSelectedItem();
+            MemoModel model = (MemoModel) tableMemos.getSelectionModel().getSelectedItem();
             if(model != null)
             {
                textMemo.setText(model.getText());
@@ -190,13 +196,14 @@ public class MainViewController implements Initializable {
         // on récupère le text inscrit dans le textMemo
         if(!textMemo.getText().isEmpty())
         {
-            MemoModel model = (MemoModel) listMemos.getSelectionModel().getSelectedItem();
+            MemoModel model = (MemoModel) tableMemos.getSelectionModel().getSelectedItem();
             if(model != null)
             {
                 // modif du model
                 model.setText(textMemo.getText());
+                model.setDateTime(LocalDateTime.now());
                 // refresh de la listMemos
-                listMemos.refresh();
+                tableMemos.refresh();
 
             }
         }
@@ -210,6 +217,7 @@ public class MainViewController implements Initializable {
         {
             MemoModel model = new MemoModel();
             model.setText(textMemo.getText());
+            model.setDateTime(LocalDateTime.now());
             this.currentModel.getoMemos().add(model);
             // effacement du text dans la vue
             textMemo.clear();
@@ -219,7 +227,7 @@ public class MainViewController implements Initializable {
     @FXML
     private void handleDeleteMemo() throws IOException
     {
-       MemoModel model = (MemoModel) listMemos.getSelectionModel().getSelectedItem();
+       MemoModel model = (MemoModel) tableMemos.getSelectionModel().getSelectedItem();
        if(model != null)
        {
            this.currentModel.getoMemos().remove(model);
@@ -711,7 +719,10 @@ public class MainViewController implements Initializable {
                 // listLinks
                 listLinks.setItems(currentModel.getoLinks());
                 // listMemos
-                listMemos.setItems(currentModel.getoMemos());
+               memoDateTimeColumn.setCellValueFactory(cellData->cellData.getValue().dateTimeProperty());
+               memoTextColumn.setCellValueFactory(cellData->cellData.getValue().textProperty());
+               memoDateTimeColumn.setCellFactory(a->new MemoTableCell());
+               tableMemos.setItems(currentModel.getoMemos());
             }
         }
         

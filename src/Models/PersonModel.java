@@ -50,6 +50,7 @@ public class PersonModel extends Model implements IDataModel
     private oApostilleChangeListener listenerApostilles;
     private OTodoChangeListener listenerTodos;
     private OLinkChangeListener listenerLinks;
+    private oMemoChangeListener listenerMemos;
     
     private final StringProperty nom = new SimpleStringProperty();
     private final StringProperty prenom = new SimpleStringProperty();
@@ -453,6 +454,8 @@ public class PersonModel extends Model implements IDataModel
                  this.oTodos.removeListener(listenerTodos);
              if(listenerLinks != null)
                  this.oLinks.removeListener(listenerLinks);
+             if(listenerMemos != null)
+                 this.oMemos.removeListener(listenerMemos);
              
              // Chargement de la liste des documents
              String sql = "select * from t_documents where ref_id_identity = ?";
@@ -573,15 +576,15 @@ public class PersonModel extends Model implements IDataModel
              
              // Chargement de la liste des mémos
              this.oMemos.clear();
-             String sql_memo = "select * from t_memo where ref_id_identity = ?";
+             String sql_memo = "select * from t_memos where ref_id_identity = ?";
              PreparedStatement pst = ConnectionSQL.getCon().prepareStatement(sql_memo);
              pst.setLong(1, this.getId());
              ResultSet result_memo = pst.executeQuery();
              while(result_memo.next())
              {
-                 MemoModel model = new MemoModel();
-                 model.setId(result_memo.getLong("id"));
+                 MemoModel model = new MemoModel(result_memo.getLong("id"));
                  model.setText(result_memo.getString("text"));
+                 model.setDateTime(result_memo.getTimestamp("date_time").toLocalDateTime());
                  this.oMemos.add(model);  
              }
              
@@ -606,10 +609,14 @@ public class PersonModel extends Model implements IDataModel
              if(listenerLinks == null)
                  listenerLinks = new OLinkChangeListener(this.getId());
              
+             if(listenerMemos == null)
+                 listenerMemos = new oMemoChangeListener(this.getId());
+             
              oDocuments.addListener(listenerDocuments);
              oApostilles.addListener(listenerApostilles);
              oTodos.addListener(listenerTodos);
              oLinks.addListener(listenerLinks);
+             oMemos.addListener(listenerMemos);
              
          } catch (SQLException ex) 
          {
