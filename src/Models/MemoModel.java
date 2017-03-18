@@ -17,6 +17,13 @@ public class MemoModel extends Model
 
     private final StringProperty text = new SimpleStringProperty();
 
+    public MemoModel() 
+    {
+        text.addListener(new MemoModelListener());
+    }
+
+    
+    
     public String getText() {
         return text.get();
     }

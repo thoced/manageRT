@@ -173,6 +173,36 @@ public class MainViewController implements Initializable {
     }
     
     @FXML
+    private void handleClicMemo() throws IOException
+    {
+            MemoModel model = (MemoModel) listMemos.getSelectionModel().getSelectedItem();
+            if(model != null)
+            {
+               textMemo.setText(model.getText());
+
+            }
+        
+    }
+    
+    @FXML
+    private void handleUpdateMemo() throws IOException
+    {
+        // on récupère le text inscrit dans le textMemo
+        if(!textMemo.getText().isEmpty())
+        {
+            MemoModel model = (MemoModel) listMemos.getSelectionModel().getSelectedItem();
+            if(model != null)
+            {
+                // modif du model
+                model.setText(textMemo.getText());
+                // refresh de la listMemos
+                listMemos.refresh();
+
+            }
+        }
+    }
+    
+    @FXML
     private void handleAddMemo() throws IOException
     {
         // on récupère le text inscrit dans le textMemo
