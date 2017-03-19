@@ -466,6 +466,7 @@ public class PersonModel extends Model implements IDataModel
                  st.setLong(1, this.getId());
                  ResultSet result = st.executeQuery();
                  oDocuments.clear();
+                 oApostilles.clear();
                  while(result.next())
                  {
                       

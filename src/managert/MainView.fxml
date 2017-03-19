@@ -33,13 +33,13 @@
       </MenuBar>
    </top>
    <bottom>
-      <TabPane>
+      <TabPane prefHeight="320.0" prefWidth="1162.0">
          <tabs>
             <Tab closable="false" text="Information">
                <content>
                   <TitledPane text="Information" BorderPane.alignment="CENTER">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="332.0" prefWidth="1160.0">
                            <children>
                               <GridPane layoutX="14.0" layoutY="14.0" prefHeight="152.0" prefWidth="752.0" style="-fx-border-color: FireBrick; -fx-border-radius: 8; -fx-border-width: 4;">
                                 <columnConstraints>
@@ -109,7 +109,7 @@
             </Tab>
             <Tab closable="false" text="Documents">
                <content>
-                  <TitledPane alignment="TOP_LEFT" text="Documents" textAlignment="CENTER">
+                  <TitledPane alignment="TOP_LEFT" prefHeight="404.0" prefWidth="1162.0" text="Documents" textAlignment="CENTER">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -151,7 +151,7 @@
             </Tab>
             <Tab closable="false" text="Apostilles">
               <content>
-                  <TitledPane text="Apostilles">
+                  <TitledPane prefHeight="364.0" prefWidth="1162.0" text="Apostilles">
                      <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -194,13 +194,13 @@
             </Tab>
             <Tab closable="false" text="Tâches">
               <content>
-                  <TitledPane text="Taches">
+                  <TitledPane prefHeight="346.0" prefWidth="1162.0" text="Taches">
                      <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="11.0" prefHeight="182.0" prefWidth="994.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                              <HBox alignment="CENTER_LEFT" layoutX="19.6" layoutY="11.0" prefHeight="238.0" prefWidth="1141.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="9.0">
                                  <children>
-                                    <TableView fx:id="tableTodos" onMouseClicked="#handleClicTodo" prefHeight="182.0" prefWidth="644.0">
+                                    <TableView fx:id="tableTodos" onMouseClicked="#handleClicTodo" prefHeight="227.0" prefWidth="615.0">
                                       <columns>
                                         <TableColumn fx:id="columnTitre" prefWidth="249.0" text="Titre" />
                                         <TableColumn fx:id="columnDateCreation" prefWidth="148.0" text="Date création" />
@@ -244,7 +244,7 @@
             </Tab>
             <Tab closable="false" text="Liens">
               <content>
-                  <TitledPane text="Liens">
+                  <TitledPane prefHeight="291.0" prefWidth="1162.0" text="Liens">
                      <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -278,7 +278,7 @@
             </Tab>
             <Tab closable="false" text="Memos">
               <content>
-                  <TitledPane text="Memos">
+                  <TitledPane prefHeight="343.0" prefWidth="1162.0" text="Memos">
                      <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
