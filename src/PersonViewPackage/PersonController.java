@@ -10,6 +10,10 @@ import GestionPackage.GestionController;
 import Models.DataModel;
 import Models.PersonModel;
 import Models.PrioriteModel;
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -49,6 +53,7 @@ import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelFormat;
+import javafx.scene.input.Clipboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -169,6 +174,36 @@ public class PersonController implements Initializable {
         }
     }
 
+    @FXML
+    public void handleCopierPressePapier(ActionEvent event)
+    {
+        java.awt.datatransfer.Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable content = clipboard.getContents(null);
+        if(content != null)
+        {
+            if(content.isDataFlavorSupported(DataFlavor.stringFlavor))
+            {
+                try {
+                    // si ce qui se trouve dans le presse papier est un String
+                    String data = (String)content.getTransferData(DataFlavor.stringFlavor);
+                    // on récupère les donne en découpant avec un split
+                    String split[] = data.split("\n");
+                    
+                    if(split != null && split.length > 1)
+                    {
+                        nom.setText(split[0]);
+                        prenom.setText(split[1]);
+                    }
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(PersonController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedFlavorException ex) {
+                    Logger.getLogger(PersonController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+    
     @FXML
     public void cancel(ActionEvent event)
     {

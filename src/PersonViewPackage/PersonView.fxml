@@ -39,6 +39,7 @@
             <Label text="Catégorie:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <ComboBox fx:id="comboPriorite" GridPane.columnIndex="3" />
             <ComboBox fx:id="comboCategorie" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#handleCopierPressePapier" text="Coller depuis ISLP (Presse papier)" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="3" />
          </children>
          <columnConstraints>
             <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="128.0" />
